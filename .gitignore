@@ -1,0 +1,8 @@
+# MAC stuff
+.DS_Store
+
+# ETNA svn files
+.svn
+
+# Temporary files
+*.swp
