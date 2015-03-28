@@ -17,7 +17,6 @@ int main(int argc, const char * argv[])
     
     if (init(gWindow, gScreenSurface)) {
         terminer = 0;
-        //loadSurface( "/Users/mouafo/Pictures/space-ship-md.png", gScreenSurface );
         while(!terminer)
         {
             SDL_WaitEvent(&evenements);

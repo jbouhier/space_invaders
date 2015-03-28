@@ -41,11 +41,11 @@
 */
 
 //The window we'll be rendering to
-SDL_Window *gWindow = NULL;
+SDL_Window *gWindow;
 //The surface contained by the window
-SDL_Surface *gScreenSurface = NULL;
+SDL_Surface *gScreenSurface;
 //The image we will load and show on the screen
-SDL_Surface *gMonster = NULL;
+SDL_Surface *gMonster;
 
 
 #endif

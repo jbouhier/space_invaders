@@ -30,7 +30,7 @@
 
 
 
-SDL_Surface *loadSurface( char* path, SDL_Surface *gScreenSurface );
+SDL_Surface *loadSurface( char* path, SDL_Window *gWindow, SDL_Surface *gScreenSurface );
 bool init(SDL_Window *gWindow, SDL_Surface *gScreenSurface );
 void end(SDL_Window *gWindow, SDL_Surface *gScreenSurface, SDL_Surface *gMonster );
 

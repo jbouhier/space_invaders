@@ -56,14 +56,18 @@ bool init(SDL_Window *gWindow, SDL_Surface *gScreenSurface) {
     gScreenSurface = SDL_GetWindowSurface( gWindow );
     
     //Fill the surface black (color corresponding to the last 3 parameters : 0,0,0 for black & 255,255,255 for white)
-    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 0, 0, 0 ) );
-    
-    //Update the surface
-    SDL_UpdateWindowSurface( gWindow );
+    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 255, 255, 255 ) );
+
     
     //Wait two seconds
     //SDL_Delay( 5000 );
+    if (gScreenSurface != NULL ) {
+        // Use absolute path to get image.
+        loadSurface( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png", gWindow, gScreenSurface );
+    }
     
+    //Update the surface
+    SDL_UpdateWindowSurface( gWindow );
     return true;
     
 }
