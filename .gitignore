@@ -1,8 +1,12 @@
 # MAC stuff
 .DS_Store
 
-# ETNA svn files
+# Xcode config
+space_invaders.xcodeproj/project.xcworkspace/xcshareddata/
+space_invaders.xcodeproj/project.xcworkspace/xcuserdata/
+
+# ETNA svn
 .svn
 
-# Temporary files
+# Temporary
 *.swp
