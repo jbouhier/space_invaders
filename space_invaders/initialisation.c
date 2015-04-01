@@ -24,9 +24,7 @@ const int SCREEN_HEIGHT = 600;
 
 #include "main_file.h"
 
-bool init(SDL_Window *gWindow, SDL_Surface *gScreenSurface) {
-    //Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG;
+SDL_Window* init(SDL_Window *gWindow) {
     
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
     {
@@ -47,30 +45,22 @@ bool init(SDL_Window *gWindow, SDL_Surface *gScreenSurface) {
         exit(EXIT_FAILURE);
     }
     
-    if( !( IMG_Init( imgFlags ) & imgFlags ) )
-    {
-        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-    }
     
-    //Get window surface
-    gScreenSurface = SDL_GetWindowSurface( gWindow );
-    
-    //Fill the surface black (color corresponding to the last 3 parameters : 0,0,0 for black & 255,255,255 for white)
-    SDL_FillRect( gScreenSurface, NULL, SDL_MapRGB( gScreenSurface->format, 255, 255, 255 ) );
-
-    
-    //Wait two seconds
-    //SDL_Delay( 5000 );
-    if (gScreenSurface != NULL ) {
-        // Use absolute path to get image.
-        loadSurface( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png", gWindow, gScreenSurface );
-    }
-    
-    //Update the surface
-    SDL_UpdateWindowSurface( gWindow );
-    return true;
-    
+    return gWindow;
 }
+
+
+SDL_Texture* init_screen(SDL_Window *gWindow, SDL_Renderer* gRenderer, SDL_Surface* screenSurface) {
+    SDL_Texture* screenSurface2;
+    //Get window surface
+    screenSurface = SDL_GetWindowSurface( gWindow );
+    
+    screenSurface2 = SDL_CreateTextureFromSurface(gRenderer, screenSurface);
+    
+    
+    return screenSurface2;
+}
+
 
 void end(SDL_Window *gWindow, SDL_Surface *gScreenSurface, SDL_Surface *gMonster)
 {

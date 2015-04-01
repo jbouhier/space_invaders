@@ -46,6 +46,9 @@ SDL_Window *gWindow;
 SDL_Surface *gScreenSurface;
 //The image we will load and show on the screen
 SDL_Surface *gMonster;
+SDL_Texture *gPlayer;
+SDL_Renderer* gRenderer = NULL;
+SDL_Texture* gTexture = NULL;
 
 
 #endif
