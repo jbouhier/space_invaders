@@ -76,13 +76,23 @@ SDL_Texture *loadPlayer(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer*
     SDL_Texture* player;
     
     //Load PNG texture
-    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png", gWindow, gRenderer);
+    
+    player = loadTexture( "/Users/princetim/space_invaders/space_invaders/space_invaders/space-ship-md.png", gWindow, gRenderer);
     if( player == NULL )
     {
+        player = loadTexture( "/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/space-ship-md.png", gWindow, gRenderer);
+        if (player == NULL) {
+             player  =  loadTexture (  "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png" ,  gWindow ,  gRenderer );
+            if (player == NULL){
+                player = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/space-ship-md.png", gWindow, gRenderer);
+            }
+        }
+    }
+    
+    if (player == NULL){
         printf( "Failed to load texture image!\n" );
         success = false;
     }
-    
     return player;
 }
 
