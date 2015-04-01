@@ -1,0 +1,27 @@
+Ce depos est destine a faire des test dans le cadre du projet space_invaders.
+
+La fonction main inclus 2 frameWorks :
+  -   Celui de la SDL2 
+  -   Celui des images
+Ces deux frameworks sont essentiel pour le projet car l'un permet de manipuler les fenetres et les surfaces? et l'autre permet de manipuler les images a include 
+dans le projet.
+
+
+Ce depos contient le fichier compresser a sa racine qu'il faudra decompresser et recuperer le framework 'SDL2_image.framework' a l'interieur.
+Recuperer ce fichier et le copier dans le dossier Framework ou le fichier 'SDL2.framework' a ete coller.
+
+
+Le MAIN
+
+la fonction main fait appel a la fonction init et maintient la fenetre SDL2 active jusqu'au moment ou le user ferme en cliquant sur la croix
+
+La function INIT
+
+elle permet de creer la fenetre et de definir ses dimensions. auusi on peut y definir la couleur de fond.
+
+la fonction loadSurface
+
+elle charge une image et la converti en surface pour la poser sur la fenetre.
+
+la fonction end
+libere les espece memoire occuper par le fenetre et les surfaces creer.

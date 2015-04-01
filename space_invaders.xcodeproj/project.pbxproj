@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8F0B023E1AC5E2E900DA3FB1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B023D1AC5E2E900DA3FB1 /* main.c */; };
 		8F0B02451AC5E31100DA3FB1 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F0B02441AC5E31100DA3FB1 /* SDL2.framework */; };
+		D177077F1AC60E690086941A /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D177077E1AC60E690086941A /* SDL2_image.framework */; };
+		D17707841AC60EF90086941A /* initialisation.c in Sources */ = {isa = PBXBuildFile; fileRef = D17707831AC60EF90086941A /* initialisation.c */; };
+		D17707861AC614930086941A /* loadings.c in Sources */ = {isa = PBXBuildFile; fileRef = D17707851AC614930086941A /* loadings.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +30,14 @@
 		8F0B023A1AC5E2E900DA3FB1 /* space_invaders */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = space_invaders; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0B023D1AC5E2E900DA3FB1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		8F0B02441AC5E31100DA3FB1 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		D177077E1AC60E690086941A /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		D17707811AC60EB10086941A /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		D17707831AC60EF90086941A /* initialisation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = initialisation.c; sourceTree = "<group>"; };
+		D17707851AC614930086941A /* loadings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadings.c; sourceTree = "<group>"; };
+		D17707871AC619D00086941A /* main_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main_file.h; sourceTree = "<group>"; };
+		D17707891AC7549A0086941A /* images.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = images.bmp; sourceTree = "<group>"; };
+		D177078A1AC7549A0086941A /* space-invaders-hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space-invaders-hi.png"; sourceTree = "<group>"; };
+		D177078B1AC7549A0086941A /* space-ship-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "space-ship-md.png"; path = "space_invaders/space-ship-md.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D177077F1AC60E690086941A /* SDL2_image.framework in Frameworks */,
 				8F0B02451AC5E31100DA3FB1 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,6 +56,7 @@
 		8F0B02311AC5E2E900DA3FB1 = {
 			isa = PBXGroup;
 			children = (
+				D177077E1AC60E690086941A /* SDL2_image.framework */,
 				8F0B02441AC5E31100DA3FB1 /* SDL2.framework */,
 				8F0B023C1AC5E2E900DA3FB1 /* space_invaders */,
 				8F0B023B1AC5E2E900DA3FB1 /* Products */,
@@ -61,9 +74,40 @@
 		8F0B023C1AC5E2E900DA3FB1 /* space_invaders */ = {
 			isa = PBXGroup;
 			children = (
+				D17707881AC62BEA0086941A /* img */,
+				D17707821AC60EBA0086941A /* files */,
+				D17707801AC60E7A0086941A /* includes */,
 				8F0B023D1AC5E2E900DA3FB1 /* main.c */,
 			);
 			path = space_invaders;
+			sourceTree = "<group>";
+		};
+		D17707801AC60E7A0086941A /* includes */ = {
+			isa = PBXGroup;
+			children = (
+				D17707811AC60EB10086941A /* main.h */,
+				D17707871AC619D00086941A /* main_file.h */,
+			);
+			name = includes;
+			sourceTree = "<group>";
+		};
+		D17707821AC60EBA0086941A /* files */ = {
+			isa = PBXGroup;
+			children = (
+				D17707831AC60EF90086941A /* initialisation.c */,
+				D17707851AC614930086941A /* loadings.c */,
+			);
+			name = files;
+			sourceTree = "<group>";
+		};
+		D17707881AC62BEA0086941A /* img */ = {
+			isa = PBXGroup;
+			children = (
+				D17707891AC7549A0086941A /* images.bmp */,
+				D177078A1AC7549A0086941A /* space-invaders-hi.png */,
+				D177078B1AC7549A0086941A /* space-ship-md.png */,
+			);
+			name = img;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +166,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D17707861AC614930086941A /* loadings.c in Sources */,
+				D17707841AC60EF90086941A /* initialisation.c in Sources */,
 				8F0B023E1AC5E2E900DA3FB1 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +290,7 @@
 				8F0B02431AC5E2E900DA3FB1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

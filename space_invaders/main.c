@@ -6,63 +6,51 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
+#include "main.h"
 
-
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 
 int main(int argc, const char * argv[])
 {
     
-    //The window we'll be rendering to
-    SDL_Window* window = NULL;
-
-    //The surface contained by the window
-    SDL_Surface* screenSurface = NULL;
-
-    //Initialize SDL
-    if (SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS ) < 0)
-    {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        exit(-1);
-    }
-
-    //Create window
-    window = SDL_CreateWindow( "SDL Tutorial",
-                              SDL_WINDOWPOS_UNDEFINED,
-                              SDL_WINDOWPOS_UNDEFINED,
-                              SCREEN_WIDTH,
-                              SCREEN_HEIGHT,
-                              SDL_WINDOW_SHOWN );
-    if( window == NULL )
-    {
-        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-    }
-    else
-    {
-        //Get window surface
-        screenSurface = SDL_GetWindowSurface( window );
-
-        //Fill the surface with a color
-        SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0x33, 0x66) );
-
-        //Update the surface
-        SDL_UpdateWindowSurface( window );
-
-        //Wait two seconds
-        SDL_Delay( 2000 );
-    }
-
-
-    //Destroy window
-    SDL_DestroyWindow( window );
+    int terminer;
+    SDL_Event evenements;
+    SDL_Rect DestR;
     
-    //Quit SDL subsystems
-    SDL_Quit();
     
+    DestR.x = 760;
+    DestR.y = 560;
+    DestR.w = 35;
+    DestR.h = 35;
+    
+    gWindow = init(gWindow);
+    gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+    gTexture = init_screen( gWindow, gRenderer, gScreenSurface);
+    
+   
+    if ( gWindow != NULL) {
+        terminer = 0;
+        gPlayer = loadPlayer(evenements, gWindow, gRenderer);
+        while(!terminer)
+        {
+            SDL_WaitEvent(&evenements);
+            
+            if(evenements.window.event == SDL_WINDOWEVENT_CLOSE)
+                terminer = 1;
+            else {
+                DestR = movePlayer(evenements, DestR);
+            }
+            //Clear screen
+            SDL_RenderClear( gRenderer );
+            //Render texture to screen
+            SDL_RenderCopy( gRenderer, gPlayer, NULL, &DestR );
+            //Update screen
+            SDL_RenderPresent( gRenderer );
+            
+            SDL_UpdateWindowSurface( gWindow );
+            
+        }
+    }
+    
+    end(gWindow, gScreenSurface, gMonster);
     return 0;
 }
