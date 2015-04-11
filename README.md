@@ -14,7 +14,6 @@ This project is a remake with lib SDL 2.0 of classics retro games:
 
 **Gatien Mouafo:** Developer
 
-**Thimothee Lestin:** Developer
+**Timothee Lestin:** Developer
 
 **Manel Zarali:** Developer
-
