@@ -38,29 +38,32 @@ S_Game launch_bullet(S_Game game) {
     int i;
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
-        game.Gplayer.bullet[i].position.y -= 20; /* On bouge la balle */
+        if (game.Gplayer.bullet[i].position.y >= 0) {
+            game.Gplayer.bullet[i].position.y -= 2; /* On bouge la balle */
+        }
+        else{
+            game = deleteBullets(game, i);
+        }
     }
-    
     return game;
 }
 
-
-SDL_Rect autoMoveBulletPlayer(SDL_Texture *bullet, SDL_Renderer* gRenderer, SDL_Rect DestR) {
+S_Game deleteBullets(S_Game game, int index) {
+    int i;
     
-    SDL_Rect pos;
-    pos = DestR;
-    //Bullet = gRenderer;
-    //printf("time : %d \n", SDL_GetTicks());
+    for (i = index; game.Gplayer.bullet[i].bullet != NULL; i++) {
+        game.Gplayer.bullet[i] = game.Gplayer.bullet[i + 1];
+       // if (game.Gplayer.bullet[i + 1].bullet == NULL) {
+         //   SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
+           // game.Gplayer.bullet[i].bullet = NULL;
+        //}
+    }
+    if (i > 0) {
+        game.Gplayer.nbr_bullet = i - 1;
+    }
     
-
     
-    pos.y -=  (SDL_GetTicks()/30.f) + 3;
-    if (pos.y < 0) {
-         pos.y =  DestR.y;
-     }
-    return pos;
-    
+    return game;
 }
-
 
 

@@ -40,6 +40,7 @@ struct player_struct
     SDL_Texture  *player;
     SDL_Rect position;
     S_Bullet *bullet;
+    int nbr_bullet;
 } typedef S_Player;
 
 struct monster_struct
@@ -47,6 +48,7 @@ struct monster_struct
     SDL_Texture  *monster;
     SDL_Rect position;
     S_Bullet *bullet;
+    int nbr_bullet;
 } typedef S_Monster;
 
 struct game_struct
@@ -71,20 +73,7 @@ SDL_Texture     *loadBullet(S_Game game);
 SDL_Rect        init_bulletPos(S_Player player);
 S_Game          launch_bullet(S_Game game);
 void            renderAll(S_Game game);
-
-void end(S_Game game);
-SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRenderer);
-
-
-/* 
-**
-** IN FILE MOUVEMENT.C
-** FUNCTIONS THAT DEALS WITH ANY KIND OF MOUVEMENT IN THE WINDOW
-**
-*/
-
-//SDL_Rect launch_bullet(SDL_Event evenements,SDL_Texture *bullet, SDL_Renderer* gRenderer,  SDL_Rect DestR);
-SDL_Rect autoMoveBulletPlayer(SDL_Texture *bullet, SDL_Renderer* gRenderer, SDL_Rect DestR);
-
+S_Game          deleteBullets(S_Game game, int index);
+void            end(S_Game game);
 
 #endif

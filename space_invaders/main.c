@@ -12,7 +12,6 @@
 int main(int argc, const char * argv[])
 {
     S_Game game;
-    int nbr_bullet;
     int tempsActuel;
     int tempsPrecedent;
     int terminer;
@@ -29,7 +28,7 @@ int main(int argc, const char * argv[])
 
     if ( game.Gwindow != NULL) {
         game.Gplayer.player = loadPlayer(game);
-        nbr_bullet = 0;
+        game.Gplayer.nbr_bullet = 0;
         while(!terminer)
         {
             SDL_PollEvent(&(game.Gevenements));
@@ -42,15 +41,15 @@ int main(int argc, const char * argv[])
                     game.Gplayer = movePlayer(game);
                     
                     if(game.Gevenements.key.keysym.sym == SDLK_SPACE) {
-                        game.Gplayer.bullet[nbr_bullet].bullet = loadBullet(game);
-                        game.Gplayer.bullet[nbr_bullet].position = init_bulletPos(game.Gplayer);
-                        nbr_bullet++;
+                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].bullet = loadBullet(game);
+                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].position = init_bulletPos(game.Gplayer);
+                        game.Gplayer.nbr_bullet++;
                     }
                 }
                 tempsActuel = SDL_GetTicks();
-                if (tempsActuel - tempsPrecedent > 18) /* Si 18 ms se sont écoulées depuis le dernier tour de boucle */
+                if (tempsActuel - tempsPrecedent > 5) /* Si 5 ms se sont écoulées depuis le dernier tour de boucle */
                 {
-                    launch_bullet(game);
+                    game = launch_bullet(game);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }

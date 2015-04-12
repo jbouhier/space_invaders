@@ -16,7 +16,7 @@ SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRender
     
     if( loadedSurface == NULL )
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+        //printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
     }
     else
     {
@@ -41,9 +41,24 @@ SDL_Texture *loadPlayer(S_Game game)
     SDL_Texture* player;
     
     //Load PNG texture
+    
     player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png",
                          game.Gwindow, game.Grenderer);
     if( player == NULL )
+    {
+        player = loadTexture( "/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/space-ship-md.png",
+                             game.Gwindow, game.Grenderer);
+        if (player == NULL) {
+            player  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/space-ship-md.png",
+                                    game.Gwindow, game.Grenderer);
+            if (player == NULL){
+                player = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/space-ship-md.png",
+                                     game.Gwindow, game.Grenderer);
+            }
+        }
+    }
+    
+    if( player == NULL)
     {
         printf( "Failed to load texture image!\n" );
     }
@@ -61,6 +76,20 @@ SDL_Texture *loadBullet(S_Game game)
     //Load PNG texture
     bullet = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/1428113676_bullet_white.png",
                          game.Gwindow, game.Grenderer);
+    if( bullet == NULL )
+    {
+        bullet = loadTexture( "/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/1428113676_bullet_white.png",
+                             game.Gwindow, game.Grenderer);
+        if (bullet == NULL) {
+            bullet  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/1428113676_bullet_white.png",
+                                    game.Gwindow, game.Grenderer);
+            if (bullet == NULL){
+                bullet = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/1428113676_bullet_white.png",
+                                     game.Gwindow, game.Grenderer);
+            }
+        }
+    }
+    
     if( bullet == NULL )
     {
         printf( "Failed to load texture image!\n" );
