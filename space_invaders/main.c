@@ -11,46 +11,54 @@
 
 int main(int argc, const char * argv[])
 {
-    
+    S_Game game;
+    int nbr_bullet;
+    int tempsActuel;
+    int tempsPrecedent;
     int terminer;
-    SDL_Event evenements;
-    SDL_Rect DestR;
     
-    
-    DestR.x = 760;
-    DestR.y = 560;
-    DestR.w = 35;
-    DestR.h = 35;
-    
-    gWindow = init(gWindow);
-    gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
-    gTexture = init_screen( gWindow, gRenderer, gScreenSurface);
-    
-   
-    if ( gWindow != NULL) {
-        terminer = 0;
-        gPlayer = loadPlayer(evenements, gWindow, gRenderer);
+    terminer = 0;
+    tempsActuel = 0;
+    tempsPrecedent = 0;
+
+    game.Gplayer.position = init_position(760, 560, 35, 35);
+    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
+    game.Gwindow = init(game.Gwindow);
+    game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
+    game.Gscreen = init_screen( game );
+
+    if ( game.Gwindow != NULL) {
+        game.Gplayer.player = loadPlayer(game);
+        nbr_bullet = 0;
         while(!terminer)
         {
-            SDL_WaitEvent(&evenements);
+            SDL_PollEvent(&(game.Gevenements));
+            SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
-            if(evenements.window.event == SDL_WINDOWEVENT_CLOSE)
+            if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE)
                 terminer = 1;
             else {
-                DestR = movePlayer(evenements, DestR);
+                if (game.Gevenements.type == SDL_KEYDOWN) {
+                    game.Gplayer = movePlayer(game);
+                    
+                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE) {
+                        game.Gplayer.bullet[nbr_bullet].bullet = loadBullet(game);
+                        game.Gplayer.bullet[nbr_bullet].position = init_bulletPos(game.Gplayer);
+                        nbr_bullet++;
+                    }
+                }
+                tempsActuel = SDL_GetTicks();
+                if (tempsActuel - tempsPrecedent > 18) /* Si 18 ms se sont écoulées depuis le dernier tour de boucle */
+                {
+                    launch_bullet(game);
+                }
+                tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
-            //Clear screen
-            SDL_RenderClear( gRenderer );
-            //Render texture to screen
-            SDL_RenderCopy( gRenderer, gPlayer, NULL, &DestR );
-            //Update screen
-            SDL_RenderPresent( gRenderer );
-            
-            SDL_UpdateWindowSurface( gWindow );
-            
+
+            renderAll(game);
         }
     }
-    
-    end(gWindow, gScreenSurface, gMonster);
+
+    end(game);
     return 0;
 }

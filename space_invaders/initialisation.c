@@ -50,31 +50,64 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-SDL_Texture* init_screen(SDL_Window *gWindow, SDL_Renderer* gRenderer, SDL_Surface* screenSurface) {
-    SDL_Texture* screenSurface2;
+SDL_Texture* init_screen(S_Game game) {
+    SDL_Texture* screenTexture;
+    SDL_Surface *screenSurface;
+    
     //Get window surface
-    screenSurface = SDL_GetWindowSurface( gWindow );
+    screenSurface = SDL_GetWindowSurface( game.Gwindow );
+    screenTexture = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
-    screenSurface2 = SDL_CreateTextureFromSurface(gRenderer, screenSurface);
     
-    
-    return screenSurface2;
+    return screenTexture;
 }
 
 
-void end(SDL_Window *gWindow, SDL_Surface *gScreenSurface, SDL_Surface *gMonster)
+void end(S_Game game)
 {
     //Deallocate surface
-    SDL_FreeSurface( gMonster );
-    SDL_FreeSurface( gScreenSurface );
-    gMonster = NULL;
-    gScreenSurface = NULL;
     
     //Destroy window
-    SDL_DestroyWindow( gWindow );
-    gWindow = NULL;
+    SDL_DestroyWindow( game.Gwindow );
+    game.Gwindow = NULL;
     
     //Quit SDL subsystems
     SDL_Quit();
 }
 
+SDL_Rect init_position(int x, int y, int h, int w) {
+    SDL_Rect DestR;
+    
+    DestR.x = x;
+    DestR.y = y;
+    DestR.h = h;
+    DestR.w = w;
+    
+    return DestR;
+}
+
+SDL_Rect init_bulletPos(S_Player player) {
+    SDL_Rect DestR;
+    
+    DestR.y =  player.position.y - 10;
+    DestR.x =  player.position.x + 12;
+    DestR.w = 10;
+    DestR.h = 25;
+    
+    return DestR;
+}
+
+void    renderAll(S_Game game) {
+    int i;
+    
+    SDL_RenderClear( game.Grenderer );
+    SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer.player, NULL, &(game.Gplayer.position) );
+    
+    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
+        SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );
+    }
+    
+    SDL_RenderPresent( game.Grenderer );
+    SDL_UpdateWindowSurface( game.Gwindow );
+}

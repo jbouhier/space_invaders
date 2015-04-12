@@ -7,40 +7,6 @@
 //
 
 #include "main_file.h"
-#define SHAPE_SIZE 160
-
-SDL_Surface *loadSurface( char* path, SDL_Window *gWindow, SDL_Surface *gScreenSurface )
-{
-    SDL_Rect DestR;
-    SDL_Surface *optimizedSurface = NULL;
-    SDL_Surface *loadedSurface;
-    
-    loadedSurface = IMG_Load( path );
-    // -630 la position de droite max
-    DestR.x = -300;
-    DestR.y = -300;
-    if( loadedSurface == NULL )
-    {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        //Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
-
-        if( optimizedSurface == NULL )
-        {
-            printf( "Unable to optimize image %s! SDL Error: %s\n", path, SDL_GetError() );
-            exit(EXIT_FAILURE);
-        }
-        
-        SDL_BlitSurface( optimizedSurface, &DestR, gScreenSurface, NULL );
-        SDL_FreeSurface( loadedSurface );
-    }
-    
-    return optimizedSurface;
-}
 
 SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRenderer)
 {
@@ -69,38 +35,37 @@ SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRender
     return newTexture;
 }
 
-SDL_Texture *loadPlayer(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer* gRenderer)
+SDL_Texture *loadPlayer(S_Game game)
 {
     //Loading success flag
-    bool success = true;
     SDL_Texture* player;
     
     //Load PNG texture
-    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png", gWindow, gRenderer);
+    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png",
+                         game.Gwindow, game.Grenderer);
     if( player == NULL )
     {
         printf( "Failed to load texture image!\n" );
-        success = false;
     }
     
     return player;
 }
 
-SDL_Rect movePlayer(SDL_Event evenements, SDL_Rect DestR) {
-    switch( evenements.key.keysym.sym )
+
+SDL_Texture *loadBullet(S_Game game)
+{
+    //Loading success flag
+    bool success = true;
+    SDL_Texture* bullet;
+    
+    //Load PNG texture
+    bullet = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/1428113676_bullet_white.png",
+                         game.Gwindow, game.Grenderer);
+    if( bullet == NULL )
     {
-        case SDLK_LEFT:
-            if ( DestR.x > 0 ) {
-                DestR.x -= 10;
-            }
-            break;
-            
-        case SDLK_RIGHT:
-            if ( DestR.x < 770 ) {
-                DestR.x += 10;
-            }
-            break;
+        printf( "Failed to load texture image!\n" );
+        success = false;
     }
     
-    return DestR;
+    return bullet;
 }
