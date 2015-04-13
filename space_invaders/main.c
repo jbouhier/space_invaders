@@ -19,15 +19,17 @@ int main(int argc, const char * argv[])
     terminer = 0;
     tempsActuel = 0;
     tempsPrecedent = 0;
-
-    game.Gplayer.position = init_position(760, 560, 35, 35);
+    
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
+    game.Gplayer.position = init_position(760, 560, 35, 35);
+    game.Gmonster.position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
     game.Gscreen = init_screen( game );
 
     if ( game.Gwindow != NULL) {
         game.Gplayer.player = loadPlayer(game);
+        game.Gmonster.monster = loadPlayer(game);
         game.Gplayer.nbr_bullet = 0;
         while(!terminer)
         {
@@ -40,7 +42,7 @@ int main(int argc, const char * argv[])
                 if (game.Gevenements.type == SDL_KEYDOWN) {
                     game.Gplayer = movePlayer(game);
                     
-                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE) {
+                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer.nbr_bullet < 2) {
                         game.Gplayer.bullet[game.Gplayer.nbr_bullet].bullet = loadBullet(game);
                         game.Gplayer.bullet[game.Gplayer.nbr_bullet].position = init_bulletPos(game.Gplayer);
                         game.Gplayer.nbr_bullet++;

@@ -54,6 +54,11 @@ SDL_Texture* init_screen(S_Game game) {
     SDL_Texture* screenTexture;
     SDL_Surface *screenSurface;
     
+    //Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
     //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     screenTexture = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
@@ -103,6 +108,7 @@ void    renderAll(S_Game game) {
     SDL_RenderClear( game.Grenderer );
     SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
     SDL_RenderCopy( game.Grenderer, game.Gplayer.player, NULL, &(game.Gplayer.position) );
+    SDL_RenderCopy( game.Grenderer, game.Gmonster.monster, NULL, &(game.Gmonster.position) );
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );

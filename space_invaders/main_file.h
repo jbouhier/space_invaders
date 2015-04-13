@@ -28,6 +28,7 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
 struct bullet_struct
 {
@@ -75,5 +76,8 @@ S_Game          launch_bullet(S_Game game);
 void            renderAll(S_Game game);
 S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);
+bool            checkCollision( SDL_Rect a, SDL_Rect b );
+
+bool loadSounds();
 
 #endif

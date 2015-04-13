@@ -98,3 +98,24 @@ SDL_Texture *loadBullet(S_Game game)
     
     return bullet;
 }
+
+bool loadSounds()
+{
+    
+    //Loading success flag
+    bool success = true;
+    //The sound effects that will be used
+    Mix_Music *gScratch = NULL;
+
+    //Load sound effects
+    gScratch = Mix_LoadMUS( "sounds/explosion.wav" );
+    if( gScratch == NULL )
+    {
+        printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+    else {
+        printf("load successfull");
+    }
+    return success;
+}

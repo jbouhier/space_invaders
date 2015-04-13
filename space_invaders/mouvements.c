@@ -25,6 +25,7 @@ S_Player movePlayer(S_Game game) {
             }
             break;
         default:
+            loadSounds();
             break;
     }
     
@@ -39,7 +40,14 @@ S_Game launch_bullet(S_Game game) {
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         if (game.Gplayer.bullet[i].position.y >= 0) {
-            game.Gplayer.bullet[i].position.y -= 2; /* On bouge la balle */
+            game.Gplayer.bullet[i].position.y -= 2;
+            if (game.Gmonster.monster != NULL) {
+                if (checkCollision( game.Gmonster.position, game.Gplayer.bullet[i].position )) {
+                    SDL_DestroyTexture(game.Gmonster.monster);
+                    game.Gmonster.monster = NULL;
+                    game = deleteBullets(game, i);
+                }
+            }
         }
         else{
             game = deleteBullets(game, i);
@@ -53,17 +61,50 @@ S_Game deleteBullets(S_Game game, int index) {
     
     for (i = index; game.Gplayer.bullet[i].bullet != NULL; i++) {
         game.Gplayer.bullet[i] = game.Gplayer.bullet[i + 1];
-       // if (game.Gplayer.bullet[i + 1].bullet == NULL) {
-         //   SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
-           // game.Gplayer.bullet[i].bullet = NULL;
-        //}
     }
     if (i > 0) {
         game.Gplayer.nbr_bullet = i - 1;
     }
     
-    
     return game;
 }
 
-
+bool checkCollision( SDL_Rect a, SDL_Rect b )
+{
+    //The sides of the rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+    
+    //Calculate the sides of rect A
+    leftA = a.x;
+    rightA = a.x + a.w;
+    topA = a.y;
+    bottomA = a.y + a.h;
+    
+    //Calculate the sides of rect B
+    leftB = b.x;
+    rightB = b.x + b.w;
+    topB = b.y;
+    bottomB = b.y + b.h;
+    //If any of the sides from A are outside of B
+    if ( bottomA <= topB ) {
+        return false;
+    }
+    
+    if ( topA >= bottomB ) {
+        return false;
+    }
+    
+    if ( rightA <= leftB ) {
+        return false;
+    }
+    
+    if ( leftA >= rightB ) {
+        return false;
+    }
+    
+    //If none of the sides from A are outside B
+    return true;
+}
