@@ -30,44 +30,52 @@
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_mixer/SDL_mixer.h>
 
-struct bullet_struct
-{
-    SDL_Texture  *bullet;
-    SDL_Rect position;
-} typedef S_Bullet;
+#define ROOT_DIR getenv("PWD")
 
-struct player_struct
-{
-    SDL_Texture  *player;
-    SDL_Rect position;
-    S_Bullet *bullet;
-    int nbr_bullet;
-} typedef S_Player;
 
-struct monster_struct
+struct              bullet_struct
 {
-    SDL_Texture  *monster;
-    SDL_Rect position;
-    S_Bullet *bullet;
-    int nbr_bullet;
-} typedef S_Monster;
+    SDL_Texture     *bullet;
+    SDL_Rect        position;
+} typedef           S_Bullet;
 
-struct game_struct
+struct              player_struct
 {
-    SDL_Window *Gwindow;
-    SDL_Texture *Gscreen;
-    SDL_Renderer *Grenderer;
-    SDL_Event Gevenements;
-    S_Player  Gplayer;
-    S_Monster Gmonster;
-    int Gscore;
-    int Glifes;
-} typedef S_Game;
+    SDL_Texture     *player;
+    SDL_Rect        position;
+    S_Bullet        *bullet;
+    Mix_Chunk       *bulletGo_sound;
+    Mix_Chunk       *playerMove_sound;
+    Mix_Chunk       *playerExplode_sound;
+    int             nbr_bullet;
+    
+} typedef           S_Player;
+
+struct              monster_struct
+{
+    SDL_Texture     *monster;
+    SDL_Rect        position;
+    S_Bullet        *bullet;
+    Mix_Chunk       *monsterExplode_sound;
+    int             nbr_bullet;
+} typedef           S_Monster;
+
+struct              game_struct
+{
+    SDL_Window      *Gwindow;
+    SDL_Texture     *Gscreen;
+    SDL_Renderer    *Grenderer;
+    SDL_Event       Gevenements;
+    S_Player        Gplayer;
+    S_Monster       Gmonster;
+    int             Gscore;
+    int             Glifes;
+} typedef           S_Game;
 
 
 SDL_Rect        init_position(int x, int y, int h, int w);
 SDL_Window      *init(SDL_Window *gWindow);
-SDL_Texture     *init_screen(S_Game game);
+S_Game          init_screen(S_Game game);
 SDL_Texture     *loadPlayer(S_Game game);
 S_Player        movePlayer(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
@@ -77,7 +85,6 @@ void            renderAll(S_Game game);
 S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);
 bool            checkCollision( SDL_Rect a, SDL_Rect b );
-
-bool loadSounds();
+S_Game          loadSounds(S_Game game);
 
 #endif

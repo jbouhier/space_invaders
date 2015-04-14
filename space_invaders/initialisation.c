@@ -50,8 +50,7 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-SDL_Texture* init_screen(S_Game game) {
-    SDL_Texture* screenTexture;
+S_Game init_screen(S_Game game) {
     SDL_Surface *screenSurface;
     
     //Initialize SDL_mixer
@@ -59,12 +58,16 @@ SDL_Texture* init_screen(S_Game game) {
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
+
+    // Load sounds effects to the Game
+    game = loadSounds( game );
+
     //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
-    screenTexture = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
+    game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
     
-    return screenTexture;
+    return game;
 }
 
 

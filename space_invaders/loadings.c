@@ -99,23 +99,35 @@ SDL_Texture *loadBullet(S_Game game)
     return bullet;
 }
 
-bool loadSounds()
-{
-    
-    //Loading success flag
-    bool success = true;
-    //The sound effects that will be used
-    Mix_Music *gScratch = NULL;
 
-    //Load sound effects
-    gScratch = Mix_LoadMUS( "sounds/explosion.wav" );
-    if( gScratch == NULL )
-    {
-        printf( "Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
-        success = false;
-    }
-    else {
-        printf("load successfull");
-    }
-    return success;
+S_Game loadSounds(S_Game game)
+{
+    char* pathExplosion;
+    char* pathLaunch;
+    char* pathMove;
+    
+    pathExplosion = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/explosion.wav") + 1);
+    pathLaunch = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/launchBullet.wav") + 1);
+    pathMove = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/MovePayer.wav") + 1);
+    
+    strcpy(pathExplosion, ROOT_DIR);
+    strcpy(pathLaunch, ROOT_DIR);
+    strcpy(pathMove, ROOT_DIR);
+    
+    strcat(pathExplosion,"/space_invaders/sounds/explosion.wav");
+    strcat(pathLaunch,"/space_invaders/sounds/launchBullet.wav");
+    strcat(pathMove,"/space_invaders/sounds/MovePayer.wav");
+    
+    game.Gmonster.monsterExplode_sound = Mix_LoadWAV( pathExplosion );
+    game.Gplayer.playerExplode_sound = Mix_LoadWAV( pathExplosion );
+    game.Gplayer.playerMove_sound = Mix_LoadWAV( pathMove );
+    game.Gplayer.bulletGo_sound = Mix_LoadWAV( pathLaunch );
+    
+    free(pathExplosion);
+    free(pathLaunch);
+    free(pathMove);
+    
+    return game;
 }
+
+

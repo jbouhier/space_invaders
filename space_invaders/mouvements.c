@@ -9,7 +9,6 @@
 #include "main_file.h"
 
 
-
 S_Player movePlayer(S_Game game) {
     switch( game.Gevenements.key.keysym.sym )
     {
@@ -25,7 +24,6 @@ S_Player movePlayer(S_Game game) {
             }
             break;
         default:
-            loadSounds();
             break;
     }
     
@@ -34,15 +32,17 @@ S_Player movePlayer(S_Game game) {
 }
 
 
+
 S_Game launch_bullet(S_Game game) {
     
     int i;
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         if (game.Gplayer.bullet[i].position.y >= 0) {
-            game.Gplayer.bullet[i].position.y -= 2;
+            game.Gplayer.bullet[i].position.y -= 1;
             if (game.Gmonster.monster != NULL) {
                 if (checkCollision( game.Gmonster.position, game.Gplayer.bullet[i].position )) {
+                    Mix_PlayChannel( -1, game.Gmonster.monsterExplode_sound, 0 );
                     SDL_DestroyTexture(game.Gmonster.monster);
                     game.Gmonster.monster = NULL;
                     game = deleteBullets(game, i);

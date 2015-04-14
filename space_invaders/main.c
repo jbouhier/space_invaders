@@ -25,7 +25,7 @@ int main(int argc, const char * argv[])
     game.Gmonster.position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
-    game.Gscreen = init_screen( game );
+    game = init_screen( game );
 
     if ( game.Gwindow != NULL) {
         game.Gplayer.player = loadPlayer(game);
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[])
                     }
                 }
                 tempsActuel = SDL_GetTicks();
-                if (tempsActuel - tempsPrecedent > 5) /* Si 5 ms se sont écoulées depuis le dernier tour de boucle */
+                if (tempsActuel - tempsPrecedent > 2) /* Si 5 ms se sont écoulées depuis le dernier tour de boucle */
                 {
                     game = launch_bullet(game);
                 }
