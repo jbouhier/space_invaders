@@ -31,6 +31,9 @@
 #include <SDL2_mixer/SDL_mixer.h>
 
 #define ROOT_DIR getenv("PWD")
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+#define LOAD_SOUND_MAX 4
 
 
 struct              bullet_struct
@@ -45,7 +48,6 @@ struct              player_struct
     SDL_Rect        position;
     S_Bullet        *bullet;
     Mix_Chunk       *bulletGo_sound;
-    Mix_Chunk       *playerMove_sound;
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
     
@@ -57,6 +59,7 @@ struct              monster_struct
     SDL_Rect        position;
     S_Bullet        *bullet;
     Mix_Chunk       *monsterExplode_sound;
+    Mix_Chunk       *monsterMove_sound;
     int             nbr_bullet;
 } typedef           S_Monster;
 
@@ -86,5 +89,6 @@ S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);
 bool            checkCollision( SDL_Rect a, SDL_Rect b );
 S_Game          loadSounds(S_Game game);
+char            **AllocateSoundPath(char **paths);
 
 #endif

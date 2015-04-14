@@ -6,21 +6,6 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-/*
- #    /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$ /$$$$$$$$  /$$$$$$
- #   /$$__  $$ /$$__  $$| $$$ | $$ /$$__  $$|__  $$__/ /$$__  $$| $$$ | $$|__  $$__/ /$$__  $$
- #  | $$  \__/| $$  \ $$| $$$$| $$| $$  \__/   | $$   | $$  \ $$| $$$$| $$   | $$   | $$  \__/
- #  | $$      | $$  | $$| $$ $$ $$|  $$$$$$    | $$   | $$$$$$$$| $$ $$ $$   | $$   |  $$$$$$
- #  | $$      | $$  | $$| $$  $$$$ \____  $$   | $$   | $$__  $$| $$  $$$$   | $$    \____  $$
- #  | $$    $$| $$  | $$| $$\  $$$ /$$  \ $$   | $$   | $$  | $$| $$\  $$$   | $$    /$$  \ $$
- #  |  $$$$$$/|  $$$$$$/| $$ \  $$|  $$$$$$/   | $$   | $$  | $$| $$ \  $$   | $$   |  $$$$$$/
- #   \______/  \______/ |__/  \__/ \______/    |__/   |__/  |__/|__/  \__/   |__/    \______/
- #
- */
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-
-
 
 #include "main_file.h"
 
@@ -53,6 +38,12 @@ SDL_Window* init(SDL_Window *gWindow) {
 S_Game init_screen(S_Game game) {
     SDL_Surface *screenSurface;
     
+    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
+    game.Gplayer.position = init_position(760, 560, 35, 35);
+    game.Gmonster.position = init_position(360, 60, 55, 55);
+    game.Gwindow = init(game.Gwindow);
+    game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
+
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
     {

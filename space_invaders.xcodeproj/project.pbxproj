@@ -32,7 +32,7 @@
 		8F0B023A1AC5E2E900DA3FB1 /* space_invaders */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = space_invaders; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0B023D1AC5E2E900DA3FB1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		8F0B02441AC5E31100DA3FB1 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		D12D02751ADC779A0093F82E /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
+		D12B60631ADDB7A600BF691C /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		D1308E921ADAF98800F45979 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		D13AB18B1ACFD163002D47A4 /* 1428113676_bullet_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1428113676_bullet_white.png; sourceTree = "<group>"; };
 		D177077E1AC60E690086941A /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		D12D026E1ADC65550093F82E /* sounds */ = {
 			isa = PBXGroup;
 			children = (
-				D12D02751ADC779A0093F82E /* sounds */,
+				D12B60631ADDB7A600BF691C /* sounds */,
 			);
 			name = sounds;
 			sourceTree = "<group>";

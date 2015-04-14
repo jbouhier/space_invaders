@@ -28,7 +28,6 @@ S_Player movePlayer(S_Game game) {
     }
     
     return game.Gplayer;
-   // SDL_RenderCopy( gRenderer, gPlayer, NULL, &DestR );    
 }
 
 

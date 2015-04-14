@@ -102,32 +102,44 @@ SDL_Texture *loadBullet(S_Game game)
 
 S_Game loadSounds(S_Game game)
 {
-    char* pathExplosion;
-    char* pathLaunch;
-    char* pathMove;
+    char **paths;
+    int i;
     
-    pathExplosion = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/explosion.wav") + 1);
-    pathLaunch = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/launchBullet.wav") + 1);
-    pathMove = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/MovePayer.wav") + 1);
+    paths = AllocateSoundPath(paths);
     
-    strcpy(pathExplosion, ROOT_DIR);
-    strcpy(pathLaunch, ROOT_DIR);
-    strcpy(pathMove, ROOT_DIR);
+    strcat(paths[0],"/space_invaders/sounds/explosion.wav");
+    strcat(paths[1],"/space_invaders/sounds/invaderkilled.wav");
+    strcat(paths[2],"/space_invaders/sounds/shoot.wav");
+    strcat(paths[3],"/space_invaders/sounds/MoveMonster.wav");
     
-    strcat(pathExplosion,"/space_invaders/sounds/explosion.wav");
-    strcat(pathLaunch,"/space_invaders/sounds/launchBullet.wav");
-    strcat(pathMove,"/space_invaders/sounds/MovePayer.wav");
+    game.Gplayer.playerExplode_sound = Mix_LoadWAV( paths[0] );
+    game.Gmonster.monsterExplode_sound = Mix_LoadWAV( paths[1] );
+    game.Gplayer.bulletGo_sound = Mix_LoadWAV( paths[2] );
+    game.Gmonster.monsterMove_sound = Mix_LoadWAV( paths[3] );
     
-    game.Gmonster.monsterExplode_sound = Mix_LoadWAV( pathExplosion );
-    game.Gplayer.playerExplode_sound = Mix_LoadWAV( pathExplosion );
-    game.Gplayer.playerMove_sound = Mix_LoadWAV( pathMove );
-    game.Gplayer.bulletGo_sound = Mix_LoadWAV( pathLaunch );
-    
-    free(pathExplosion);
-    free(pathLaunch);
-    free(pathMove);
+    for (i = 0; i < LOAD_SOUND_MAX; i++) {
+        free(paths[i]);
+    }
+    free(paths);
     
     return game;
+}
+
+
+char **AllocateSoundPath(char **paths) {
+
+    paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
+    paths[0] = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/explosion.wav") + 1);
+    paths[1] = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/invaderkilled.wav") + 1);
+    paths[2] = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/shoot.wav") + 1);
+    paths[3] = malloc (strlen(ROOT_DIR) + strlen("/space_invaders/sounds/MovePayer.wav") + 1);
+
+    strcpy(paths[0], ROOT_DIR);
+    strcpy(paths[1], ROOT_DIR);
+    strcpy(paths[2], ROOT_DIR);
+    strcpy(paths[3], ROOT_DIR);
+
+    return paths;
 }
 
 
