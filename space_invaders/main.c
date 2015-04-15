@@ -6,51 +6,56 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#include "main.h"
+#include "main_file.h"
 
 
 int main(int argc, const char * argv[])
 {
-    
+    S_Game game;
+    int tempsActuel;
+    int tempsPrecedent;
     int terminer;
-    SDL_Event evenements;
-    SDL_Rect DestR;
     
-    
-    DestR.x = 760;
-    DestR.y = 560;
-    DestR.w = 35;
-    DestR.h = 35;
-    
-    gWindow = init(gWindow);
-    gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
-    gTexture = init_screen( gWindow, gRenderer, gScreenSurface);
-    
-   
-    if ( gWindow != NULL) {
-        terminer = 0;
-        gPlayer = loadPlayer(evenements, gWindow, gRenderer);
+    terminer = 0;
+    tempsActuel = 0;
+    tempsPrecedent = 0;
+
+    game = init_screen( game );
+
+    if ( game.Gwindow != NULL) {
+        game.Gplayer.player = loadPlayer(game);
+        game.Gmonster.monster = loadPlayer(game);
+        game.Gplayer.nbr_bullet = 0;
         while(!terminer)
         {
-            SDL_WaitEvent(&evenements);
+            SDL_PollEvent(&(game.Gevenements));
+            SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
-            if(evenements.window.event == SDL_WINDOWEVENT_CLOSE)
+            if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE)
                 terminer = 1;
             else {
-                DestR = movePlayer(evenements, DestR);
+                if (game.Gevenements.type == SDL_KEYDOWN) {
+                    game.Gplayer = movePlayer(game);
+                    
+                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer.nbr_bullet < 2) {
+                        Mix_PlayChannel( -1, game.Gplayer.bulletGo_sound, 0 );
+                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].bullet = loadBullet(game);
+                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].position = init_bulletPos(game.Gplayer);
+                        game.Gplayer.nbr_bullet++;
+                    }
+                }
+                tempsActuel = SDL_GetTicks();
+                if (tempsActuel - tempsPrecedent > 15) /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
+                {
+                    game = launch_bullet(game);
+                }
+                tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
-            //Clear screen
-            SDL_RenderClear( gRenderer );
-            //Render texture to screen
-            SDL_RenderCopy( gRenderer, gPlayer, NULL, &DestR );
-            //Update screen
-            SDL_RenderPresent( gRenderer );
-            
-            SDL_UpdateWindowSurface( gWindow );
-            
+            SDL_Delay(15);
+            renderAll(game);
         }
     }
-    
-    end(gWindow, gScreenSurface, gMonster);
+
+    end(game);
     return 0;
 }
