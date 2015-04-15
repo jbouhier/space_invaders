@@ -111,6 +111,8 @@ S_Game loadSounds(S_Game game)
     strcat(paths[2],"/space_invaders/sounds/shoot.wav");
     strcat(paths[3],"/space_invaders/sounds/MoveMonster.wav");
     
+    printf("%s\n\n", paths[0]);
+    printf("%s\n", paths[1]);
     game.Gplayer.playerExplode_sound = Mix_LoadWAV( paths[0] );
     game.Gmonster.monsterExplode_sound = Mix_LoadWAV( paths[1] );
     game.Gplayer.bulletGo_sound = Mix_LoadWAV( paths[2] );

@@ -38,7 +38,7 @@ SDL_Window* init(SDL_Window *gWindow) {
 S_Game init_screen(S_Game game) {
     SDL_Surface *screenSurface;
     
-    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
+    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 50);
     game.Gplayer.position = init_position(760, 560, 35, 35);
     game.Gmonster.position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
