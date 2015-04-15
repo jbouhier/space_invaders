@@ -60,6 +60,7 @@ struct              monster_struct
     S_Bullet        *bullet;
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
+    bool            flagdown;
     int             nbr_bullet;
 } typedef           S_Monster;
 

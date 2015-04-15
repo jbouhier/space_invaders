@@ -64,8 +64,17 @@ S_Game init_screen(S_Game game) {
 
 void end(S_Game game)
 {
-    //Deallocate surface
+    int i;
+    //Deallocate textures
+    SDL_DestroyTexture(game.Gmonster.monster);
+    SDL_DestroyTexture(game.Gplayer.player);
+    SDL_DestroyTexture(game.Gscreen);
     
+    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
+        SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
+    }
+    SDL_RenderClear( game.Grenderer );
+
     //Destroy window
     SDL_DestroyWindow( game.Gwindow );
     game.Gwindow = NULL;

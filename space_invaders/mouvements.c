@@ -14,13 +14,13 @@ S_Player movePlayer(S_Game game) {
     {
         case SDLK_LEFT:
             if ( game.Gplayer.position.x > 0 ) {
-                game.Gplayer.position.x -= 1;
+                game.Gplayer.position.x -= 2;
             }
             break;
             
         case SDLK_RIGHT:
             if ( game.Gplayer.position.x < 761 ) {
-                game.Gplayer.position.x += 1;
+                game.Gplayer.position.x += 2;
             }
             break;
         default:
@@ -38,7 +38,7 @@ S_Game launch_bullet(S_Game game) {
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         if (game.Gplayer.bullet[i].position.y >= 0) {
-            game.Gplayer.bullet[i].position.y -= 1;
+            game.Gplayer.bullet[i].position.y -= 5;
             if (game.Gmonster.monster != NULL) {
                 if (checkCollision( game.Gmonster.position, game.Gplayer.bullet[i].position )) {
                     Mix_PlayChannel( -1, game.Gmonster.monsterExplode_sound, 0 );
@@ -58,6 +58,8 @@ S_Game launch_bullet(S_Game game) {
 S_Game deleteBullets(S_Game game, int index) {
     int i;
     
+    SDL_DestroyTexture(game.Gplayer.bullet[index].bullet);
+
     for (i = index; game.Gplayer.bullet[i].bullet != NULL; i++) {
         game.Gplayer.bullet[i] = game.Gplayer.bullet[i + 1];
     }

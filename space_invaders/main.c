@@ -45,13 +45,13 @@ int main(int argc, const char * argv[])
                     }
                 }
                 tempsActuel = SDL_GetTicks();
-                if (tempsActuel - tempsPrecedent > 2) /* Si 5 ms se sont écoulées depuis le dernier tour de boucle */
+                if (tempsActuel - tempsPrecedent > 15) /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
                 {
                     game = launch_bullet(game);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
-
+            SDL_Delay(15);
             renderAll(game);
         }
     }
