@@ -18,6 +18,13 @@ SDL_Window* init(SDL_Window *gWindow)
         exit(EXIT_FAILURE);
     }
     
+    if(TTF_Init() != 0)
+    {
+        fprintf(stderr, "Error of text initialization of SDL : %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+    
+
     gWindow = SDL_CreateWindow("Space Invaders",
                                SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED,
