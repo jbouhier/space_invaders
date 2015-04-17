@@ -9,7 +9,8 @@
 
 #include "main_file.h"
 
-SDL_Window* init(SDL_Window *gWindow) {
+SDL_Window* init(SDL_Window *gWindow)
+{
     
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
     {
@@ -35,7 +36,8 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-S_Game init_screen(S_Game game) {
+S_Game init_screen(S_Game game)
+{
     SDL_Surface *screenSurface;
     
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
@@ -83,7 +85,8 @@ void end(S_Game game)
     SDL_Quit();
 }
 
-SDL_Rect init_position(int x, int y, int h, int w) {
+SDL_Rect init_position(int x, int y, int h, int w)
+{
     SDL_Rect DestR;
     
     DestR.x = x;
@@ -94,7 +97,8 @@ SDL_Rect init_position(int x, int y, int h, int w) {
     return DestR;
 }
 
-SDL_Rect init_bulletPos(S_Player player) {
+SDL_Rect init_bulletPos(S_Player player)
+{
     SDL_Rect DestR;
     
     DestR.y =  player.position.y - 10;
@@ -105,7 +109,8 @@ SDL_Rect init_bulletPos(S_Player player) {
     return DestR;
 }
 
-void    renderAll(S_Game game) {
+void    renderAll(S_Game game)
+{
     int i;
     
     SDL_RenderClear( game.Grenderer );
