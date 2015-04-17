@@ -24,6 +24,7 @@
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
 #define LOAD_FONT_MAX 1
+#define FONT_SIZE 25
 
 
 struct              bullet_struct
