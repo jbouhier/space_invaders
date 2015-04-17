@@ -82,6 +82,8 @@ void end(S_Game game)
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
     }
+    
+    TTF_Quit();
     SDL_RenderClear( game.Grenderer );
 
     //Destroy window
