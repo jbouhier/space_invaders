@@ -53,10 +53,14 @@ S_Game init_screen(S_Game game)
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
     game.Gplayer.position = init_position(760, 560, 35, 35);
     game.Gmonster.position = init_position(360, 60, 55, 55);
+    
+    //Text positioning test
+    game.textPosition = init_position(250, 30, 30, 300);
+    
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
     game.font = TTF_OpenFont("/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/fonts/04B_03__.TTF", FONT_SIZE);
-    game.sText = TTF_RenderText_Solid(game.font, "Du texte !", text_color);
+    game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
     game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
 
     //Initialize SDL_mixer
@@ -134,7 +138,7 @@ void    renderAll(S_Game game)
     SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
     SDL_RenderCopy( game.Grenderer, game.Gplayer.player, NULL, &(game.Gplayer.position) );
     SDL_RenderCopy( game.Grenderer, game.Gmonster.monster, NULL, &(game.Gmonster.position) );
-    SDL_RenderCopy( game.Grenderer, game.tText, NULL, &(game.Gmonster.position) );
+    SDL_RenderCopy( game.Grenderer, game.tText, NULL, &(game.textPosition) );
     
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );
