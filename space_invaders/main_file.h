@@ -58,6 +58,7 @@ struct              game_struct
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
+    TTF_Font        *font;
     SDL_Surface     *sText;
     SDL_Texture     *tText;
     SDL_Renderer    *Grenderer;
