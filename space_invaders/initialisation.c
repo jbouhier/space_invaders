@@ -52,6 +52,7 @@ S_Game init_screen(S_Game game)
     game.Gmonster.position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
+    game.font = TTF_OpenFont("/space_invaders/fonts/04B_02__.TTF", FONT_SIZE);
 
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
@@ -83,7 +84,10 @@ void end(S_Game game)
         SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
     }
     
+
+    TTF_CloseFont(game.font);
     TTF_Quit();
+    
     SDL_RenderClear( game.Grenderer );
 
     //Destroy window
