@@ -23,6 +23,7 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
+#define LOAD_FONT_MAX 1
 
 
 struct              bullet_struct
@@ -57,6 +58,8 @@ struct              game_struct
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
+    SDL_Surface     *sText;
+    SDL_Texture     *tText;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
