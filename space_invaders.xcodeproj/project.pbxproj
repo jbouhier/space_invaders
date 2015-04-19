@@ -41,9 +41,9 @@
 		D17707851AC614930086941A /* loadings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadings.c; sourceTree = "<group>"; };
 		D17707871AC619D00086941A /* main_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main_file.h; sourceTree = "<group>"; };
 		D17707891AC7549A0086941A /* images.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = images.bmp; sourceTree = "<group>"; };
-		D177078A1AC7549A0086941A /* space-invaders-hi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space-invaders-hi.png"; sourceTree = "<group>"; };
 		D177078B1AC7549A0086941A /* space-ship-md.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "space-ship-md.png"; path = "space_invaders/space-ship-md.png"; sourceTree = SOURCE_ROOT; };
 		D17707941ACCA0930086941A /* mouvements.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mouvements.c; sourceTree = "<group>"; };
+		D187945F1AE2546600C74CB1 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,9 +121,9 @@
 		D17707881AC62BEA0086941A /* img */ = {
 			isa = PBXGroup;
 			children = (
+				D187945F1AE2546600C74CB1 /* image */,
 				D13AB18B1ACFD163002D47A4 /* 1428113676_bullet_white.png */,
 				D17707891AC7549A0086941A /* images.bmp */,
-				D177078A1AC7549A0086941A /* space-invaders-hi.png */,
 				D177078B1AC7549A0086941A /* space-ship-md.png */,
 			);
 			name = img;

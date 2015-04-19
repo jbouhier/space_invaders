@@ -9,18 +9,6 @@
 #ifndef space_invaders_main_file_h
 #define space_invaders_main_file_h
 
-
-/*
- #   /$$$$$$ /$$   /$$  /$$$$$$  /$$       /$$   /$$  /$$$$$$  /$$$$$$  /$$$$$$  /$$   /$$  /$$$$$$
- #  |_  $$_/| $$$ | $$ /$$__  $$| $$      | $$  | $$ /$$__  $$|_  $$_/ /$$__  $$| $$$ | $$ /$$__  $$
- #    | $$  | $$$$| $$| $$  \__/| $$      | $$  | $$| $$  \__/  | $$  | $$  \ $$| $$$$| $$| $$  \__/
- #    | $$  | $$ $$ $$| $$      | $$      | $$  | $$|  $$$$$$   | $$  | $$  | $$| $$ $$ $$|  $$$$$$
- #    | $$  | $$  $$$$| $$      | $$      | $$  | $$ \____  $$  | $$  | $$  | $$| $$  $$$$ \____  $$
- #    | $$  | $$\  $$$| $$    $$| $$      | $$  | $$ /$$  \ $$  | $$  | $$  | $$| $$\  $$$ /$$  \ $$
- #   /$$$$$$| $$ \  $$|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/ /$$$$$$|  $$$$$$/| $$ \  $$|  $$$$$$/
- #  |______/|__/  \__/ \______/ |________/ \______/  \______/ |______/ \______/ |__/  \__/ \______/
- #
- */
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -34,6 +22,7 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
+#define MONSTER_NBR 30
 
 
 struct              bullet_struct
@@ -56,6 +45,7 @@ struct              player_struct
 struct              monster_struct
 {
     SDL_Texture     *monster;
+    SDL_Texture     *explosion;
     SDL_Rect        position;
     S_Bullet        *bullet;
     Mix_Chunk       *monsterExplode_sound;
@@ -71,7 +61,7 @@ struct              game_struct
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
-    S_Monster       Gmonster;
+    S_Monster       *Gmonster;
     int             Gscore;
     int             Glifes;
 } typedef           S_Game;
@@ -91,5 +81,8 @@ void            end(S_Game game);
 bool            checkCollision( SDL_Rect a, SDL_Rect b );
 S_Game          loadSounds(S_Game game);
 char            **AllocateSoundPath(char **paths);
+S_Game          loadMonsters(S_Game game);
+
+S_Game showExposion(S_Game game, int index);
 
 #endif
