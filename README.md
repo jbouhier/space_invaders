@@ -1,3 +1,5 @@
+![](http://i.imgur.com/TsQRIlk.jpg)
+
 Project Space Invaders
 ### etna-alternance.net - Software Engineerers - promotion March 2017
 
