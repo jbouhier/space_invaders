@@ -1,6 +1,6 @@
 ![](http://i.imgur.com/TsQRIlk.jpg)
 
-Project Space Invaders
+# Project Space Invaders
 ### etna-alternance.net - Software Engineerers - promotion March 2017
 
 This is the last C project of our 1st year at ETNA after programming the Linux commands ls, cat and C printf function.
