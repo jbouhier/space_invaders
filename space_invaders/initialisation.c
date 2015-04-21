@@ -59,7 +59,7 @@ S_Game init_screen(S_Game game)
     
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
-    game.font = TTF_OpenFont("/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/fonts/uni05_53.ttf", FONT_SIZE);
+    game.font = TTF_OpenFont("/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/fonts/uni05_53.ttf", FONT_SIZE);
     game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
     game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
 

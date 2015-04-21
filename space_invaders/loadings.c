@@ -46,7 +46,7 @@ SDL_Texture *loadPlayer(S_Game game)
                          game.Gwindow, game.Grenderer);
     if( player == NULL )
     {
-        player = loadTexture( "/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/space-ship-md.png",
+        player = loadTexture( "/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/space-ship-md.png",
                              game.Gwindow, game.Grenderer);
         if (player == NULL) {
             player  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/space-ship-md.png",
@@ -77,7 +77,7 @@ SDL_Texture *loadBullet(S_Game game)
                          game.Gwindow, game.Grenderer);
     if( bullet == NULL )
     {
-        bullet = loadTexture( "/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/1428113676_bullet_white.png",
+        bullet = loadTexture( "/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/1428113676_bullet_white.png",
                              game.Gwindow, game.Grenderer);
         if (bullet == NULL) {
             bullet  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/1428113676_bullet_white.png",
