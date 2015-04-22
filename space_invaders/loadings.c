@@ -142,3 +142,25 @@ char **AllocateSoundPath(char **paths) {
 }
 
 
+SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer* gRenderer)
+{
+    //Loading success flag
+    bool success = true;
+    SDL_Texture* monster;
+    
+    monster = loadTexture( "/Users/princetim/space_invaders/space_invaders/space_invaders/images.bmp", gWindow, gRenderer);
+    
+    if (monster == NULL){
+        printf( "Failed to load texture image!\n" );
+        success = false;
+    }
+    return monster;
+}
+
+SDL_Rect moveMonster(SDL_Rect DestR)
+{
+    
+        
+    return DestR;
+}
+
