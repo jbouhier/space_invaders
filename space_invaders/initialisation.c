@@ -10,13 +10,18 @@
 #include "main_file.h"
 
 SDL_Window* init(SDL_Window *gWindow) {
-
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-
+    
+    if(TTF_Init() != 0)
+    {
+        fprintf(stderr, "Error of text initialization of SDL : %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+    
     gWindow = SDL_CreateWindow("Space Invaders",
                                SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED,
@@ -34,14 +39,30 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-S_Game init_screen(S_Game game) {
+S_Game init_screen(S_Game game)
+{
     SDL_Surface *screenSurface;
+    char *paths;
 
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 50);
     game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
     game.Gplayer.position = init_position(60, 560, 35, 35);
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/fonts/04B_03__.TTF") + 1);
+    
+    strcpy(paths, ROOT_DIR);
+    strcat(paths, "/../../../space_invaders/fonts/04B_03__.TTF");
+    
+    //RGBA colors
+    SDL_Colour text_color = { 255, 255, 255 };
+    
+    //Text positioning test
+    game.textPosition = init_position(250, 30, 30, 300);
+    
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
+    game.font = TTF_OpenFont(paths, FONT_SIZE);
+    game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
+    game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
 
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
@@ -82,6 +103,11 @@ void end(S_Game game)
 
     game.Gplayer.player =NULL;
     game.Gscreen = NULL;
+    
+    TTF_CloseFont(game.font);
+    TTF_Quit();
+    
+    SDL_RenderClear( game.Grenderer );
 
     SDL_DestroyRenderer( game.Grenderer );
     game.Grenderer = NULL;
@@ -94,7 +120,8 @@ void end(S_Game game)
     SDL_Quit();
 }
 
-SDL_Rect init_position(int x, int y, int h, int w) {
+SDL_Rect init_position(int x, int y, int h, int w)
+{
     SDL_Rect DestR;
 
     DestR.x = x;
@@ -105,7 +132,8 @@ SDL_Rect init_position(int x, int y, int h, int w) {
     return DestR;
 }
 
-SDL_Rect init_bulletPos(S_Player player) {
+SDL_Rect init_bulletPos(S_Player player)
+{
     SDL_Rect DestR;
 
     DestR.y =  player.position.y - 10;
@@ -127,7 +155,8 @@ SDL_Rect init_bulletMonsterPos(S_Monster monster) {
     return DestR;
 }
 
-void    renderAll(S_Game game) {
+void    renderAll(S_Game game)
+{
     int i;
     int x;
     int y;
