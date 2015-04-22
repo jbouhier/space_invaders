@@ -9,18 +9,6 @@
 #ifndef space_invaders_main_file_h
 #define space_invaders_main_file_h
 
-
-/*
- #   /$$$$$$ /$$   /$$  /$$$$$$  /$$       /$$   /$$  /$$$$$$  /$$$$$$  /$$$$$$  /$$   /$$  /$$$$$$
- #  |_  $$_/| $$$ | $$ /$$__  $$| $$      | $$  | $$ /$$__  $$|_  $$_/ /$$__  $$| $$$ | $$ /$$__  $$
- #    | $$  | $$$$| $$| $$  \__/| $$      | $$  | $$| $$  \__/  | $$  | $$  \ $$| $$$$| $$| $$  \__/
- #    | $$  | $$ $$ $$| $$      | $$      | $$  | $$|  $$$$$$   | $$  | $$  | $$| $$ $$ $$|  $$$$$$
- #    | $$  | $$  $$$$| $$      | $$      | $$  | $$ \____  $$  | $$  | $$  | $$| $$  $$$$ \____  $$
- #    | $$  | $$\  $$$| $$    $$| $$      | $$  | $$ /$$  \ $$  | $$  | $$  | $$| $$\  $$$ /$$  \ $$
- #   /$$$$$$| $$ \  $$|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/ /$$$$$$|  $$$$$$/| $$ \  $$|  $$$$$$/
- #  |______/|__/  \__/ \______/ |________/ \______/  \______/ |______/ \______/ |__/  \__/ \______/
- #
- */
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -29,11 +17,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_mixer/SDL_mixer.h>
+#include <SDL2_ttf/SDL_ttf.h>
 
 #define ROOT_DIR getenv("PWD")
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
+#define LOAD_FONT_MAX 1
+#define FONT_SIZE 20
 
 
 struct              bullet_struct
@@ -68,6 +59,10 @@ struct              game_struct
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
+    TTF_Font        *font;
+    SDL_Surface     *sText;
+    SDL_Texture     *tText;
+    SDL_Rect        textPosition;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
