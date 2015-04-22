@@ -134,13 +134,8 @@ S_Game loadMonsters(S_Game game)
 S_Game loadSounds(S_Game game)
 {
     char **paths;
-
+    
     paths = AllocateSoundPath(paths);
-
-    strcat(paths[0],"/../../../space_invaders/sounds/explosion.wav");
-    strcat(paths[1],"/../../../space_invaders/sounds/invaderkilled.wav");
-    strcat(paths[2],"/../../../space_invaders/sounds/shoot.wav");
-    strcat(paths[3],"/../../../space_invaders/sounds/MoveMonster.wav");
 
     game.Gplayer.playerExplode_sound = Mix_LoadWAV( paths[0] );
     game.Gplayer.bulletGo_sound = Mix_LoadWAV( paths[2] );
@@ -163,17 +158,22 @@ S_Game loadSounds(S_Game game)
 
 
 char **AllocateSoundPath(char **paths) {
-
     paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
-    paths[0] = malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/explosion.wav") + 1);
-    paths[1] = malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/invaderkilled.wav") + 1);
-    paths[2] = malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/shoot.wav") + 1);
-    paths[3] = malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/MoveMonster.wav") + 1);
+
+    paths[0] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/explosion.wav")) + 1);
+    paths[1] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/invaderkilled.wav")) + 1);
+    paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/shoot.wav")) + 1);
+    paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/MoveMonster.wav")) + 1);
 
     strcpy(paths[0], ROOT_DIR);
     strcpy(paths[1], ROOT_DIR);
     strcpy(paths[2], ROOT_DIR);
     strcpy(paths[3], ROOT_DIR);
+    
+    strcat(paths[0],"/../../../space_invaders/sounds/explosion.wav");
+    strcat(paths[1],"/../../../space_invaders/sounds/invaderkilled.wav");
+    strcat(paths[2],"/../../../space_invaders/sounds/shoot.wav");
+    strcat(paths[3],"/../../../space_invaders/sounds/MoveMonster.wav");
 
     return paths;
 }

@@ -28,7 +28,6 @@ int main(int argc, const char * argv[])
         while(!terminer)
         {
             tempsActuel = SDL_GetTicks();
-            
             SDL_PollEvent(&(game.Gevenements));
             SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
@@ -47,6 +46,7 @@ int main(int argc, const char * argv[])
                 }
                 if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
                     game = launch_bullet(game);
+                    game = launch_bulletMonster(game);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
@@ -55,6 +55,8 @@ int main(int argc, const char * argv[])
                 SDL_Delay(16 - toWait);
             renderAll(game);
         }
+        /* This should never happen */
+        printf("SDL_WaitEvent error: %s\n", SDL_GetError());
     }
 
     end(game);

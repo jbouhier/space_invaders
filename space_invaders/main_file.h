@@ -47,7 +47,7 @@ struct              monster_struct
     SDL_Texture     *monster;
     SDL_Texture     *explosion;
     SDL_Rect        position;
-    S_Bullet        *bullet;
+    S_Bullet        bullet;
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
     bool            flagdown;
@@ -58,6 +58,8 @@ struct              game_struct
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
+    SDL_Texture     *tText;
+    SDL_Rect        textPosition;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
@@ -74,7 +76,9 @@ SDL_Texture     *loadPlayer(S_Game game);
 S_Player        movePlayer(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
 SDL_Rect        init_bulletPos(S_Player player);
+SDL_Rect        init_bulletMonsterPos(S_Monster monster);
 S_Game          launch_bullet(S_Game game);
+S_Game          launch_bulletMonster(S_Game game);
 void            renderAll(S_Game game);
 S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);

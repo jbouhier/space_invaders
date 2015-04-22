@@ -55,6 +55,8 @@ S_Game init_screen(S_Game game) {
     //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
+    
+    SDL_FreeSurface(screenSurface);
 
     return game;
 }
@@ -114,6 +116,17 @@ SDL_Rect init_bulletPos(S_Player player) {
     return DestR;
 }
 
+SDL_Rect init_bulletMonsterPos(S_Monster monster) {
+    SDL_Rect DestR;
+    
+    DestR.y =  monster.position.y + 4;
+    DestR.x =  monster.position.x + 8;
+    DestR.w = 4;
+    DestR.h = 30;
+
+    return DestR;
+}
+
 void    renderAll(S_Game game) {
     int i;
     int x;
@@ -124,12 +137,20 @@ void    renderAll(S_Game game) {
     SDL_RenderClear( game.Grenderer );
     SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
     SDL_RenderCopy( game.Grenderer, game.Gplayer.player, NULL, &(game.Gplayer.position) );
-
+    SDL_RenderCopy( game.Grenderer, game.tText, NULL, &(game.textPosition) );
+    
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) );
         if (game.Gmonster[i].explosion != NULL) {
             SDL_RenderCopy( game.Grenderer, game.Gmonster[i].explosion, NULL, &(game.Gmonster[i].position) );
         }
+        if (game.Gmonster[i].bullet.bullet != NULL) {
+            SDL_RenderCopy( game.Grenderer, game.Gmonster[i].bullet.bullet, NULL, &(game.Gmonster[i].bullet.position) );
+        }
+    }
+
+    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
+        SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );
     }
 
     for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++)
