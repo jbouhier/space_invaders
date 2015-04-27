@@ -4,8 +4,12 @@
 # Xcode config
 space_invaders.xcodeproj/
 
+# Xcode binary path
+space_invaders/Build/
+
 # ETNA svn
 .svn
 
 # Temporary
 *.swp
+
