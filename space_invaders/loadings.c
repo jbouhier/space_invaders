@@ -7,31 +7,36 @@
 //
 
 #include "main_file.h"
+int i;
+int j;
+int x;
+int y;
 
 SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRenderer)
 {
-    SDL_Texture* newTexture = NULL;
+    SDL_Texture* newTexture;
     //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load( path );
-    
+    SDL_Surface* loadedSurface;
+
+    loadedSurface = IMG_Load( path );
     if( loadedSurface == NULL )
     {
-        //printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+        printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
     }
     else
     {
         //Create texture from surface pixels
-        
+
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
         if( newTexture == NULL )
         {
             printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError() );
         }
-        
+
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
     }
-    
+
     return newTexture;
 }
 
@@ -39,9 +44,8 @@ SDL_Texture *loadPlayer(S_Game game)
 {
     //Loading success flag
     SDL_Texture* player;
-    
+
     //Load PNG texture
-    
     player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/space-ship-md.png",
                          game.Gwindow, game.Grenderer);
     if( player == NULL )
@@ -57,7 +61,7 @@ SDL_Texture *loadPlayer(S_Game game)
             }
         }
     }
-    
+
     if( player == NULL)
     {
         printf( "Failed to load texture image!\n" );
@@ -73,6 +77,7 @@ SDL_Texture *loadBullet(S_Game game)
     SDL_Texture* bullet;
     char *paths;
 
+<<<<<<< HEAD
     paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/1428113676_bullet_white.png") + 1);
 
     strcpy(paths, ROOT_DIR);
@@ -95,18 +100,31 @@ SDL_Texture *loadBullet(S_Game game)
         }
     }
     
+=======
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/1428113676_bullet_white.png") + 1);
+
+    strcpy(paths, ROOT_DIR);
+    strcat(paths,"/../../../space_invaders/1428113676_bullet_white.png");
+
+    //Load PNG texture
+    bullet = loadTexture( paths, game.Gwindow, game.Grenderer);
+
+>>>>>>> dev
     if( bullet == NULL )
     {
         printf( "Failed to load texture image!\n" );
         success = false;
     }
-    
+
     return bullet;
 }
 
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> dev
 S_Game loadMonsters(S_Game game)
 {
     char *paths;
@@ -114,10 +132,17 @@ S_Game loadMonsters(S_Game game)
 
     x = 10;
     y = 10;
+<<<<<<< HEAD
     paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/image/monster.png") + 1);
 
     strcpy(paths, ROOT_DIR);
     strcat(paths, "/../../../../space_invaders/image/monster.png");
+=======
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/image/monster.png") + 1);
+
+    strcpy(paths, ROOT_DIR);
+    strcat(paths, "/../../../space_invaders/image/monster.png");
+>>>>>>> dev
     loadedSurface = IMG_Load( paths );
     if( loadedSurface == NULL )
         printf( "Unable to load image %s! SDL_image Error: %s\n", paths, IMG_GetError() );
@@ -143,34 +168,38 @@ S_Game loadMonsters(S_Game game)
     return game;
 }
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> dev
 S_Game loadSounds(S_Game game)
 {
     char **paths;
-    int i;
     
     paths = AllocateSoundPath(paths);
-    
-    strcat(paths[0],"/space_invaders/sounds/explosion.wav");
-    strcat(paths[1],"/space_invaders/sounds/invaderkilled.wav");
-    strcat(paths[2],"/space_invaders/sounds/shoot.wav");
-    strcat(paths[3],"/space_invaders/sounds/MoveMonster.wav");
-    
+
     game.Gplayer.playerExplode_sound = Mix_LoadWAV( paths[0] );
-    game.Gmonster.monsterExplode_sound = Mix_LoadWAV( paths[1] );
     game.Gplayer.bulletGo_sound = Mix_LoadWAV( paths[2] );
-    game.Gmonster.monsterMove_sound = Mix_LoadWAV( paths[3] );
+
+    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
+        game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( paths[1] );
+        game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( paths[3] );
+    }
+
+    if(game.Gplayer.playerExplode_sound == NULL)
+        fprintf(stderr,"Could not load %s\n", paths[0]);
     
     for (i = 0; i < LOAD_SOUND_MAX; i++) {
         free(paths[i]);
     }
     free(paths);
-    
+
     return game;
 }
 
 
 char **AllocateSoundPath(char **paths) {
+<<<<<<< HEAD
 
 <<<<<<< Updated upstream
     paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
@@ -184,11 +213,20 @@ char **AllocateSoundPath(char **paths) {
     paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/shoot.wav")) + 1);
     paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/MoveMonster.wav")) + 1);
 >>>>>>> Stashed changes
+=======
+    paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
+
+    paths[0] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/explosion.wav")) + 1);
+    paths[1] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/invaderkilled.wav")) + 1);
+    paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/shoot.wav")) + 1);
+    paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../space_invaders/sounds/MoveMonster.wav")) + 1);
+>>>>>>> dev
 
     strcpy(paths[0], ROOT_DIR);
     strcpy(paths[1], ROOT_DIR);
     strcpy(paths[2], ROOT_DIR);
     strcpy(paths[3], ROOT_DIR);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     
@@ -197,11 +235,19 @@ char **AllocateSoundPath(char **paths) {
     strcat(paths[2],"/../../../../space_invaders/sounds/shoot.wav");
     strcat(paths[3],"/../../../../space_invaders/sounds/MoveMonster.wav");
 >>>>>>> Stashed changes
+=======
+    
+    strcat(paths[0],"/../../../space_invaders/sounds/explosion.wav");
+    strcat(paths[1],"/../../../space_invaders/sounds/invaderkilled.wav");
+    strcat(paths[2],"/../../../space_invaders/sounds/shoot.wav");
+    strcat(paths[3],"/../../../space_invaders/sounds/MoveMonster.wav");
+>>>>>>> dev
 
     return paths;
 }
 
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 S_Game showExposion(S_Game game, int index) {
@@ -211,6 +257,15 @@ S_Game showExposion(S_Game game, int index) {
     
     strcpy(paths, ROOT_DIR);
     strcat(paths,"/../../../../space_invaders/image/explosion.png");
+=======
+S_Game showExposion(S_Game game, int index) {
+    char *paths;
+    
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/image/explosion.png") + 1);
+    
+    strcpy(paths, ROOT_DIR);
+    strcat(paths,"/../../../space_invaders/image/explosion.png");
+>>>>>>> dev
     
     game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
 
@@ -218,4 +273,7 @@ S_Game showExposion(S_Game game, int index) {
 }
 
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> dev
