@@ -46,6 +46,16 @@ SDL_Window* init(SDL_Window *gWindow)
 S_Game init_screen(S_Game game)
 {
     SDL_Surface *screenSurface;
+    char *paths;
+
+    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 50);
+    game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
+    game.Gplayer.position = init_position(60, 560, 35, 35);
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/fonts/04B_03__.TTF") + 1);
+    
+    strcpy(paths, ROOT_DIR);
+    strcat(paths, "/../../../../space_invaders/fonts/04B_03__.TTF");
+
     
     //RGBA colors
     SDL_Colour text_color = { 255, 255, 255 };
