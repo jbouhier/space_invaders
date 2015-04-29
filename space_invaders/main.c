@@ -23,8 +23,10 @@ int main(int argc, const char * argv[])
 
     game = init_screen(game);
     game = init_player(game);
+    game = init_text(game);
     
-    printf("Score %d\n", game.score);
+    // Debug
+    printf("Score %d\n", game.Gplayer.score);
 
 
     if ( game.Gwindow != NULL) {

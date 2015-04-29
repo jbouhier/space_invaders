@@ -42,6 +42,14 @@ struct              player_struct
     Mix_Chunk       *bulletGo_sound;
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
+    int             score;
+    SDL_Rect        score_pos;
+    SDL_Surface     *surface_score;
+    SDL_Texture     *texture_score;
+    int             lives;
+    SDL_Rect        lives_pos;
+    SDL_Surface     *surface_lives;
+    SDL_Texture     *texture_lives;
     
 } typedef           S_Player;
 
@@ -62,16 +70,18 @@ struct              game_struct
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
     TTF_Font        *font;
-    SDL_Surface     *sText;
-    SDL_Texture     *tText;
-    SDL_Rect        textPosition;
+    SDL_Surface     *surface_score_title;
+    SDL_Texture     *texture_score_title;
+    SDL_Rect        lives_pos;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
     S_Monster       *Gmonster;
-    int             score;
-    int             hight_score;
-    int             lifes;
+    SDL_Rect        score_title_pos;
+    int             high_score;
+    SDL_Rect        high_score_pos;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
 } typedef           S_Game;
 
 
@@ -79,6 +89,7 @@ SDL_Rect        init_position(int x, int y, int h, int w);
 SDL_Window      *init(SDL_Window *gWindow);
 S_Game          init_screen(S_Game game);
 S_Game          init_player(S_Game game);
+S_Game          init_text(S_Game game);
 SDL_Texture     *loadPlayer(S_Game game);
 S_Player        movePlayer(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
