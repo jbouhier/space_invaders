@@ -48,6 +48,7 @@ int main(int argc, const char * argv[])
                 if (tempsActuel - tempsPrecedent > 15) /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
                 {
                     game = launch_bullet(game);
+                    game.Gmonster = moveMonster(game);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }

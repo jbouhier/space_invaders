@@ -52,6 +52,7 @@ struct              monster_struct
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
     bool            flagdown;
+    bool            flagpositon;
     int             nbr_bullet;
 } typedef           S_Monster;
 
@@ -77,9 +78,10 @@ SDL_Window      *init(SDL_Window *gWindow);
 S_Game          init_screen(S_Game game);
 SDL_Texture     *loadPlayer(S_Game game);
 S_Player        movePlayer(S_Game game);
+S_Monster       moveMonster(S_Game game);
+S_Game          launch_bullet(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
 SDL_Rect        init_bulletPos(S_Player player);
-S_Game          launch_bullet(S_Game game);
 void            renderAll(S_Game game);
 S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);

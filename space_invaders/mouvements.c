@@ -30,6 +30,38 @@ S_Player movePlayer(S_Game game) {
     return game.Gplayer;
 }
 
+S_Monster moveMonster(S_Game game)
+{
+    //int i;
+    //int j;
+    //int move;
+    
+        if(game.Gmonster.flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
+        {
+            if(game.Gmonster.position.x > 0){
+                game.Gmonster.position.x -= 2;
+            }else{
+                game.Gmonster.flagpositon = 0;
+                game.Gmonster.position.y += 10;
+            }
+            
+        }
+        else   //Check si l'objet doit se déplacer vers la droite
+        {
+            if(game.Gmonster.position.x < 760){
+                game.Gmonster.position.x += 2;
+            }else{
+                game.Gmonster.flagpositon = 1;
+                game.Gmonster.position.y += 10;
+            }
+            
+        }
+    //}
+    
+    return game.Gmonster;
+}
+
+
 
 
 S_Game launch_bullet(S_Game game) {

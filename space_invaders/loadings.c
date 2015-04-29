@@ -157,10 +157,4 @@ SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer
     return monster;
 }
 
-SDL_Rect moveMonster(SDL_Rect DestR)
-{
-    
-        
-    return DestR;
-}
 
