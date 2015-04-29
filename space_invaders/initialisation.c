@@ -48,8 +48,8 @@ S_Game init_screen(S_Game game)
     game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
     game.Gplayer.position = init_position(60, 560, 35, 35);
 
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/fonts/uni05_53.ttf") + 1);
-    strcpy(paths, ROOT_DIR);
+    paths =  malloc (strlen(PWD) + strlen("/../../../../space_invaders/fonts/uni05_53.ttf") + 1);
+    strcpy(paths, PWD);
     strcat(paths, "/../../../../space_invaders/fonts/uni05_53.ttf");
     
     //RGBA colors

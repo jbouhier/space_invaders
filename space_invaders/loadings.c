@@ -73,8 +73,8 @@ SDL_Texture *loadBullet(S_Game game)
     SDL_Texture* bullet;
     char *paths;
     
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../images/bullet.png") + 1);
-    strcpy(paths, ROOT_DIR);
+    paths =  malloc (strlen(PWD) + strlen("/../../../images/bullet.png") + 1);
+    strcpy(paths, PWD);
     strcat(paths,"/../../../images/bullet.png");
 
     //Load PNG texture
@@ -97,8 +97,8 @@ S_Game loadMonsters(S_Game game)
     x = 10;
     y = 10;
 
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../images/monster1.png") + 1);
-    strcpy(paths, ROOT_DIR);
+    paths =  malloc (strlen(PWD) + strlen("/../../../images/monster1.png") + 1);
+    strcpy(paths, PWD);
     strcat(paths, "/../../../images/monster1.png");
 
     loadedSurface = IMG_Load( paths );
@@ -154,15 +154,15 @@ S_Game loadSounds(S_Game game)
 
 char **AllocateSoundPath(char **paths)
 {
-    paths[0] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/explosion.wav")) + 1);
-    paths[1] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/invaderkilled.wav")) + 1);
-    paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/shoot.wav")) + 1);
-    paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/MoveMonster.wav")) + 1);
+    paths[0] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/explosion.wav")) + 1);
+    paths[1] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/invaderkilled.wav")) + 1);
+    paths[2] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/shoot.wav")) + 1);
+    paths[3] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/MoveMonster.wav")) + 1);
 
-    strcpy(paths[0], ROOT_DIR);
-    strcpy(paths[1], ROOT_DIR);
-    strcpy(paths[2], ROOT_DIR);
-    strcpy(paths[3], ROOT_DIR);
+    strcpy(paths[0], PWD);
+    strcpy(paths[1], PWD);
+    strcpy(paths[2], PWD);
+    strcpy(paths[3], PWD);
     
     strcat(paths[0],"/../../../sounds/explosion.wav");
     strcat(paths[1],"/../../../sounds/invaderkilled.wav");
@@ -176,9 +176,9 @@ S_Game showExposion(S_Game game, int index)
 {
     char *paths;
     
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../images/explosion.png") + 1);
+    paths =  malloc (strlen(PWD) + strlen("/../../../images/explosion.png") + 1);
     
-    strcpy(paths, ROOT_DIR);
+    strcpy(paths, PWD);
     strcat(paths,"/../../../images/explosion.png");
     
     game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
