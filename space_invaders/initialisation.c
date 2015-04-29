@@ -48,11 +48,12 @@ S_Game init_screen(S_Game game)
     SDL_Surface *screenSurface;
     
     //RGBA colors
-    SDL_Colour text_color = { 255, 255, 255 };
+    //SDL_Colour text_color = { 255, 255, 255 };
     
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
     game.Gplayer.position = init_position(760, 560, 35, 35);
     game.Gmonster.position = init_position(360, 60, 55, 55);
+    game.Gmonster.flagpositon = 0;
     
     //Text positioning test
     game.textPosition = init_position(250, 30, 30, 300);
@@ -61,7 +62,10 @@ S_Game init_screen(S_Game game)
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
     game.font = TTF_OpenFont("/Users/synxs/etna/c/space_invaders/space_invaders/space_invaders/fonts/04B_03__.TTF", FONT_SIZE);
     //game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
+
     game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
+
+   
 
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
