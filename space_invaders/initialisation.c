@@ -48,16 +48,16 @@ S_Game init_screen(S_Game game)
     game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
     game.Gplayer.position = init_position(60, 560, 35, 35);
 
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/fonts/04B_03__.TTF") + 1);
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/fonts/uni05_53.ttf") + 1);
     strcpy(paths, ROOT_DIR);
-    strcat(paths, "/../../../../space_invaders/fonts/04B_03__.TTF");
+    strcat(paths, "/../../../../space_invaders/fonts/uni05_53.ttf");
     
     //RGBA colors
     SDL_Colour text_color = { 255, 255, 255 };
     
     game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
     game.Gplayer.position = init_position(760, 560, 35, 35);
-    game.Gmonster.position = init_position(360, 60, 55, 55);
+    game.Gmonster->position = init_position(360, 60, 55, 55);
     
     //Text position       ---        (x,    y,  h,   w)
     game.textPosition = init_position(250, 30, 30, 300);
@@ -158,6 +158,7 @@ SDL_Rect init_bulletMonsterPos(S_Monster monster) {
 
     return DestR;
 }
+
 
 void    renderAll(S_Game game)
 {
