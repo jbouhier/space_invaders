@@ -46,18 +46,14 @@ SDL_Texture *loadPlayer(S_Game game)
     SDL_Texture* player;
 
     //Load PNG texture
-    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/images/ship.png",
-                         game.Gwindow, game.Grenderer);
+    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
     if( player == NULL )
     {
-        player = loadTexture( "/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/images/ship.png",
-                             game.Gwindow, game.Grenderer);
+        player = loadTexture( "/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
         if (player == NULL) {
-            player  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/images/ship.png",
-                                    game.Gwindow, game.Grenderer);
+            player  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
             if (player == NULL){
-                player = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/images/ship.png",
-                                     game.Gwindow, game.Grenderer);
+                player = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
             }
         }
     }
@@ -77,9 +73,9 @@ SDL_Texture *loadBullet(S_Game game)
     SDL_Texture* bullet;
     char *paths;
     
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/images/bullet.png") + 1);
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../images/bullet.png") + 1);
     strcpy(paths, ROOT_DIR);
-    strcat(paths,"/../../../../space_invaders/images/bullet.png");
+    strcat(paths,"/../../../images/bullet.png");
 
     //Load PNG texture
     bullet = loadTexture( paths, game.Gwindow, game.Grenderer);
@@ -158,20 +154,20 @@ S_Game loadSounds(S_Game game)
 
 char **AllocateSoundPath(char **paths)
 {
-    paths[0] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/explosion.wav")) + 1);
-    paths[1] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/invaderkilled.wav")) + 1);
-    paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/shoot.wav")) + 1);
-    paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../../space_invaders/sounds/MoveMonster.wav")) + 1);
+    paths[0] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/explosion.wav")) + 1);
+    paths[1] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/invaderkilled.wav")) + 1);
+    paths[2] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/shoot.wav")) + 1);
+    paths[3] = malloc ((sizeof(char) * strlen(ROOT_DIR) + strlen("/../../../sounds/MoveMonster.wav")) + 1);
 
     strcpy(paths[0], ROOT_DIR);
     strcpy(paths[1], ROOT_DIR);
     strcpy(paths[2], ROOT_DIR);
     strcpy(paths[3], ROOT_DIR);
     
-    strcat(paths[0],"/../../../../space_invaders/sounds/explosion.wav");
-    strcat(paths[1],"/../../../../space_invaders/sounds/invaderkilled.wav");
-    strcat(paths[2],"/../../../../space_invaders/sounds/shoot.wav");
-    strcat(paths[3],"/../../../../space_invaders/sounds/MoveMonster.wav");
+    strcat(paths[0],"/../../../sounds/explosion.wav");
+    strcat(paths[1],"/../../../sounds/invaderkilled.wav");
+    strcat(paths[2],"/../../../sounds/shoot.wav");
+    strcat(paths[3],"/../../../sounds/MoveMonster.wav");
 
     return paths;
 }
@@ -180,10 +176,10 @@ S_Game showExposion(S_Game game, int index)
 {
     char *paths;
     
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../../space_invaders/images/explosion.png") + 1);
+    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../images/explosion.png") + 1);
     
     strcpy(paths, ROOT_DIR);
-    strcat(paths,"/../../../../space_invaders/images/explosion.png");
+    strcat(paths,"/../../../images/explosion.png");
     
     game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
 
