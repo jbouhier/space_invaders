@@ -44,24 +44,19 @@ SDL_Texture *loadPlayer(S_Game game)
 {
     //Loading success flag
     SDL_Texture* player;
-
-    //Load PNG texture
-    player = loadTexture( "/Users/mouafo/bitbucket/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
+    char        *ship_rel_path = "/../../../images/ship.png";
+    char        *ship;
+    
+    // Create and malloc shipfull path string
+    ship = malloc ((sizeof(char) * strlen(PWD) + strlen(ship_rel_path)) + 1);
+    strcpy(ship, PWD);
+    strcat(ship, ship_rel_path);
+    
+    //Load ship PNG texture
+    player = loadTexture( ship, game.Gwindow, game.Grenderer);
     if( player == NULL )
-    {
-        player = loadTexture( "/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
-        if (player == NULL) {
-            player  =  loadTexture (  "/Users/princetim/space_invaders/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
-            if (player == NULL){
-                player = loadTexture( "/Users/manelzrelli/Desktop/space_invaders/space_invaders/images/ship.png", game.Gwindow, game.Grenderer);
-            }
-        }
-    }
-
-    if( player == NULL)
-    {
         printf( "Failed to load texture image!\n" );
-    }
+
     return player;
 }
 
@@ -85,6 +80,8 @@ SDL_Texture *loadBullet(S_Game game)
         printf( "Failed to load texture image!\n" );
         success = false;
     }
+    
+    free(paths);
 
     return bullet;
 }
@@ -122,6 +119,8 @@ S_Game loadMonsters(S_Game game)
         }
         SDL_FreeSurface( loadedSurface );
     }
+    
+    free(paths);
 
     return game;
 }
@@ -154,6 +153,8 @@ S_Game loadSounds(S_Game game)
 
 char **AllocateSoundPath(char **paths)
 {
+    paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
+
     paths[0] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/explosion.wav")) + 1);
     paths[1] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/invaderkilled.wav")) + 1);
     paths[2] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/shoot.wav")) + 1);
@@ -168,7 +169,7 @@ char **AllocateSoundPath(char **paths)
     strcat(paths[1],"/../../../sounds/invaderkilled.wav");
     strcat(paths[2],"/../../../sounds/shoot.wav");
     strcat(paths[3],"/../../../sounds/MoveMonster.wav");
-
+    
     return paths;
 }
 

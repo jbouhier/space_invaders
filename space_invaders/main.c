@@ -21,7 +21,11 @@ int main(int argc, const char * argv[])
     tempsActuel = 0;
     tempsPrecedent = 0;
 
-    game = init_screen( game );
+    game = init_screen(game);
+    game = init_player(game);
+    
+    printf("Score %d\n", game.score);
+
 
     if ( game.Gwindow != NULL) {
         game.Gplayer.nbr_bullet = 0;

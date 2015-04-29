@@ -48,9 +48,9 @@ S_Game init_screen(S_Game game)
     game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
     game.Gplayer.position = init_position(60, 560, 35, 35);
 
-    paths =  malloc (strlen(PWD) + strlen("/../../../../space_invaders/fonts/uni05_53.ttf") + 1);
+    paths =  malloc (strlen(PWD) + strlen("/../../../fonts/uni05_53.ttf") + 1);
     strcpy(paths, PWD);
-    strcat(paths, "/../../../../space_invaders/fonts/uni05_53.ttf");
+    strcat(paths, "/../../../fonts/uni05_53.ttf");
     
     //RGBA colors
     SDL_Colour text_color = { 255, 255, 255 };
@@ -64,7 +64,7 @@ S_Game init_screen(S_Game game)
     
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
-    game.font = TTF_OpenFont("/Users/synxs/etna/0-bachelor/c/space/space_invaders/space_invaders/fonts/uni05_53.ttf", FONT_SIZE);
+    game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
     game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
     game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
 
@@ -83,6 +83,15 @@ S_Game init_screen(S_Game game)
     
     SDL_FreeSurface(screenSurface);
 
+    return game;
+}
+
+
+S_Game init_player(S_Game game)
+{
+    game.score = 0;
+    game.lifes = 3;
+    
     return game;
 }
 

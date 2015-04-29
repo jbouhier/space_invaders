@@ -102,9 +102,18 @@ S_Game launch_bulletMonster(S_Game game) {
             game.Gmonster[MonsterToLaunch].bullet.position.y += 5;
             if (checkCollision( game.Gplayer.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
                 Mix_PlayChannel( -1, game.Gplayer.playerExplode_sound, 0 );
-                printf("je touche le player");
+                printf("A monster has hit the player!\n");
+                printf("Lifes %d\n", game.lifes);
                 SDL_DestroyTexture(game.Gplayer.player);
                 game.Gplayer.player = NULL;
+                
+                if (game.lifes == -1)
+                {
+                    printf("GAME OVER\n");
+                    end(game);
+                }
+                
+                game.lifes--;
                 renderAll(game);
                 SDL_Delay(3000);
                 game.Gplayer.player = loadPlayer(game);

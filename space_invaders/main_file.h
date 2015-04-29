@@ -69,14 +69,16 @@ struct              game_struct
     SDL_Event       Gevenements;
     S_Player        Gplayer;
     S_Monster       *Gmonster;
-    int             Gscore;
-    int             Glifes;
+    int             score;
+    int             hight_score;
+    int             lifes;
 } typedef           S_Game;
 
 
 SDL_Rect        init_position(int x, int y, int h, int w);
 SDL_Window      *init(SDL_Window *gWindow);
 S_Game          init_screen(S_Game game);
+S_Game          init_player(S_Game game);
 SDL_Texture     *loadPlayer(S_Game game);
 S_Player        movePlayer(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
