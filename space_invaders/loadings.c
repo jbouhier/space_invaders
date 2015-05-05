@@ -131,15 +131,15 @@ S_Game loadSounds(S_Game game)
     
     paths = AllocateSoundPath(paths);
 
-    game.Gplayer.playerExplode_sound = Mix_LoadWAV( paths[0] );
-    game.Gplayer.bulletGo_sound = Mix_LoadWAV( paths[2] );
+    game.Gplayer1.playerExplode_sound = Mix_LoadWAV( paths[0] );
+    game.Gplayer1.bulletGo_sound = Mix_LoadWAV( paths[2] );
 
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( paths[1] );
         game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( paths[3] );
     }
 
-    if(game.Gplayer.playerExplode_sound == NULL)
+    if(game.Gplayer1.playerExplode_sound == NULL)
         fprintf(stderr,"Could not load %s\n", paths[0]);
     
     for (i = 0; i < LOAD_SOUND_MAX; i++) {

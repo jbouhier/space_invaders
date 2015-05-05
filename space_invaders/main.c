@@ -26,11 +26,11 @@ int main(int argc, const char * argv[])
     game = init_text(game);
     
     // Debug
-    printf("Score %d\n", game.Gplayer.score);
+    printf("Score %d\n", game.Gplayer1.score);
 
 
     if ( game.Gwindow != NULL) {
-        game.Gplayer.nbr_bullet = 0;
+        game.Gplayer1.nbr_bullet = 0;
         while(!terminer)
         {
             tempsActuel = SDL_GetTicks();
@@ -41,13 +41,13 @@ int main(int argc, const char * argv[])
                 terminer = 1;
             else {
                 if (game.Gevenements.type == SDL_KEYDOWN) {
-                    game.Gplayer = movePlayer(game);
+                    game.Gplayer1 = movePlayer(game);
                     
-                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer.nbr_bullet < 2) {
-                        Mix_PlayChannel( -1, game.Gplayer.bulletGo_sound, 0 );
-                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].bullet = loadBullet(game);
-                        game.Gplayer.bullet[game.Gplayer.nbr_bullet].position = init_bulletPos(game.Gplayer);
-                        game.Gplayer.nbr_bullet++;
+                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
+                        Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
+                        game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
+                        game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].position = init_bulletPos(game.Gplayer1);
+                        game.Gplayer1.nbr_bullet++;
                     }
                 }
                 if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */

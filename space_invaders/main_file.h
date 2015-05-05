@@ -75,7 +75,8 @@ struct              game_struct
     SDL_Rect        lives_pos;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
-    S_Player        Gplayer;
+    S_Player        Gplayer1;
+    S_Player        Gplayer2;
     S_Monster       *Gmonster;
     SDL_Rect        score_title_pos;
     int             high_score;
