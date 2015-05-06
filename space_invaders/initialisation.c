@@ -51,7 +51,7 @@ t_game init_screen(t_game game)
     game.Gmonster->position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
-    
+
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );

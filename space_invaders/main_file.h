@@ -61,6 +61,7 @@ typedef struct      s_monster
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
     bool            flagdown;
+    bool            flagpositon;
     int             nbr_bullet;
 }                   t_monster;
 
@@ -92,6 +93,7 @@ t_game          init_player(t_game game);
 t_game          init_text(t_game game);
 SDL_Texture     *loadPlayer(t_game game);
 t_player        movePlayer(t_game game);
+t_monster       moveMonster(t_game game);
 SDL_Texture     *loadBullet(t_game game);
 SDL_Rect        init_bulletPos(t_player player);
 SDL_Rect        init_bulletMonsterPos(t_monster monster);
@@ -104,7 +106,7 @@ bool            checkCollision( SDL_Rect a, SDL_Rect b );
 t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
-
 t_game showExposion(t_game game, int index);
+
 
 #endif
