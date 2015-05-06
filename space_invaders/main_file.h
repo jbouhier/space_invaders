@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#ifndef space_invaders_main_file_h
-#define space_invaders_main_file_h
+#ifndef __main_file_h__
+# define __main_file_h__
 
 #include <stdio.h>
 #include <unistd.h>
@@ -104,7 +104,7 @@ bool            checkCollision( SDL_Rect a, SDL_Rect b );
 t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
-
+t_game          get_hscore(t_game game);
 t_game showExposion(t_game game, int index);
 
-#endif
+#endif /* __main_file_h__ */
