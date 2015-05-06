@@ -72,7 +72,7 @@ t_game init_screen(t_game game)
 
 t_game  init_text(t_game game)
 {
-    game.font = TTF_OpenFont("/../../../space_invaders/fonts/uni05_53.ttf", FONT_SIZE);
+    game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
     SDL_Colour text_color = { 255, 255, 255 };
     
     // Engine text size and position -  (x,    y,  h,   w)
@@ -233,4 +233,31 @@ void    renderAll(t_game game)
 
     SDL_RenderPresent( game.Grenderer );
     SDL_UpdateWindowSurface( game.Gwindow );
+}
+
+/*
+**  Fonction qui affiche l'interface du GameOver lorsque le Joueur se fait tuer
+**
+*/
+t_game    showEnd(t_game game)
+{
+    return game;
+}
+
+/*
+**  Fonction qui affiche l'interface qui permet de debuter le jeux.
+**  L'utilisateur doit cliquer sur commencer le jeux pour passer a l'interface du jeux et jouer
+*/
+t_game    showBegin(t_game game)
+{
+    return game;
+}
+
+/*
+**  Fonction qui affiche l'interface du jeux et le permet de jouer.
+**
+*/
+t_game    showGame(t_game game)
+{
+    return game;
 }

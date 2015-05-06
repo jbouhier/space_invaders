@@ -17,8 +17,10 @@ int main(int argc, const char * argv[])
     int     toWait;
     int     terminer;
     int     gameover;
+    int     begin;
     
     terminer = 0;
+    begin = 1;
     gameover = 0;
     tempsActuel = 0;
     tempsPrecedent = 0;
@@ -37,28 +39,37 @@ int main(int argc, const char * argv[])
             SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
             if (gameover == 1) {
+                game = showEnd(game);
                 exit(100);
             }
             if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE)
                 terminer = 1;
             else {
-                if (game.Gevenements.type == SDL_KEYDOWN) {
-                    game.Gplayer1 = movePlayer(game);
-                    
-                    if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
-                        Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
-                        game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
-                        game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].position = init_bulletPos(game.Gplayer1);
-                        game.Gplayer1.nbr_bullet++;
+                if (begin == 0 && gameover == 0)
+                    game = showBegin(game);
+                else {
+                    if (gameover == 0) {
+                        game = showGame(game);
                     }
+                    
+                    if (game.Gevenements.type == SDL_KEYDOWN) {
+                        game.Gplayer1 = movePlayer(game);
+                        
+                        if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
+                            Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
+                            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
+                            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].position = init_bulletPos(game.Gplayer1);
+                            game.Gplayer1.nbr_bullet++;
+                        }
+                    }
+                    if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
+                        game = launch_bullet(game);
+                        game = launch_bulletMonster(game);
+                        //game.Gmonster = moveMonster(game);
+                        
+                    }
+                    tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
                 }
-                if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
-                    game = launch_bullet(game);
-                    game = launch_bulletMonster(game);
-                    // game.Gmonster = moveMonster(game);
-
-                }
-                tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
             
             if (game.Gplayer1.lives == -1 || game.Gplayer2.lives == -1 || game.Gmonster[0].monster == NULL)

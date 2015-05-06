@@ -63,6 +63,7 @@ typedef struct      s_monster
     bool            flagdown;
     bool            flagpositon;
     int             nbr_bullet;
+    int             score;
 }                   t_monster;
 
 typedef struct      s_game
@@ -87,6 +88,9 @@ typedef struct      s_game
 
 
 SDL_Rect        init_position(int x, int y, int h, int w);
+t_game            showBegin(t_game game);
+t_game            showEnd(t_game game);
+t_game            showGame(t_game game);
 SDL_Window      *init(SDL_Window *gWindow);
 t_game          init_screen(t_game game);
 t_game          init_player(t_game game);
