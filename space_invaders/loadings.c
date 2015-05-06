@@ -40,7 +40,7 @@ SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRender
     return newTexture;
 }
 
-SDL_Texture *loadPlayer(S_Game game)
+SDL_Texture *loadPlayer(t_game game)
 {
     //Loading success flag
     SDL_Texture* player;
@@ -61,7 +61,7 @@ SDL_Texture *loadPlayer(S_Game game)
 }
 
 
-SDL_Texture *loadBullet(S_Game game)
+SDL_Texture *loadBullet(t_game game)
 {
     //Loading success flag
     bool success = true;
@@ -86,7 +86,7 @@ SDL_Texture *loadBullet(S_Game game)
     return bullet;
 }
 
-S_Game loadMonsters(S_Game game)
+t_game loadMonsters(t_game game)
 {
     char *paths;
     SDL_Surface *loadedSurface;
@@ -125,7 +125,7 @@ S_Game loadMonsters(S_Game game)
     return game;
 }
 
-S_Game loadSounds(S_Game game)
+t_game loadSounds(t_game game)
 {
     char **paths;
     
@@ -173,7 +173,7 @@ char **AllocateSoundPath(char **paths)
     return paths;
 }
 
-S_Game showExposion(S_Game game, int index)
+t_game showExposion(t_game game, int index)
 {
     char *paths;
     

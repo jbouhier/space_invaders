@@ -11,11 +11,11 @@
 
 int main(int argc, const char * argv[])
 {
-    S_Game game;
-    int tempsActuel;
-    int tempsPrecedent;
-    int toWait;
-    int terminer;
+    t_game  game;
+    int     tempsActuel;
+    int     tempsPrecedent;
+    int     toWait;
+    int     terminer;
     
     terminer = 0;
     tempsActuel = 0;

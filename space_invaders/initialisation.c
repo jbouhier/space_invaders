@@ -39,14 +39,14 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-S_Game init_screen(S_Game game)
+t_game init_screen(t_game game)
 {
     SDL_Surface *screenSurface;
 
-    game.Gplayer1.bullet = malloc(sizeof(S_Bullet) * 50);
-    game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
+    game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
     game.Gplayer1.position = init_position(60, 560, 35, 35);
-    game.Gplayer1.bullet = malloc(sizeof(S_Bullet) * 100);
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 100);
     game.Gplayer1.position = init_position(760, 560, 35, 35);
     game.Gmonster->position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
@@ -71,7 +71,7 @@ S_Game init_screen(S_Game game)
 }
 
 
-S_Game  init_text(S_Game game)
+t_game  init_text(t_game game)
 {
     game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
     SDL_Colour text_color = { 255, 255, 255 };
@@ -111,7 +111,7 @@ S_Game  init_text(S_Game game)
 }
 
 
-S_Game  init_player(S_Game game)
+t_game  init_player(t_game game)
 {
     game.Gplayer1.score = 0;
     game.Gplayer2.lives = 3;
@@ -123,7 +123,7 @@ S_Game  init_player(S_Game game)
 }
 
 
-void end(S_Game game)
+void end(t_game game)
 {
     int i;
     //Deallocate textures
@@ -172,7 +172,7 @@ SDL_Rect init_position(int x, int y, int h, int w)
     return DestR;
 }
 
-SDL_Rect init_bulletPos(S_Player player)
+SDL_Rect init_bulletPos(t_player player)
 {
     SDL_Rect DestR;
 
@@ -184,7 +184,7 @@ SDL_Rect init_bulletPos(S_Player player)
     return DestR;
 }
 
-SDL_Rect init_bulletMonsterPos(S_Monster monster) {
+SDL_Rect init_bulletMonsterPos(t_monster monster) {
     SDL_Rect DestR;
     
     DestR.y =  monster.position.y + 4;
@@ -196,7 +196,7 @@ SDL_Rect init_bulletMonsterPos(S_Monster monster) {
 }
 
 
-void    renderAll(S_Game game)
+void    renderAll(t_game game)
 {
     int i;
     int x;

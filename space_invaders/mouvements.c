@@ -9,7 +9,7 @@
 #include "main_file.h"
 
 
-S_Player movePlayer(S_Game game) {
+t_player movePlayer(t_game game) {
     switch( game.Gevenements.key.keysym.sym )
     {
         case SDLK_LEFT:
@@ -32,7 +32,7 @@ S_Player movePlayer(S_Game game) {
 
 
 
-S_Game launch_bullet(S_Game game) {
+t_game launch_bullet(t_game game) {
     int i;
     int j;
 
@@ -72,7 +72,7 @@ S_Game launch_bullet(S_Game game) {
 }
 
 
-S_Game launch_bulletMonster(S_Game game) {
+t_game launch_bulletMonster(t_game game) {
     int i;
     int bulletOn;
     int MonsterToLaunch;
@@ -131,7 +131,7 @@ S_Game launch_bulletMonster(S_Game game) {
 }
 
 
-S_Game deleteBullets(S_Game game, int index) {
+t_game deleteBullets(t_game game, int index) {
     int i;
 
     SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet);
