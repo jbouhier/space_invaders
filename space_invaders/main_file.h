@@ -9,10 +9,11 @@
 #ifndef __main_file_h__
 # define __main_file_h__
 
-#include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
@@ -78,7 +79,7 @@ typedef struct      s_game
     t_player        Gplayer2;
     t_monster       *Gmonster;
     SDL_Rect        score_title_pos;
-    int             high_score;
+    long            high_score;
     SDL_Rect        high_score_pos;
     SDL_Surface     *surface_high_score;
     SDL_Texture     *texture_high_score;
