@@ -64,7 +64,7 @@ typedef struct      s_monster
     int             nbr_bullet;
 }                   t_monster;
 
-typedef struct      game_struct
+typedef struct      s_game
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
