@@ -24,20 +24,17 @@ char    *hscore_path()
 }
 
 
-t_game get_hscore(t_game game, char *hscore_path)
+long get_hscore(char *hscore_path)
 {
     FILE    *fd;
     long    score;
     char    buffer[BUFF_SIZE];
     char    *end;
-
+    
     if ((fd = fopen(hscore_path, "r")))
     {
         if (fgets(buffer, BUFF_SIZE, fd))
-        {
             score = strtol(buffer, &end, 10);
-            game.high_score = score;
-        }
         fclose(fd);
     }
     else
@@ -47,34 +44,66 @@ t_game get_hscore(t_game game, char *hscore_path)
         exit(EXIT_FAILURE);
     }
     
-    return (game);
+    return (score);
 }
 
-void    set_hscore(t_game game, char *hscore_path)
+
+void    set_hscore(t_game *game, long score)
+{
+    game->high_score = score;
+}
+
+
+// Use: write_score(game, get_hscore(hscore_path()) );
+void    write_score(t_game game, long hscore)
+{
+    if (game.Gplayer1.score > hscore)
+        overwite_hscore(game.Gplayer1);
+    else if (game.Gplayer2.score > hscore)
+         overwite_hscore(game.Gplayer2);
+}
+
+
+void    overwrite_hscore(t_player player)
 {
     FILE    *fd;
-    char    score_string[BUFF_SIZE];
-
-    // Create file if it doesn't exists, truncate, fd at pos 0
-    if ( (fd = fopen(hscore_path, "w+")) )
+    char    buffer[BUFF_SIZE];
+    char    *end;
+    
+    if ((fd = fopen(hscore_path(), "w+")))
     {
-        // score_string = sprintf(score_string, "%ld", game.high_score)
-        sprintf(score_string, "%ld", game.high_score);
-        printf("score_string: %s\n", score_string);
-        // fwrite(score_string, 1, sizeof(score_string), fd);
+        if (fgets(buffer, BUFF_SIZE, fd))
+            score = strtol(buffer, &end, 10);
+        
+        fclose(fd);
     }
     else
     {
-        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path, strerror(errno));
+        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path(), strerror(errno));
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
-    
-    fclose(fd);
 }
 
-t_game  init_hscore(t_game game)
-{
-    get_hscore(game, hscore_path());
-    return (game);
-}
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

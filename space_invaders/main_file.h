@@ -43,7 +43,7 @@ typedef struct      s_player
     Mix_Chunk       *bulletGo_sound;
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
-    int             score;
+    long            score;
     SDL_Rect        score_pos;
     SDL_Surface     *surface_score;
     SDL_Texture     *texture_score;
@@ -106,9 +106,10 @@ t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
 char            *hscore_path();
-t_game          get_hscore(t_game game, char *hscore_path);
-void            set_hscore(t_game game, char *hscore_path);
+long            get_hscore(char *hscore_path);
+void            set_hscore(t_game *game, long score);
 t_game          showExposion(t_game game, int index);
-t_game          init_hscore(t_game game);
+void            write_score(t_game game, long hscore);
+void            overwrite_hscore(t_player player);
 
 #endif /* __main_file_h__ */
