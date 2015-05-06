@@ -105,7 +105,10 @@ bool            checkCollision( SDL_Rect a, SDL_Rect b );
 t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
-t_game          get_hscore(t_game game);
-t_game showExposion(t_game game, int index);
+char            *hscore_path();
+t_game          get_hscore(t_game game, char *hscore_path);
+void            set_hscore(t_game game, char *hscore_path);
+t_game          showExposion(t_game game, int index);
+t_game          init_hscore(t_game game);
 
 #endif /* __main_file_h__ */

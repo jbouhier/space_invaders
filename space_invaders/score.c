@@ -12,19 +12,26 @@
 // Score is 4 numbers long + 1 for the NULL terminating string
 #define BUFF_SIZE 5
 
-t_game get_hscore(t_game game)
+char    *hscore_path()
 {
-    FILE    *fd;
-    long    score;
-    char    buffer[BUFF_SIZE];
     char    *path;
-    char    *end;
-
+    
     path =  malloc (strlen(PWD) + strlen(HSCORE_FILE_PATH) + 1);
     strcpy(path, PWD);
     strcat(path, HSCORE_FILE_PATH);
     
-    if ((fd = fopen(path, "r")))
+    return (path);
+}
+
+
+t_game get_hscore(t_game game, char *hscore_path)
+{
+    FILE    *fd;
+    long    score;
+    char    buffer[BUFF_SIZE];
+    char    *end;
+
+    if ((fd = fopen(hscore_path, "r")))
     {
         if (fgets(buffer, BUFF_SIZE, fd))
         {
@@ -35,10 +42,39 @@ t_game get_hscore(t_game game)
     }
     else
     {
-        fprintf(stderr, "Could not open: %s -> Error: %s\n", path, strerror(errno));
+        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path, strerror(errno));
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
     
+    return (game);
+}
+
+void    set_hscore(t_game game, char *hscore_path)
+{
+    FILE    *fd;
+    char    score_string[BUFF_SIZE];
+
+    // Create file if it doesn't exists, truncate, fd at pos 0
+    if ( (fd = fopen(hscore_path, "w+")) )
+    {
+        // score_string = sprintf(score_string, "%ld", game.high_score)
+        sprintf(score_string, "%ld", game.high_score);
+        printf("score_string: %s\n", score_string);
+        // fwrite(score_string, 1, sizeof(score_string), fd);
+    }
+    else
+    {
+        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path, strerror(errno));
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+    
+    fclose(fd);
+}
+
+t_game  init_hscore(t_game game)
+{
+    get_hscore(game, hscore_path());
     return (game);
 }
