@@ -23,4 +23,3 @@ This is a remake with lib SDL 2.0 of classics retro games:
 **Jean-Baptiste Bouhier:** Developer & Project Manager  
 **Gatien Mouafo:** Developer  
 **Timothee Lestin:** Developer  
-**Manel Zarali:** Developer  

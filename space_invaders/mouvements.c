@@ -9,71 +9,73 @@
 #include "main_file.h"
 
 
-S_Player movePlayer(S_Game game) {
+t_player movePlayer(t_game game) {
     switch( game.Gevenements.key.keysym.sym )
     {
         case SDLK_LEFT:
-            if ( game.Gplayer.position.x > 0 ) {
-                game.Gplayer.position.x -= 5;
+            if ( game.Gplayer1.position.x > 0 ) {
+                game.Gplayer1.position.x -= 5;
             }
             break;
             
         case SDLK_RIGHT:
-            if ( game.Gplayer.position.x < 761 ) {
-                game.Gplayer.position.x += 5;
+            if ( game.Gplayer1.position.x < 761 ) {
+                game.Gplayer1.position.x += 5;
             }
             break;
         default:
             break;
     }
 
-    return game.Gplayer;
+    return game.Gplayer1;
 }
 
-S_Monster moveMonster(S_Game game)
+t_monster moveMonster(t_game game)
 {
     //int i;
     //int j;
     //int move;
     
-        if(game.Gmonster.flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
+        if (game.Gmonster->flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
         {
-            if(game.Gmonster.position.x > 0){
-                game.Gmonster.position.x -= 2;
-            }else{
-                game.Gmonster.flagpositon = 0;
-                game.Gmonster.position.y += 10;
+            if (game.Gmonster->position.x > 0)
+                game.Gmonster->position.x -= 2;
+            else
+            {
+                game.Gmonster->flagpositon = 0;
+                game.Gmonster->position.y += 10;
             }
             
         }
         else   //Check si l'objet doit se déplacer vers la droite
         {
-            if(game.Gmonster.position.x < 760){
-                game.Gmonster.position.x += 2;
-            }else{
-                game.Gmonster.flagpositon = 1;
-                game.Gmonster.position.y += 10;
+            if (game.Gmonster->position.x < 760)
+                game.Gmonster->position.x += 2;
+            else
+            {
+                game.Gmonster->flagpositon = 1;
+                game.Gmonster->position.y += 10;
             }
             
         }
     //}
     
-    return game.Gmonster;
+    return *game.Gmonster;
 }
 
 
 
 
-S_Game launch_bullet(S_Game game) {
+t_game launch_bullet(t_game game) {
     int i;
     int j;
 
-    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
-        if (game.Gplayer.bullet[i].position.y >= 0) {
-            game.Gplayer.bullet[i].position.y -= 5;
+    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
+        if (game.Gplayer1.bullet[i].position.y >= 0) {
+            game.Gplayer1.bullet[i].position.y -= 5;
             for (j = 0; game.Gmonster[j].monster != NULL; j++) {
                 if (game.Gmonster[j].monster != NULL) {
-                    if (checkCollision( game.Gmonster[j].position, game.Gplayer.bullet[i].position )) {
+                    if (checkCollision( game.Gmonster[j].position, game.Gplayer1.bullet[i].position )) {
                         Mix_PlayChannel( -1, game.Gmonster[j].monsterExplode_sound, 0 );
                         SDL_DestroyTexture(game.Gmonster[j].monster);
                         game = deleteBullets(game, i);
@@ -104,7 +106,7 @@ S_Game launch_bullet(S_Game game) {
 }
 
 
-S_Game launch_bulletMonster(S_Game game) {
+t_game launch_bulletMonster(t_game game) {
     int i;
     int bulletOn;
     int MonsterToLaunch;
@@ -132,14 +134,23 @@ S_Game launch_bulletMonster(S_Game game) {
     else {
         if (game.Gmonster[MonsterToLaunch].bullet.position.y <= 560) {
             game.Gmonster[MonsterToLaunch].bullet.position.y += 5;
-            if (checkCollision( game.Gplayer.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
-                Mix_PlayChannel( -1, game.Gplayer.playerExplode_sound, 0 );
-                printf("je touche le player");
-                SDL_DestroyTexture(game.Gplayer.player);
-                game.Gplayer.player = NULL;
+            if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
+                Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
+                printf("A monster has hit the player!\n");
+                printf("Lifes %d\n", game.Gplayer1.lives);
+                SDL_DestroyTexture(game.Gplayer1.player);
+                game.Gplayer1.player = NULL;
+                
+                if (game.Gplayer1.lives == -1)
+                {
+                    printf("GAME OVER\n");
+                    end(game);
+                }
+                
+                game.Gplayer1.lives--;
                 renderAll(game);
                 SDL_Delay(3000);
-                game.Gplayer.player = loadPlayer(game);
+                game.Gplayer1.player = loadPlayer(game);
                 SDL_DestroyTexture(game.Gmonster[MonsterToLaunch].bullet.bullet);
                 game.Gmonster[MonsterToLaunch].bullet.bullet = NULL;
             }
@@ -154,16 +165,16 @@ S_Game launch_bulletMonster(S_Game game) {
 }
 
 
-S_Game deleteBullets(S_Game game, int index) {
+t_game deleteBullets(t_game game, int index) {
     int i;
 
-    SDL_DestroyTexture(game.Gplayer.bullet[index].bullet);
+    SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet);
 
-    for (i = index; game.Gplayer.bullet[i].bullet != NULL; i++) {
-        game.Gplayer.bullet[i] = game.Gplayer.bullet[i + 1];
+    for (i = index; game.Gplayer1.bullet[i].bullet != NULL; i++) {
+        game.Gplayer1.bullet[i] = game.Gplayer1.bullet[i + 1];
     }
     if (i > 0) {
-        game.Gplayer.nbr_bullet = i - 1;
+        game.Gplayer1.nbr_bullet = i - 1;
     }
 
     return game;

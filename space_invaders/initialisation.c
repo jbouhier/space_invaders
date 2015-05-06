@@ -39,43 +39,24 @@ SDL_Window* init(SDL_Window *gWindow) {
 }
 
 
-S_Game init_screen(S_Game game)
+t_game init_screen(t_game game)
 {
     SDL_Surface *screenSurface;
-    char *paths;
 
-    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 50);
-    game.Gmonster = malloc((sizeof(S_Monster) * MONSTER_NBR) + 1);
-    game.Gplayer.position = init_position(60, 560, 35, 35);
-    paths =  malloc (strlen(ROOT_DIR) + strlen("/../../../space_invaders/fonts/04B_03__.TTF") + 1);
-    
-    strcpy(paths, ROOT_DIR);
-    strcat(paths, "/../../../space_invaders/fonts/04B_03__.TTF");
-    
-    //RGBA colors
-    //SDL_Colour text_color = { 255, 255, 255 };
-    
-    game.Gplayer.bullet = malloc(sizeof(S_Bullet) * 100);
-    game.Gplayer.position = init_position(760, 560, 35, 35);
-    game.Gmonster.position = init_position(360, 60, 55, 55);
-    game.Gmonster.flagpositon = 0;
-    
-    //Text positioning test
-    game.textPosition = init_position(250, 30, 30, 300);
-    
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
+    game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
+    game.Gplayer1.position = init_position(60, 560, 35, 35);
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 100);
+    game.Gplayer1.position = init_position(760, 560, 35, 35);
+    game.Gmonster->position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
-    game.font = TTF_OpenFont(paths, FONT_SIZE);
-    game.sText = TTF_RenderText_Solid(game.font, "SPACE    INVADERS", text_color);
-    game.tText = SDL_CreateTextureFromSurface(game.Grenderer, game.sText);
-
-   
 
     //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 
-    game.Gplayer.player = loadPlayer(game);
+    game.Gplayer1.player = loadPlayer(game);
     game = loadMonsters( game );
     // Load sounds effects to the Game
     game = loadSounds( game );
@@ -90,7 +71,59 @@ S_Game init_screen(S_Game game)
 }
 
 
-void end(S_Game game)
+t_game  init_text(t_game game)
+{
+    game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
+    SDL_Colour text_color = { 255, 255, 255 };
+    
+    // Engine text size and position -  (x,    y,  h,   w)
+    game.score_title_pos = init_position(200, 5, 25, 420);
+    game.high_score_pos = init_position(355, 40, 25, 80);
+    game.Gplayer1.score_pos = init_position(200, 40, 25, 80);
+    game.Gplayer2.score_pos = init_position(480, 40, 25, 80);
+    
+    // Score title
+    game.surface_score_title = TTF_RenderText_Solid(game.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
+    game.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.surface_score_title);
+    
+    // Hi-Score
+    game.surface_high_score = TTF_RenderText_Solid(game.font, "0000", text_color); // Change "0000" with the correct variable
+    game.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.surface_high_score);
+
+    // Player1 - Change "0000" with the correct variable !!!!!!!
+    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
+    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer1.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_lives);
+
+    
+    // Player2 - Change "0000" with the correct variable !!!!!!!!!
+    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
+    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer2.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_lives);
+    
+    // Next, look inside renderAll function !!!
+    // Next, look inside renderAll function !!!
+    // Next, look inside renderAll function !!!
+
+    return (game);
+}
+
+
+t_game  init_player(t_game game)
+{
+    game.Gplayer1.score = 0;
+    game.Gplayer2.lives = 3;
+    
+    game.Gplayer2.score = 0;
+    game.Gplayer2.lives = 3;
+    
+    return game;
+}
+
+
+void end(t_game game)
 {
     int i;
     //Deallocate textures
@@ -100,15 +133,15 @@ void end(S_Game game)
     }
     free(game.Gmonster);
 
-    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
-        SDL_DestroyTexture(game.Gplayer.bullet[i].bullet);
-        game.Gplayer.bullet[i].bullet = NULL;
+    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
+        SDL_DestroyTexture(game.Gplayer1.bullet[i].bullet);
+        game.Gplayer1.bullet[i].bullet = NULL;
     }
-    free(game.Gplayer.bullet);
-    SDL_DestroyTexture(game.Gplayer.player);
+    free(game.Gplayer1.bullet);
+    SDL_DestroyTexture(game.Gplayer1.player);
     SDL_DestroyTexture(game.Gscreen);
 
-    game.Gplayer.player =NULL;
+    game.Gplayer1.player =NULL;
     game.Gscreen = NULL;
     
     TTF_CloseFont(game.font);
@@ -139,7 +172,7 @@ SDL_Rect init_position(int x, int y, int h, int w)
     return DestR;
 }
 
-SDL_Rect init_bulletPos(S_Player player)
+SDL_Rect init_bulletPos(t_player player)
 {
     SDL_Rect DestR;
 
@@ -151,7 +184,7 @@ SDL_Rect init_bulletPos(S_Player player)
     return DestR;
 }
 
-SDL_Rect init_bulletMonsterPos(S_Monster monster) {
+SDL_Rect init_bulletMonsterPos(t_monster monster) {
     SDL_Rect DestR;
     
     DestR.y =  monster.position.y + 4;
@@ -162,7 +195,8 @@ SDL_Rect init_bulletMonsterPos(S_Monster monster) {
     return DestR;
 }
 
-void    renderAll(S_Game game)
+
+void    renderAll(t_game game)
 {
     int i;
     int x;
@@ -172,8 +206,11 @@ void    renderAll(S_Game game)
     y = 10;
     SDL_RenderClear( game.Grenderer );
     SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-    SDL_RenderCopy( game.Grenderer, game.Gplayer.player, NULL, &(game.Gplayer.position) );
-    SDL_RenderCopy( game.Grenderer, game.tText, NULL, &(game.textPosition) );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer1.player, NULL, &(game.Gplayer1.position) );
+    
+    // Text
+    SDL_RenderCopy( game.Grenderer, game.texture_score_title, NULL, &(game.score_title_pos) );
+    SDL_RenderCopy( game.Grenderer, game.texture_high_score, NULL, &(game.high_score_pos) );
     
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) );
@@ -185,12 +222,12 @@ void    renderAll(S_Game game)
         }
     }
 
-    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++) {
-        SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );
+    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
+        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) );
     }
 
-    for (i = 0; game.Gplayer.bullet[i].bullet != NULL; i++)
-        SDL_RenderCopy( game.Grenderer, game.Gplayer.bullet[i].bullet, NULL, &(game.Gplayer.bullet[i].position) );
+    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++)
+        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) );
 
     SDL_RenderPresent( game.Grenderer );
     SDL_UpdateWindowSurface( game.Gwindow );

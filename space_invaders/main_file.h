@@ -19,7 +19,7 @@
 #include <SDL2_mixer/SDL_mixer.h>
 #include <SDL2_ttf/SDL_ttf.h>
 
-#define ROOT_DIR getenv("PWD")
+#define PWD getenv("PWD")
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
@@ -28,73 +28,85 @@
 #define FONT_SIZE 20
 
 
-struct              bullet_struct
+typedef struct      s_bullet
 {
     SDL_Texture     *bullet;
     SDL_Rect        position;
-} typedef           S_Bullet;
+}                   t_bullet;
 
-struct              player_struct
+typedef struct      s_player
 {
     SDL_Texture     *player;
     SDL_Rect        position;
-    S_Bullet        *bullet;
+    t_bullet        *bullet;
     Mix_Chunk       *bulletGo_sound;
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
-    
-} typedef           S_Player;
+    int             score;
+    SDL_Rect        score_pos;
+    SDL_Surface     *surface_score;
+    SDL_Texture     *texture_score;
+    int             lives;
+    SDL_Rect        lives_pos;
+    SDL_Surface     *surface_lives;
+    SDL_Texture     *texture_lives;
+}                   t_player;
 
-struct              monster_struct
+typedef struct      s_monster
 {
     SDL_Texture     *monster;
     SDL_Texture     *explosion;
     SDL_Rect        position;
-    S_Bullet        bullet;
+    t_bullet        bullet;
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
     bool            flagdown;
     bool            flagpositon;
     int             nbr_bullet;
-} typedef           S_Monster;
+}                   t_monster;
 
-struct              game_struct
+typedef struct      s_game
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
     TTF_Font        *font;
-    SDL_Surface     *sText;
-    SDL_Texture     *tText;
-    SDL_Rect        textPosition;
+    SDL_Surface     *surface_score_title;
+    SDL_Texture     *texture_score_title;
+    SDL_Rect        lives_pos;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
-    S_Player        Gplayer;
-    S_Monster       *Gmonster;
-    int             Gscore;
-    int             Glifes;
-} typedef           S_Game;
+    t_player        Gplayer1;
+    t_player        Gplayer2;
+    t_monster       *Gmonster;
+    SDL_Rect        score_title_pos;
+    int             high_score;
+    SDL_Rect        high_score_pos;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
+}                   t_game;
 
 
 SDL_Rect        init_position(int x, int y, int h, int w);
 SDL_Window      *init(SDL_Window *gWindow);
-S_Game          init_screen(S_Game game);
-SDL_Texture     *loadPlayer(S_Game game);
-S_Player        movePlayer(S_Game game);
-S_Monster       moveMonster(S_Game game);
-S_Game          launch_bullet(S_Game game);
-SDL_Texture     *loadBullet(S_Game game);
-SDL_Rect        init_bulletPos(S_Player player);
-SDL_Rect        init_bulletMonsterPos(S_Monster monster);
-S_Game          launch_bullet(S_Game game);
-S_Game          launch_bulletMonster(S_Game game);
-void            renderAll(S_Game game);
-S_Game          deleteBullets(S_Game game, int index);
-void            end(S_Game game);
+t_game          init_screen(t_game game);
+t_game          init_player(t_game game);
+t_game          init_text(t_game game);
+SDL_Texture     *loadPlayer(t_game game);
+t_player        movePlayer(t_game game);
+t_monster       moveMonster(t_game game);
+SDL_Texture     *loadBullet(t_game game);
+SDL_Rect        init_bulletPos(t_player player);
+SDL_Rect        init_bulletMonsterPos(t_monster monster);
+t_game          launch_bullet(t_game game);
+t_game          launch_bulletMonster(t_game game);
+void            renderAll(t_game game);
+t_game          deleteBullets(t_game game, int index);
+void            end(t_game game);
 bool            checkCollision( SDL_Rect a, SDL_Rect b );
-S_Game          loadSounds(S_Game game);
+t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
-S_Game          loadMonsters(S_Game game);
+t_game          loadMonsters(t_game game);
+t_game showExposion(t_game game, int index);
 
-S_Game showExposion(S_Game game, int index);
 
 #endif
