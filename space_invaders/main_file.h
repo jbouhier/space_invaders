@@ -93,7 +93,7 @@ t_game          init_player(t_game game);
 t_game          init_text(t_game game);
 SDL_Texture     *loadPlayer(t_game game);
 t_player        movePlayer(t_game game);
-t_monster       moveMonster(t_game game);
+t_game		moveMonster(t_game game);
 SDL_Texture     *loadBullet(t_game game);
 SDL_Rect        init_bulletPos(t_player player);
 SDL_Rect        init_bulletMonsterPos(t_monster monster);

@@ -177,15 +177,18 @@ t_game showExposion(t_game game, int index)
 {
     char *paths;
     
+
     paths =  malloc (strlen(PWD) + strlen("/../../../images/explosion.png") + 1);
     
     strcpy(paths, PWD);
     strcat(paths,"/../../../images/explosion.png");
+
     
     game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
 
     return game;
 }
+
 
 SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer* gRenderer)
 {
@@ -201,3 +204,4 @@ SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer
     }
     return monster;
 }
+

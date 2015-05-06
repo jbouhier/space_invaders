@@ -30,37 +30,37 @@ t_player movePlayer(t_game game) {
     return game.Gplayer1;
 }
 
-t_monster moveMonster(t_game game)
+t_game moveMonster(t_game game)
 {
-    //int i;
+    int i;
     //int j;
     //int move;
     
-        if (game.Gmonster->flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
+    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
+    
+        if(game.Gmonster[i].flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
         {
-            if (game.Gmonster->position.x > 0)
-                game.Gmonster->position.x -= 2;
-            else
-            {
-                game.Gmonster->flagpositon = 0;
-                game.Gmonster->position.y += 10;
+            if(game.Gmonster[i].position.x > 0){
+                game.Gmonster[i].position.x -= 2;
+            }else{
+                game.Gmonster[i].flagpositon = 0;
+                game.Gmonster[i].position.y += 20;
             }
             
         }
         else   //Check si l'objet doit se déplacer vers la droite
         {
-            if (game.Gmonster->position.x < 760)
-                game.Gmonster->position.x += 2;
-            else
-            {
-                game.Gmonster->flagpositon = 1;
-                game.Gmonster->position.y += 10;
+            if(game.Gmonster[i].position.x < 760){
+                game.Gmonster[i].position.x += 2;
+            }else{
+                game.Gmonster[i].flagpositon = 1;
+                game.Gmonster[i].position.y += 20;
             }
             
         }
-    //}
+    }
     
-    return *game.Gmonster;
+    return game;
 }
 
 
