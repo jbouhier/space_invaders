@@ -1,4 +1,4 @@
-//
+ //
 //  main.c
 //  space_invaders
 //
@@ -14,6 +14,7 @@ int main(int argc, const char * argv[])
     S_Game game;
     int tempsActuel;
     int tempsPrecedent;
+    int toWait;
     int terminer;
     
     terminer = 0;
@@ -23,11 +24,10 @@ int main(int argc, const char * argv[])
     game = init_screen( game );
 
     if ( game.Gwindow != NULL) {
-        game.Gplayer.player = loadPlayer(game);
-        game.Gmonster.monster = loadPlayer(game);
         game.Gplayer.nbr_bullet = 0;
         while(!terminer)
         {
+            tempsActuel = SDL_GetTicks();
             SDL_PollEvent(&(game.Gevenements));
             SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
@@ -44,17 +44,19 @@ int main(int argc, const char * argv[])
                         game.Gplayer.nbr_bullet++;
                     }
                 }
-                tempsActuel = SDL_GetTicks();
-                if (tempsActuel - tempsPrecedent > 15) /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
-                {
+                if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
                     game = launch_bullet(game);
-                    game.Gmonster = moveMonster(game);
+                    game = launch_bulletMonster(game);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
-            SDL_Delay(15);
+            toWait = SDL_GetTicks() - tempsActuel;
+            if ( toWait < 16 )
+                SDL_Delay(16 - toWait);
             renderAll(game);
         }
+        /* This should never happen */
+        printf("SDL_WaitEvent error: %s\n", SDL_GetError());
     }
 
     end(game);

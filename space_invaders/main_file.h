@@ -23,6 +23,7 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
+#define MONSTER_NBR 30
 #define LOAD_FONT_MAX 1
 #define FONT_SIZE 20
 
@@ -47,8 +48,9 @@ struct              player_struct
 struct              monster_struct
 {
     SDL_Texture     *monster;
+    SDL_Texture     *explosion;
     SDL_Rect        position;
-    S_Bullet        *bullet;
+    S_Bullet        bullet;
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
     bool            flagdown;
@@ -67,7 +69,7 @@ struct              game_struct
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     S_Player        Gplayer;
-    S_Monster       Gmonster;
+    S_Monster       *Gmonster;
     int             Gscore;
     int             Glifes;
 } typedef           S_Game;
@@ -82,11 +84,17 @@ S_Monster       moveMonster(S_Game game);
 S_Game          launch_bullet(S_Game game);
 SDL_Texture     *loadBullet(S_Game game);
 SDL_Rect        init_bulletPos(S_Player player);
+SDL_Rect        init_bulletMonsterPos(S_Monster monster);
+S_Game          launch_bullet(S_Game game);
+S_Game          launch_bulletMonster(S_Game game);
 void            renderAll(S_Game game);
 S_Game          deleteBullets(S_Game game, int index);
 void            end(S_Game game);
 bool            checkCollision( SDL_Rect a, SDL_Rect b );
 S_Game          loadSounds(S_Game game);
 char            **AllocateSoundPath(char **paths);
+S_Game          loadMonsters(S_Game game);
+
+S_Game showExposion(S_Game game, int index);
 
 #endif
