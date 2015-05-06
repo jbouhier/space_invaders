@@ -43,11 +43,7 @@ t_game init_screen(t_game game)
 {
     SDL_Surface *screenSurface;
 
-    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
     game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
-    game.Gplayer1.position = init_position(60, 560, 35, 35);
-    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 100);
-    game.Gplayer1.position = init_position(760, 560, 35, 35);
     game.Gmonster->position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
@@ -66,6 +62,9 @@ t_game init_screen(t_game game)
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
     SDL_FreeSurface(screenSurface);
+    
+    game = init_player(game);
+    game = init_text(game);
 
     return game;
 }
@@ -73,7 +72,7 @@ t_game init_screen(t_game game)
 
 t_game  init_text(t_game game)
 {
-    game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
+    game.font = TTF_OpenFont("/../../../space_invaders/fonts/uni05_53.ttf", FONT_SIZE);
     SDL_Colour text_color = { 255, 255, 255 };
     
     // Engine text size and position -  (x,    y,  h,   w)
@@ -113,8 +112,11 @@ t_game  init_text(t_game game)
 
 t_game  init_player(t_game game)
 {
+    game.Gplayer1.position = init_position(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 35, 35);
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
+    
     game.Gplayer1.score = 0;
-    game.Gplayer2.lives = 3;
+    game.Gplayer1.lives = 3;
     
     game.Gplayer2.score = 0;
     game.Gplayer2.lives = 3;

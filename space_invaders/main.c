@@ -16,17 +16,16 @@ int main(int argc, const char * argv[])
     int     tempsPrecedent;
     int     toWait;
     int     terminer;
+    int     gameover;
     
     terminer = 0;
+    gameover = 0;
     tempsActuel = 0;
     tempsPrecedent = 0;
 
     game = init_screen(game);
-    game = init_player(game);
-    game = init_text(game);
     
     // Debug
-    printf("Score %d\n", game.Gplayer1.score);
 
 
     if ( game.Gwindow != NULL) {
@@ -37,6 +36,9 @@ int main(int argc, const char * argv[])
             SDL_PollEvent(&(game.Gevenements));
             SDL_SetRenderDrawColor( game.Grenderer, 0, 0, 0, 0 );
             
+            if (gameover == 1) {
+                exit(100);
+            }
             if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE)
                 terminer = 1;
             else {
@@ -58,6 +60,10 @@ int main(int argc, const char * argv[])
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
+            
+            if (game.Gplayer1.lives == -1 || game.Gplayer2.lives == -1 || game.Gmonster[0].monster == NULL)
+                gameover = 1;
+            
             toWait = SDL_GetTicks() - tempsActuel;
             if ( toWait < 16 )
                 SDL_Delay(16 - toWait);
