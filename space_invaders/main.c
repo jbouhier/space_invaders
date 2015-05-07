@@ -1,4 +1,4 @@
- //
+//
 //  main.c
 //  space_invaders
 //
@@ -45,15 +45,8 @@ int main(int argc, const char * argv[])
                         exit(100);
                     }
                 }
-                
-		if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
-                    game = launch_bullet(game);
-                    game = launch_bulletMonster(game);
-                    game = moveMonster(game);
-                }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
-            tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             if (game.Gplayer1.lives == -1 || game.Gplayer2.lives == -1 || game.Gmonster[0].monster == NULL)
                 gameover = 1;
             
