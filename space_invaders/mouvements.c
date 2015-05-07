@@ -33,16 +33,13 @@ t_player movePlayer(t_game game) {
 t_game moveMonster(t_game game)
 {
     int i;
-    //int j;
-    //int move;
-    
+
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-    
         if(game.Gmonster[i].flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
         {
-            if(game.Gmonster[i].position.x > 0){
-                game.Gmonster[i].position.x -= 2;
-            }else{
+            if(game.Gmonster[i].position.x > 0)
+                game.Gmonster[i].position.x -= game.monster_speed;
+            else{
                 game.Gmonster[i].flagpositon = 0;
                 game.Gmonster[i].position.y += 20;
             }
@@ -50,16 +47,15 @@ t_game moveMonster(t_game game)
         }
         else   //Check si l'objet doit se déplacer vers la droite
         {
-            if(game.Gmonster[i].position.x < 760){
-                game.Gmonster[i].position.x += 2;
-            }else{
+            if(game.Gmonster[i].position.x < 760)
+                game.Gmonster[i].position.x += game.monster_speed;
+            else{
                 game.Gmonster[i].flagpositon = 1;
                 game.Gmonster[i].position.y += 20;
             }
-            
         }
     }
-    
+
     return game;
 }
 
@@ -122,8 +118,10 @@ t_game launch_bulletMonster(t_game game) {
 
     if (i == 0) {
         // No monsters. The player won
-        SDL_Delay(5);
+        SDL_Delay(5000);
         game = loadMonsters(game);
+        if (game.monster_speed < 3)
+            game.monster_speed += 1;
         i = 50;
     }
     // Launch bullet of the monster when no other bullet have being launched by one of them
@@ -155,7 +153,7 @@ t_game launch_bulletMonster(t_game game) {
                 
                 game.Gplayer1.lives--;
                 renderAll(game);
-                SDL_Delay(3000);
+                SDL_Delay(1500);
                 game.Gplayer1.player = loadPlayer(game);
                 SDL_DestroyTexture(game.Gmonster[MonsterToLaunch].bullet.bullet);
                 game.Gmonster[MonsterToLaunch].bullet.bullet = NULL;
