@@ -43,11 +43,7 @@ t_game init_screen(t_game game)
 {
     SDL_Surface *screenSurface;
 
-    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
     game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
-    game.Gplayer1.position = init_position(60, 560, 35, 35);
-    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 100);
-    game.Gplayer1.position = init_position(760, 560, 35, 35);
     game.Gmonster->position = init_position(360, 60, 55, 55);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
@@ -66,6 +62,9 @@ t_game init_screen(t_game game)
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
     SDL_FreeSurface(screenSurface);
+    
+    game = init_player(game);
+    game = init_text(game);
 
     return game;
 }
@@ -73,34 +72,34 @@ t_game init_screen(t_game game)
 
 t_game  init_text(t_game game)
 {
-    game.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
+    game.infos.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
     SDL_Colour text_color = { 255, 255, 255 };
     
     // Engine text size and position -  (x,    y,  h,   w)
-    game.score_title_pos = init_position(200, 5, 25, 420);
-    game.high_score_pos = init_position(355, 40, 25, 80);
+    game.infos.score_title_pos = init_position(200, 5, 25, 420);
+    game.infos.high_score_pos = init_position(355, 40, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 40, 25, 80);
     game.Gplayer2.score_pos = init_position(480, 40, 25, 80);
     
     // Score title
-    game.surface_score_title = TTF_RenderText_Solid(game.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
-    game.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.surface_score_title);
+    game.infos.surface_score_title = TTF_RenderText_Solid(game.infos.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
+    game.infos.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_score_title);
     
     // Hi-Score
-    game.surface_high_score = TTF_RenderText_Solid(game.font, "0000", text_color); // Change "0000" with the correct variable
-    game.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.surface_high_score);
+    game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color); // Change "0000" with the correct variable
+    game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
 
     // Player1 - Change "0000" with the correct variable !!!!!!!
-    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
     game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
-    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
     game.Gplayer1.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_lives);
 
     
     // Player2 - Change "0000" with the correct variable !!!!!!!!!
-    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
     game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
-    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.font, "0000", text_color);
+    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
     game.Gplayer2.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_lives);
     
     // Next, look inside renderAll function !!!
@@ -113,9 +112,14 @@ t_game  init_text(t_game game)
 
 t_game  init_player(t_game game)
 {
+    game.Gplayer1.position = init_position(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 35, 35);
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
+
+    game.Gplayer1.nbr_bullet = 0;
     game.Gplayer1.score = 0;
-    game.Gplayer2.lives = 3;
-    
+    game.Gplayer1.lives = 3;
+
+    game.Gplayer2.nbr_bullet = 0;
     game.Gplayer2.score = 0;
     game.Gplayer2.lives = 3;
     
@@ -144,7 +148,7 @@ void end(t_game game)
     game.Gplayer1.player =NULL;
     game.Gscreen = NULL;
     
-    TTF_CloseFont(game.font);
+    TTF_CloseFont(game.infos.font);
     TTF_Quit();
     
     SDL_RenderClear( game.Grenderer );
@@ -209,8 +213,8 @@ void    renderAll(t_game game)
     SDL_RenderCopy( game.Grenderer, game.Gplayer1.player, NULL, &(game.Gplayer1.position) );
     
     // Text
-    SDL_RenderCopy( game.Grenderer, game.texture_score_title, NULL, &(game.score_title_pos) );
-    SDL_RenderCopy( game.Grenderer, game.texture_high_score, NULL, &(game.high_score_pos) );
+    SDL_RenderCopy( game.Grenderer, game.infos.texture_score_title, NULL, &(game.infos.score_title_pos) );
+    SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
     
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) );
@@ -231,4 +235,39 @@ void    renderAll(t_game game)
 
     SDL_RenderPresent( game.Grenderer );
     SDL_UpdateWindowSurface( game.Gwindow );
+}
+
+/*
+**  Fonction qui affiche l'interface du GameOver lorsque le Joueur se fait tuer
+**
+*/
+t_game    showEnd(t_game game)
+{
+    return game;
+}
+
+/*
+**  Fonction qui affiche l'interface du jeux et le permet de jouer.
+**
+*/
+t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
+{
+    if (game.Gevenements.type == SDL_KEYDOWN) {
+        game.Gplayer1 = movePlayer(game);
+
+        if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
+            Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
+            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
+            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].position = init_bulletPos(game.Gplayer1);
+            game.Gplayer1.nbr_bullet++;
+        }
+    }
+    if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
+        game = launch_bullet(game);
+        game = launch_bulletMonster(game);
+        //game.Gmonster = moveMonster(game);
+    }
+
+    renderAll(game);
+    return game;
 }

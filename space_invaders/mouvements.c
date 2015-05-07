@@ -144,7 +144,6 @@ t_game launch_bulletMonster(t_game game) {
                 if (game.Gplayer1.lives == -1)
                 {
                     printf("GAME OVER\n");
-                    end(game);
                 }
                 
                 game.Gplayer1.lives--;

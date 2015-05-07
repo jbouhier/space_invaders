@@ -23,7 +23,7 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
-#define MONSTER_NBR 30
+#define MONSTER_NBR 50
 #define LOAD_FONT_MAX 1
 #define FONT_SIZE 20
 
@@ -63,30 +63,63 @@ typedef struct      s_monster
     bool            flagdown;
     bool            flagpositon;
     int             nbr_bullet;
+    int             score;
 }                   t_monster;
+
+
+typedef struct      s_text_game
+{
+    TTF_Font        *font;
+    SDL_Surface     *surface_score_title;
+    SDL_Texture     *texture_score_title;
+    SDL_Rect        score_title_pos;
+    SDL_Rect        high_score_pos;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
+}                   t_text_game;
+
+
+typedef struct      s_begin
+{
+    SDL_Texture     *logo;
+    SDL_Rect        logo_position;
+    SDL_Texture     *play_with_1;
+    SDL_Rect        play_with_1_position;
+    SDL_Texture     *play_with_2;
+    SDL_Rect        play_with_2_position;
+    SDL_Texture     *high_score;
+    SDL_Rect        high_score_position;
+    SDL_Texture     *quit;
+    SDL_Rect        quit_position;
+    SDL_Surface     *surface_play;
+    SDL_Texture     *selected_option;
+    SDL_Rect        selected_option_position;
+    int             state;
+}                   t_begin;
 
 typedef struct      s_game
 {
     SDL_Window      *Gwindow;
     SDL_Texture     *Gscreen;
-    TTF_Font        *font;
-    SDL_Surface     *surface_score_title;
-    SDL_Texture     *texture_score_title;
-    SDL_Rect        lives_pos;
     SDL_Renderer    *Grenderer;
     SDL_Event       Gevenements;
     t_player        Gplayer1;
     t_player        Gplayer2;
     t_monster       *Gmonster;
-    SDL_Rect        score_title_pos;
+    t_text_game     infos;
+    t_begin         begin;
     int             high_score;
-    SDL_Rect        high_score_pos;
-    SDL_Surface     *surface_high_score;
-    SDL_Texture     *texture_high_score;
+    int             quit;
 }                   t_game;
 
-
 SDL_Rect        init_position(int x, int y, int h, int w);
+void            renderBegin(t_game game);
+t_game          showBegin(t_game game);
+t_game          handleBegin(t_game game);
+int             checkBeginTexture(t_begin beginGame);
+t_game          selectionBeginHandler(t_game game);
+t_game          showEnd(t_game game);
+t_game          showGame(t_game game, int tempsActuel, int tempsPrecedent);
 SDL_Window      *init(SDL_Window *gWindow);
 t_game          init_screen(t_game game);
 t_game          init_player(t_game game);
