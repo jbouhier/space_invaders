@@ -265,7 +265,7 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
     if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
         game = launch_bullet(game);
         game = launch_bulletMonster(game);
-        //game.Gmonster = moveMonster(game);
+        game = moveMonster(game);
     }
 
     renderAll(game);

@@ -119,6 +119,13 @@ t_game launch_bulletMonster(t_game game) {
             MonsterToLaunch = i;
         }
     }
+
+    if (i == 0) {
+        // No monsters. The player won
+        SDL_Delay(5);
+        game = loadMonsters(game);
+        i = 50;
+    }
     // Launch bullet of the monster when no other bullet have being launched by one of them
     if (bulletOn == 0) {
         MonsterToLaunch = rand() % i;
