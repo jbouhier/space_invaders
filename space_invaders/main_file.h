@@ -109,7 +109,8 @@ char            *hscore_path();
 long            get_hscore(char *hscore_path);
 void            set_hscore(t_game *game, long score);
 t_game          showExposion(t_game game, int index);
-void            write_score(t_game game, long hscore);
 void            overwrite_hscore(t_player player);
+void            write_score(t_game game, long hscore);
+
 
 #endif /* __main_file_h__ */

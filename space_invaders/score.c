@@ -54,27 +54,15 @@ void    set_hscore(t_game *game, long score)
 }
 
 
-// Use: write_score(game, get_hscore(hscore_path()) );
-void    write_score(t_game game, long hscore)
-{
-    if (game.Gplayer1.score > hscore)
-        overwite_hscore(game.Gplayer1);
-    else if (game.Gplayer2.score > hscore)
-         overwite_hscore(game.Gplayer2);
-}
-
-
 void    overwrite_hscore(t_player player)
 {
     FILE    *fd;
-    char    buffer[BUFF_SIZE];
-    char    *end;
+    char	score_str[12];
     
     if ((fd = fopen(hscore_path(), "w+")))
     {
-        if (fgets(buffer, BUFF_SIZE, fd))
-            score = strtol(buffer, &end, 10);
-        
+        sprintf(score_str, "%ld", player.score);
+        fwrite(score_str, 1, sizeof(score_str), fd);
         fclose(fd);
     }
     else
@@ -84,6 +72,20 @@ void    overwrite_hscore(t_player player)
         exit(EXIT_FAILURE);
     }
 }
+
+
+// When player.lives < 0
+// write_score(game, get_hscore(hscore_path()) );
+void    write_score(t_game game, long hscore)
+{
+    if (game.Gplayer1.score > hscore)
+        overwrite_hscore(game.Gplayer1);
+    else if (game.Gplayer2.score > hscore)
+         overwrite_hscore(game.Gplayer2);
+}
+
+
+
 
 
 

@@ -27,7 +27,7 @@ int main(int argc, const char * argv[])
     set_hscore(&game, get_hscore(hscore_path()));
     
     // Debug
-    printf("Score %d\n", game.Gplayer1.score);
+    printf("Score %ld\n", game.Gplayer1.score);
 
 
     if ( game.Gwindow != NULL) {
