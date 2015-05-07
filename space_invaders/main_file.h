@@ -108,6 +108,7 @@ typedef struct      s_game
     t_monster       *Gmonster;
     t_text_game     infos;
     t_begin         begin;
+    int             monster_speed;
     int             high_score;
     int             quit;
 }                   t_game;

@@ -54,6 +54,7 @@ t_game init_screen(t_game game)
 
     game.Gplayer1.player = loadPlayer(game);
     game = loadMonsters( game );
+    game.monster_speed = 1;
     // Load sounds effects to the Game
     game = loadSounds( game );
 
