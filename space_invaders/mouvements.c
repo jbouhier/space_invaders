@@ -172,7 +172,7 @@ t_game launch_bulletMonster(t_game game) {
 t_game deleteBullets(t_game game, int index) {
     int i;
 
-    SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet);
+    SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet); // Error !
 
     for (i = index; game.Gplayer1.bullet[i].bullet != NULL; i++) {
         game.Gplayer1.bullet[i] = game.Gplayer1.bullet[i + 1];
