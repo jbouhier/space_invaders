@@ -6,13 +6,14 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#ifndef space_invaders_main_file_h
-#define space_invaders_main_file_h
+#ifndef __main_file_h__
+# define __main_file_h__
 
-#include <stdio.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
@@ -26,6 +27,7 @@
 #define MONSTER_NBR 50
 #define LOAD_FONT_MAX 1
 #define FONT_SIZE 20
+#define SCORE_LENGTH 4
 
 
 typedef struct      s_bullet
@@ -42,7 +44,7 @@ typedef struct      s_player
     Mix_Chunk       *bulletGo_sound;
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
-    int             score;
+    long            score;
     SDL_Rect        score_pos;
     SDL_Surface     *surface_score;
     SDL_Texture     *texture_score;
@@ -109,8 +111,13 @@ typedef struct      s_game
     t_text_game     infos;
     t_begin         begin;
     int             monster_speed;
-    int             high_score;
     int             quit;
+    SDL_Rect        score_title_pos;
+    long            high_score;
+    char            *hscore_str;
+    SDL_Rect        high_score_pos;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
 }                   t_game;
 
 SDL_Rect        init_position(int x, int y, int h, int w);
@@ -127,7 +134,7 @@ t_game          init_player(t_game game);
 t_game          init_text(t_game game);
 SDL_Texture     *loadPlayer(t_game game);
 t_player        movePlayer(t_game game);
-t_game		moveMonster(t_game game);
+t_game          moveMonster(t_game game);
 SDL_Texture     *loadBullet(t_game game);
 SDL_Rect        init_bulletPos(t_player player);
 SDL_Rect        init_bulletMonsterPos(t_monster monster);
@@ -140,7 +147,13 @@ bool            checkCollision( SDL_Rect a, SDL_Rect b );
 t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
-t_game showExposion(t_game game, int index);
+t_game          showExposion(t_game game, int index);
+char            *hscore_path();
+long            get_hscore(char *hscore_path);
+void            set_hscore(t_game *game, long score);
+t_game          showExposion(t_game game, int index);
+void            overwrite_hscore(t_player player);
+void            write_score(t_game game, long hscore);
+char            *score_str(long hscore, char *score_str);
 
-
-#endif
+#endif /* __main_file_h__ */

@@ -74,7 +74,7 @@ t_game init_screen(t_game game)
 t_game  init_text(t_game game)
 {
     game.infos.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
-    SDL_Colour text_color = { 255, 255, 255 };
+    SDL_Colour text_color = { 255, 255, 255, 0};
     
     // Engine text size and position -  (x,    y,  h,   w)
     game.infos.score_title_pos = init_position(200, 5, 25, 420);
@@ -87,7 +87,10 @@ t_game  init_text(t_game game)
     game.infos.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_score_title);
     
     // Hi-Score
-    game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color); // Change "0000" with the correct variable
+    game.hscore_str = malloc(sizeof(SCORE_LENGTH) + 1);
+    game.hscore_str = score_str(game.high_score, game.hscore_str);
+    printf("hscore_str: %s\n", game.hscore_str);
+    game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, game.hscore_str, text_color);
     game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
 
     // Player1 - Change "0000" with the correct variable !!!!!!!

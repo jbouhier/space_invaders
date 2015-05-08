@@ -12,11 +12,13 @@ int j;
 int x;
 int y;
 
-SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRenderer)
+SDL_Texture *loadTexture(char* path, SDL_Renderer* gRenderer)
 {
     SDL_Texture* newTexture;
     //Load image at specified path
     SDL_Surface* loadedSurface;
+    
+    newTexture = NULL;
 
     loadedSurface = IMG_Load( path );
     if( loadedSurface == NULL )
@@ -47,13 +49,13 @@ SDL_Texture *loadPlayer(t_game game)
     char        *ship_rel_path = "/../../../images/ship.png";
     char        *ship;
     
-    // Create and malloc shipfull path string
+    // Create and malloc ship full path string
     ship = malloc ((sizeof(char) * strlen(PWD) + strlen(ship_rel_path)) + 1);
     strcpy(ship, PWD);
     strcat(ship, ship_rel_path);
     
     //Load ship PNG texture
-    player = loadTexture( ship, game.Gwindow, game.Grenderer);
+    player = loadTexture(ship, game.Grenderer);
     if( player == NULL )
         printf( "Failed to load texture image!\n" );
 
@@ -73,7 +75,7 @@ SDL_Texture *loadBullet(t_game game)
     strcat(paths,"/../../../images/bullet.png");
 
     //Load PNG texture
-    bullet = loadTexture( paths, game.Gwindow, game.Grenderer);
+    bullet = loadTexture(paths, game.Grenderer);
 
     if( bullet == NULL )
     {
@@ -134,6 +136,7 @@ t_game loadSounds(t_game game)
 {
     char **paths;
     
+    paths = NULL;
     paths = AllocateSoundPath(paths);
 
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( paths[0] );
@@ -188,29 +191,28 @@ t_game showExposion(t_game game, int index)
     strcpy(paths, PWD);
     strcat(paths,"/../../../images/explosion.png");
 
-    
-    game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
+    game.Gmonster[index].explosion = loadTexture(paths, game.Grenderer);
     
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
         game.Gplayer1.score += game.Gmonster[index].score;
     else
         game.Gplayer2.score += game.Gmonster[index].score;
     
-    
-    printf("Score %d\n", game.Gplayer1.score);
-    
+    // Debug
+    printf("Score %ld\n", game.Gplayer1.score);
     printf("monster's[%d] score : %d\n", index, game.Gmonster[index].score);
+    
     return game;
 }
 
 
-SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer* gRenderer)
+SDL_Texture *loadMonster(SDL_Renderer* gRenderer)
 {
     //Loading success flag
     bool success = true;
     SDL_Texture* monster;
     
-    monster = loadTexture( "/../../../images/monster2.bmp", gWindow, gRenderer);
+    monster = loadTexture( "/../../../images/monster2.bmp", gRenderer);
     
     if (monster == NULL){
         printf( "Failed to load texture image!\n" );
@@ -225,10 +227,10 @@ SDL_Texture *loadMonster(SDL_Event evenements, SDL_Window *gWindow, SDL_Renderer
  */
 t_game    showBegin(t_game game)
 {
-    SDL_Colour text_color = { 255, 255, 255 };
-    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Gwindow, game.Grenderer );
-    game.begin.logo = loadTexture( "/../../../images/background/logo.png", game.Gwindow, game.Grenderer );
-    game.begin.selected_option = loadTexture( "/../../../images/background/selection.png", game.Gwindow, game.Grenderer );
+    SDL_Colour text_color = { 255, 255, 255, 0 };
+    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
+    game.begin.logo = loadTexture( "/../../../images/background/logo.png", game.Grenderer );
+    game.begin.selected_option = loadTexture( "/../../../images/background/selection.png", game.Grenderer );
     game.begin.logo_position = init_position(120, 100, 150, 500);
     game.begin.state = 1;
     game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     Play      ", text_color);
@@ -251,6 +253,7 @@ t_game    showBegin(t_game game)
 
     return game;
 }
+
 
 void    renderBegin(t_game game)
 {
