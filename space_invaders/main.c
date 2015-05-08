@@ -30,7 +30,7 @@ int main(void)
     game = showBegin(game);
     while(!terminer)
     {
-        while( SDL_PollEvent(&game.Gevenements) >= 0 )
+        while( SDL_PollEvent(&game.Gevenements) >= 0 ) // Error !
         {
             tempsActuel = SDL_GetTicks();
             if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE || game.quit == 1)

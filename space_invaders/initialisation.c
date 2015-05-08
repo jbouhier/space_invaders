@@ -205,7 +205,7 @@ void    renderAll(t_game game)
     SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
     
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) );
+        SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) ); // Error !
         if (game.Gmonster[i].explosion != NULL) {
             SDL_RenderCopy( game.Grenderer, game.Gmonster[i].explosion, NULL, &(game.Gmonster[i].position) );
         }
