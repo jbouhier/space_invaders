@@ -27,6 +27,7 @@
 #define MONSTER_NBR 30
 #define LOAD_FONT_MAX 1
 #define FONT_SIZE 20
+#define SCORE_LENGTH 4
 
 
 typedef struct      s_bullet
@@ -80,6 +81,7 @@ typedef struct      s_game
     t_monster       *Gmonster;
     SDL_Rect        score_title_pos;
     long            high_score;
+    char            *hscore_str;
     SDL_Rect        high_score_pos;
     SDL_Surface     *surface_high_score;
     SDL_Texture     *texture_high_score;
@@ -111,6 +113,6 @@ void            set_hscore(t_game *game, long score);
 t_game          showExposion(t_game game, int index);
 void            overwrite_hscore(t_player player);
 void            write_score(t_game game, long hscore);
-
+char            *score_str(long hscore, char *score_str);
 
 #endif /* __main_file_h__ */

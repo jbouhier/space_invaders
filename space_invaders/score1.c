@@ -10,7 +10,7 @@
 
 #define HSCORE_FILE_PATH "/../../../game/high_score.txt"
 // Score is 4 numbers long + 1 for the NULL terminating string
-#define BUFF_SIZE 5
+
 
 char    *hscore_path()
 {
@@ -27,13 +27,15 @@ char    *hscore_path()
 long get_hscore(char *hscore_path)
 {
     FILE    *fd;
-    long    score;
-    char    buffer[BUFF_SIZE];
+    char    buffer[SCORE_LENGTH + 1];
     char    *end;
+    long    score;
+    
+    score = 0;
     
     if ((fd = fopen(hscore_path, "r")))
     {
-        if (fgets(buffer, BUFF_SIZE, fd))
+        if (fgets(buffer, SCORE_LENGTH + 1, fd))
             score = strtol(buffer, &end, 10);
         fclose(fd);
     }

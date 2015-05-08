@@ -9,7 +9,7 @@
 #include "main_file.h"
 
 
-int main(int argc, const char * argv[])
+int main(void)
 {
     t_game  game;
     int     tempsActuel;
@@ -25,6 +25,7 @@ int main(int argc, const char * argv[])
     game = init_player(game);
     game = init_text(game);
     set_hscore(&game, get_hscore(hscore_path()));
+    game.hscore_str = score_str(game.high_score, game.hscore_str);
     
     // Debug
     printf("Score %ld\n", game.Gplayer1.score);
