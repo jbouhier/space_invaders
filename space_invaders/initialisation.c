@@ -7,7 +7,7 @@
 //
 
 
-#include "main_file.h"
+#include "prototypes.h"
 
 SDL_Window* init(SDL_Window *gWindow) {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
@@ -215,7 +215,7 @@ void    renderAll(t_game game)
     }
 
     for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
-        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) );
+        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) ); // 2 balles = plantage !
     }
 
     for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++)

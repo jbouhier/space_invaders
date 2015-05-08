@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#include "main_file.h"
+#include "prototypes.h"
 
 #define HSCORE_FILE_PATH "/../../../game/high_score.txt"
 // Score is 4 numbers long + 1 for the NULL terminating string

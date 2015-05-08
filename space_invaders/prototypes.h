@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#ifndef __main_file_h__
-# define __main_file_h__
+#ifndef __prototypes_h__
+# define __prototypes_h__
 
 #include <unistd.h>
 #include <stdio.h>
@@ -161,4 +161,4 @@ void            freeMonster(t_game game);
 void            freePlayer(t_player player);
 void            freeInfos(t_game game);
 
-#endif /* __main_file_h__ */
+#endif /* __prototypes_h__ */

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-#include "main_file.h"
+#include "prototypes.h"
 
 char  *score_str(long hscore, char *score_str)
 {
