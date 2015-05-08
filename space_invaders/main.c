@@ -24,12 +24,12 @@ int main(int argc, const char * argv[])
     tempsPrecedent = 0;
 
     game = init_screen(game);
-    if ( game.Gwindow != NULL) {
-        game = showBegin(game);
-        while(!terminer)
+    game = showBegin(game);
+    while(!terminer)
+    {
+        while( SDL_PollEvent(&game.Gevenements) >= 0 )
         {
             tempsActuel = SDL_GetTicks();
-            SDL_PollEvent(&(game.Gevenements));
             if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE || game.quit == 1)
                 terminer = 1;
             else {

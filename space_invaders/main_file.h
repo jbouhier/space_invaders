@@ -117,6 +117,7 @@ SDL_Rect        init_position(int x, int y, int h, int w);
 void            renderBegin(t_game game);
 t_game          showBegin(t_game game);
 t_game          handleBegin(t_game game);
+t_game          KeyBeginHandler(t_game game);
 int             checkBeginTexture(t_begin beginGame);
 t_game          selectionBeginHandler(t_game game);
 t_game          showEnd(t_game game);
@@ -127,7 +128,7 @@ t_game          init_player(t_game game);
 t_game          init_text(t_game game);
 SDL_Texture     *loadPlayer(t_game game);
 t_player        movePlayer(t_game game);
-t_game		moveMonster(t_game game);
+t_game          moveMonster(t_game game);
 SDL_Texture     *loadBullet(t_game game);
 SDL_Rect        init_bulletPos(t_player player);
 SDL_Rect        init_bulletMonsterPos(t_monster monster);
@@ -140,7 +141,10 @@ bool            checkCollision( SDL_Rect a, SDL_Rect b );
 t_game          loadSounds(t_game game);
 char            **AllocateSoundPath(char **paths);
 t_game          loadMonsters(t_game game);
-t_game showExposion(t_game game, int index);
+t_game          showExposion(t_game game, int index);
+void            freeBegin(t_game game);
+void            freeMonster(t_game game);
+void            freePlayer(t_player player);
 
 
 #endif
