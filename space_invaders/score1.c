@@ -1,5 +1,5 @@
 //
-//  get_hscore.c
+//  score1.c
 //  space_invaders
 //
 //  Created by SynxS on 06/05/15.
@@ -57,6 +57,8 @@ void    set_hscore(t_game *game, long score)
 void    overwrite_hscore(t_player player)
 {
     FILE    *fd;
+    // score_str should normaly be 5 because the number is 4 long
+    // + 1 for the NULL terminating string
     char	score_str[12];
     
     if ((fd = fopen(hscore_path(), "w+")))
@@ -78,34 +80,8 @@ void    overwrite_hscore(t_player player)
 // write_score(game, get_hscore(hscore_path()) );
 void    write_score(t_game game, long hscore)
 {
-    if (game.Gplayer1.score > hscore)
+    if (game.Gplayer1.score > hscore && game.Gplayer1.score > game.Gplayer2.score)
         overwrite_hscore(game.Gplayer1);
-    else if (game.Gplayer2.score > hscore)
+    else if (game.Gplayer2.score > hscore && game.Gplayer1.score < game.Gplayer2.score)
          overwrite_hscore(game.Gplayer2);
 }
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
