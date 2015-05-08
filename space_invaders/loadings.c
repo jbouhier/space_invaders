@@ -12,11 +12,13 @@ int j;
 int x;
 int y;
 
-SDL_Texture *loadTexture( char* path, SDL_Window *gWindow, SDL_Renderer* gRenderer)
+SDL_Texture *loadTexture(char* path, SDL_Renderer* gRenderer)
 {
     SDL_Texture* newTexture;
     //Load image at specified path
     SDL_Surface* loadedSurface;
+    
+    newTexture = NULL;
 
     loadedSurface = IMG_Load( path );
     if( loadedSurface == NULL )
@@ -53,7 +55,7 @@ SDL_Texture *loadPlayer(t_game game)
     strcat(ship, ship_rel_path);
     
     //Load ship PNG texture
-    player = loadTexture( ship, game.Gwindow, game.Grenderer);
+    player = loadTexture(ship, game.Grenderer);
     if( player == NULL )
         printf( "Failed to load texture image!\n" );
 
@@ -73,7 +75,7 @@ SDL_Texture *loadBullet(t_game game)
     strcat(paths,"/../../../images/bullet.png");
 
     //Load PNG texture
-    bullet = loadTexture( paths, game.Gwindow, game.Grenderer);
+    bullet = loadTexture(paths, game.Grenderer);
 
     if( bullet == NULL )
     {
@@ -129,6 +131,7 @@ t_game loadSounds(t_game game)
 {
     char **paths;
     
+    paths = NULL;
     paths = AllocateSoundPath(paths);
 
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( paths[0] );
@@ -182,7 +185,7 @@ t_game showExposion(t_game game, int index)
     strcpy(paths, PWD);
     strcat(paths,"/../../../images/explosion.png");
     
-    game.Gmonster[index].explosion = loadTexture( paths, game.Gwindow, game.Grenderer);
+    game.Gmonster[index].explosion = loadTexture(paths, game.Grenderer);
 
     return game;
 }
