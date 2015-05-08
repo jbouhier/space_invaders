@@ -245,10 +245,9 @@ t_game    showBegin(t_game game)
                                                    game.begin.play_with_1_position.h, game.begin.play_with_1_position.w);
     game.begin.quit_position = init_position(game.begin.high_score_position.x, game.begin.high_score_position.y + 50,
                                              game.begin.high_score_position.h, game.begin.high_score_position.w);
-
     game.begin.selected_option_position = init_position(game.begin.play_with_1_position.x - 100,
                                                         game.begin.play_with_1_position.y + 10, 30, 100);
-
+    game.begin.play_with_2 = NULL;
     renderBegin(game);
 
     return game;
