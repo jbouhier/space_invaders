@@ -47,7 +47,7 @@ SDL_Texture *loadPlayer(t_game game)
     char        *ship_rel_path = "/../../../images/ship.png";
     char        *ship;
     
-    // Create and malloc shipfull path string
+    // Create and malloc ship full path string
     ship = malloc ((sizeof(char) * strlen(PWD) + strlen(ship_rel_path)) + 1);
     strcpy(ship, PWD);
     strcat(ship, ship_rel_path);
