@@ -124,6 +124,7 @@ SDL_Rect        init_position(int x, int y, int h, int w);
 void            renderBegin(t_game game);
 t_game          showBegin(t_game game);
 t_game          handleBegin(t_game game);
+t_game          KeyBeginHandler(t_game game);
 int             checkBeginTexture(t_begin beginGame);
 t_game          selectionBeginHandler(t_game game);
 t_game          showEnd(t_game game);
@@ -155,5 +156,9 @@ t_game          showExposion(t_game game, int index);
 void            overwrite_hscore(t_player player);
 void            write_score(t_game game, long hscore);
 char            *score_str(long hscore, char *score_str);
+void            freeBegin(t_game game);
+void            freeMonster(t_game game);
+void            freePlayer(t_player player);
+void            freeInfos(t_game game);
 
 #endif /* __main_file_h__ */

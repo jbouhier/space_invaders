@@ -27,15 +27,12 @@ int main(void)
     set_hscore(&game, get_hscore(hscore_path()));
     game.hscore_str = score_str(game.high_score, game.hscore_str);
     
-    // Debug
-    printf("Score %ld\n", game.Gplayer1.score);
-
-    if ( game.Gwindow != NULL) {
-        game = showBegin(game);
-        while(!terminer)
+    game = showBegin(game);
+    while(!terminer)
+    {
+        while( SDL_PollEvent(&game.Gevenements) >= 0 )
         {
             tempsActuel = SDL_GetTicks();
-            SDL_PollEvent(&(game.Gevenements));
             if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE || game.quit == 1)
                 terminer = 1;
             else {

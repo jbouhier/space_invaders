@@ -68,7 +68,7 @@ t_game launch_bullet(t_game game) {
 
     for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
         if (game.Gplayer1.bullet[i].position.y >= 0) {
-            game.Gplayer1.bullet[i].position.y -= 5;
+            game.Gplayer1.bullet[i].position.y -= 10;
             for (j = 0; game.Gmonster[j].monster != NULL; j++) {
                 if (game.Gmonster[j].monster != NULL) {
                     if (checkCollision( game.Gmonster[j].position, game.Gplayer1.bullet[i].position )) {

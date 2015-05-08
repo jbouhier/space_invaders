@@ -272,7 +272,6 @@ void    renderBegin(t_game game)
         SDL_RenderPresent( game.Grenderer );
         SDL_UpdateWindowSurface( game.Gwindow );
     }
-
 }
 
 int     checkBeginTexture(t_begin beginGame) {
@@ -299,9 +298,12 @@ int     checkBeginTexture(t_begin beginGame) {
 }
 
 t_game  handleBegin(t_game game) {
-    if(game.Gevenements.type == SDL_MOUSEMOTION){
+    if(game.Gevenements.type == SDL_MOUSEMOTION)
         game = selectionBeginHandler(game);
-    }
+
+    if (game.Gevenements.type == SDL_KEYDOWN)
+        game = KeyBeginHandler(game);
+
     renderBegin(game);
     if(game.Gevenements.type == SDL_MOUSEBUTTONDOWN && game.Gevenements.button.button == SDL_BUTTON_LEFT) {
         if( game.Gevenements.button.x >= game.begin.play_with_1_position.x &&
@@ -311,6 +313,7 @@ t_game  handleBegin(t_game game) {
         {
             game.begin.state = 0;
         }
+
         if( game.Gevenements.button.x >= game.begin.quit_position.x &&
            game.Gevenements.button.x <= game.begin.quit_position.x + game.begin.quit_position.w &&
            game.Gevenements.button.y >= game.begin.quit_position.y &&
@@ -322,19 +325,53 @@ t_game  handleBegin(t_game game) {
     return game;
 }
 
+t_game  KeyBeginHandler(t_game game) {
+    if( game.Gevenements.key.keysym.sym == SDLK_UP) {
+        if ( game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
+            game.begin.selected_option_position.y = game.begin.play_with_1_position.y + 10;
+        else if (game.begin.selected_option_position.y == game.begin.quit_position.y + 10)
+            game.begin.selected_option_position.y = game.begin.high_score_position.y + 10;
+    }
+    else if( game.Gevenements.key.keysym.sym == SDLK_DOWN) {
+        if ( game.begin.selected_option_position.y == game.begin.play_with_1_position.y + 10)
+            game.begin.selected_option_position.y = game.begin.high_score_position.y + 10;
+        else if (game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
+            game.begin.selected_option_position.y = game.begin.quit_position.y + 10;
+    }
+
+    if (game.Gevenements.key.keysym.sym == SDLK_RETURN || game.Gevenements.key.keysym.sym == SDLK_RETURN2) {
+        if ( game.begin.selected_option_position.y == game.begin.play_with_1_position.y + 10)
+            game.begin.state = 0;
+        //else if (game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
+            // TODO Script pour l'affichage des highscores
+        else
+            game.quit = 1;
+    }
+
+    return game;
+}
+
 t_game  selectionBeginHandler(t_game game) {
+    SDL_Cursor* cursor;
+    cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     if( game.Gevenements.motion.x >= game.begin.play_with_1_position.x &&
        game.Gevenements.motion.x <= game.begin.play_with_1_position.x + game.begin.play_with_1_position.w) {
         if ( game.Gevenements.motion.y >= game.begin.play_with_1_position.y &&
             game.Gevenements.motion.y <= game.begin.play_with_1_position.y + game.begin.play_with_1_position.h) {
             game.begin.selected_option_position.y = game.begin.play_with_1_position.y + 10;
+            cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
         }
         else if (game.Gevenements.motion.y >= game.begin.high_score_position.y &&
                  game.Gevenements.motion.y <= game.begin.high_score_position.y + game.begin.high_score_position.h) {
             game.begin.selected_option_position.y = game.begin.high_score_position.y + 10;
+            cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
         }
-        else
+        else {
             game.begin.selected_option_position.y = game.begin.quit_position.y + 10;
+            cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+        }
     }
+
+    SDL_SetCursor(cursor);
     return game;
 }

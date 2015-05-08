@@ -53,17 +53,17 @@ t_game init_screen(t_game game)
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 
     game.Gplayer1.player = loadPlayer(game);
-    game = loadMonsters( game );
+    game = loadMonsters(game);
     game.monster_speed = 1;
     // Load sounds effects to the Game
-    game = loadSounds( game );
+    game = loadSounds(game);
 
     //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
     SDL_FreeSurface(screenSurface);
-    
+
     game = init_player(game);
     game = init_text(game);
 
@@ -133,38 +133,22 @@ t_game  init_player(t_game game)
 
 void end(t_game game)
 {
-    int i;
-    //Deallocate textures
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        SDL_DestroyTexture(game.Gmonster[i].monster);
-        game.Gmonster[i].monster = NULL;
-    }
-    free(game.Gmonster);
+    freeBegin(game);
+    freeMonster(game);
+    freePlayer(game.Gplayer1);
+    freePlayer(game.Gplayer2);
+    freeInfos(game);
 
-    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
-        SDL_DestroyTexture(game.Gplayer1.bullet[i].bullet);
-        game.Gplayer1.bullet[i].bullet = NULL;
-    }
-    free(game.Gplayer1.bullet);
-    SDL_DestroyTexture(game.Gplayer1.player);
     SDL_DestroyTexture(game.Gscreen);
-
-    game.Gplayer1.player =NULL;
-    game.Gscreen = NULL;
-    
-    TTF_CloseFont(game.infos.font);
-    TTF_Quit();
-    
-    SDL_RenderClear( game.Grenderer );
-
     SDL_DestroyRenderer( game.Grenderer );
-    game.Grenderer = NULL;
-    //Destroy window
     SDL_DestroyWindow( game.Gwindow );
+    game.Grenderer = NULL;
+    game.Gscreen = NULL;
     game.Gwindow = NULL;
-
-    //Quit SDL subsystems
+    
     IMG_Quit();
+    Mix_Quit();
+    TTF_Quit();
     SDL_Quit();
 }
 
