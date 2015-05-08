@@ -53,17 +53,17 @@ t_game init_screen(t_game game)
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 
     game.Gplayer1.player = loadPlayer(game);
-    game = loadMonsters( game );
+    game = loadMonsters(game);
     game.monster_speed = 1;
     // Load sounds effects to the Game
-    game = loadSounds( game );
+    game = loadSounds(game);
 
     //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
     SDL_FreeSurface(screenSurface);
-    
+
     game = init_player(game);
     game = init_text(game);
 
@@ -134,10 +134,8 @@ void end(t_game game)
     freeMonster(game);
     freePlayer(game.Gplayer1);
     freePlayer(game.Gplayer2);
-    
-    TTF_CloseFont(game.infos.font);
-    TTF_Quit();
-    
+    freeInfos(game);
+
     SDL_DestroyTexture(game.Gscreen);
     SDL_DestroyRenderer( game.Grenderer );
     SDL_DestroyWindow( game.Gwindow );

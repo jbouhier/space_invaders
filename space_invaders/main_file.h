@@ -145,6 +145,6 @@ t_game          showExposion(t_game game, int index);
 void            freeBegin(t_game game);
 void            freeMonster(t_game game);
 void            freePlayer(t_player player);
-
+void            freeInfos(t_game game);
 
 #endif

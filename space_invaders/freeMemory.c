@@ -92,3 +92,23 @@ void freePlayer(t_player player)
 
     free(player.bullet);
 }
+
+void freeInfos(t_game game)
+{
+    if (game.infos.surface_high_score)
+        SDL_FreeSurface(game.infos.surface_high_score);
+    if (game.infos.surface_score_title)
+        SDL_FreeSurface(game.infos.surface_score_title);
+    if (game.infos.texture_high_score)
+        SDL_DestroyTexture(game.infos.texture_high_score);
+    if (game.infos.texture_score_title)
+        SDL_DestroyTexture(game.infos.texture_score_title);
+    if (game.infos.font)
+        TTF_CloseFont(game.infos.font);
+
+    game.infos.surface_high_score = NULL;
+    game.infos.surface_score_title = NULL;
+    game.infos.texture_high_score = NULL;
+    game.infos.texture_score_title = NULL;
+    game.infos.font = NULL;
+}
