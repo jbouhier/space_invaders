@@ -146,7 +146,7 @@ t_game launch_bulletMonster(t_game game) {
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
                 
-                if (game.Gplayer1.lives == -1)
+                if (game.Gplayer1.lives <= 0)
                 {
                     printf("GAME OVER\n");
                 }
@@ -172,13 +172,16 @@ t_game launch_bulletMonster(t_game game) {
 t_game deleteBullets(t_game game, int index) {
     int i;
 
-    SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet); // Error !
+    if (game.Gplayer1.bullet[index].bullet != NULL) {
+        SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet); // Error !
+    }
 
-    for (i = index; game.Gplayer1.bullet[i].bullet != NULL; i++) {
+    for (i = index; i < 10; i++) {
         game.Gplayer1.bullet[i] = game.Gplayer1.bullet[i + 1];
     }
+
     if (i > 0) {
-        game.Gplayer1.nbr_bullet = i - 1;
+        game.Gplayer1.nbr_bullet--;
     }
 
     return game;

@@ -9,28 +9,26 @@
 
 #include "prototypes.h"
 
-SDL_Window* init(SDL_Window *gWindow) {
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0)
-    {
+SDL_Window* init(SDL_Window *gWindow)
+{
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0) {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-    
-    if(TTF_Init() != 0)
-    {
+
+    if(TTF_Init() != 0) {
         fprintf(stderr, "Error of text initialization of SDL : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-    
-    gWindow = SDL_CreateWindow("Space Invaders",
-                               SDL_WINDOWPOS_CENTERED,
-                               SDL_WINDOWPOS_CENTERED,
-                               SCREEN_WIDTH, SCREEN_HEIGHT,
-                               SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
-    if ( gWindow == NULL )
-    {
-        fprintf(stderr,  "Impossible de créer la fenêtre! Erreur SDL: %s\n", SDL_GetError() );
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+        fprintf(stderr, "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+
+    gWindow = SDL_CreateWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                               SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+
+    if ( gWindow == NULL ) {
+        fprintf(stderr, "Impossible de créer la fenêtre! Erreur SDL: %s\n", SDL_GetError() );
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
@@ -47,16 +45,13 @@ t_game init_screen(t_game game)
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
 
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-
     game.Gplayer1.player = loadPlayer(game);
     game = loadMonsters(game);
     game = loadSounds(game);
 
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
-    
+
     SDL_FreeSurface(screenSurface);
 
     game = init_player(game);
@@ -124,9 +119,9 @@ t_game  init_text(t_game game)
     
     // Engine text size and position -  (x,    y,  h,   w)
     game.infos.score_title_pos = init_position(200, 5, 25, 420);
-    game.infos.high_score_pos = init_position(355, 40, 25, 80);
+    game.infos.high_score_pos = init_position(365, 40, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 40, 25, 80);
-    game.Gplayer2.score_pos = init_position(480, 40, 25, 80);
+    game.Gplayer2.score_pos = init_position(510, 40, 25, 80);
     
     // Score title
     game.infos.surface_score_title = TTF_RenderText_Solid(game.infos.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
@@ -233,43 +228,6 @@ SDL_Rect init_bulletMonsterPos(t_monster monster) {
 }
 
 
-void    renderAll(t_game game)
-{
-    int i;
-    int x;
-    int y;
-
-    x = 10;
-    y = 10;
-    SDL_RenderClear( game.Grenderer );
-    SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-    SDL_RenderCopy( game.Grenderer, game.Gplayer1.player, NULL, &(game.Gplayer1.position) );
-    
-    // Text
-    SDL_RenderCopy( game.Grenderer, game.infos.texture_score_title, NULL, &(game.infos.score_title_pos) );
-    SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
-    
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) ); // Error !
-        if (game.Gmonster[i].explosion != NULL) {
-            SDL_RenderCopy( game.Grenderer, game.Gmonster[i].explosion, NULL, &(game.Gmonster[i].position) );
-        }
-        if (game.Gmonster[i].bullet.bullet != NULL) {
-            SDL_RenderCopy( game.Grenderer, game.Gmonster[i].bullet.bullet, NULL, &(game.Gmonster[i].bullet.position) );
-        }
-    }
-
-    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
-        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) ); // 2 balles = plantage !
-    }
-
-    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++)
-        SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) );
-
-    SDL_RenderPresent( game.Grenderer );
-    SDL_UpdateWindowSurface( game.Gwindow );
-}
-
 /*
 **  Fonction qui affiche l'interface du GameOver lorsque le Joueur se fait tuer
 **
@@ -287,7 +245,7 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
 {
     if (game.Gevenements.type == SDL_KEYDOWN) {
         game.Gplayer1 = movePlayer(game);
-
+        printf("bullet nbr : %d\n", game.Gplayer1.nbr_bullet);
         if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
             Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
             game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
@@ -297,7 +255,7 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
     }
     if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
         game = launch_bullet(game);
-        game = launch_bulletMonster(game);
+        //game = launch_bulletMonster(game);
         game = moveMonster(game);
     }
 

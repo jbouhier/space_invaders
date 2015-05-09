@@ -54,7 +54,7 @@ int main(void)
                 gameover = 1;
             
             toWait = SDL_GetTicks() - tempsActuel;
-            if ( toWait < 16 )
+            if ( toWait < 16 && game.quit == 0)
                 SDL_Delay(16 - toWait);
         }
     }

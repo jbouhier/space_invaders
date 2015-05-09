@@ -62,7 +62,7 @@ typedef struct      s_monster
     t_bullet        bullet;
     Mix_Chunk       *monsterExplode_sound;
     Mix_Chunk       *monsterMove_sound;
-    bool            flagdown;
+    int             timeShowExplosion;
     bool            flagpositon;
     int             nbr_bullet;
     int             score;
@@ -162,5 +162,6 @@ void            freePlayer(t_player player);
 void            freeInfos(t_game game);
 t_game          init_monster_player(t_game game);
 t_game          init_game(t_game game);
+void            renderPlayer(t_game game);
 
 #endif /* __prototypes_h__ */
