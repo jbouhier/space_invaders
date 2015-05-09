@@ -43,22 +43,17 @@ t_game init_screen(t_game game)
 {
     SDL_Surface *screenSurface;
 
-    game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
-    game.Gmonster->position = init_position(360, 60, 55, 55);
+    game = init_game(game);
     game.Gwindow = init(game.Gwindow);
     game.Grenderer = SDL_CreateRenderer( game.Gwindow, -1, SDL_RENDERER_ACCELERATED );
 
-    //Initialize SDL_mixer
     if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 
     game.Gplayer1.player = loadPlayer(game);
     game = loadMonsters(game);
-    game.monster_speed = 1;
-    // Load sounds effects to the Game
     game = loadSounds(game);
 
-    //Get window surface
     screenSurface = SDL_GetWindowSurface( game.Gwindow );
     game.Gscreen = SDL_CreateTextureFromSurface(game.Grenderer, screenSurface);
     
@@ -70,6 +65,57 @@ t_game init_screen(t_game game)
     return game;
 }
 
+t_game init_game(t_game game)
+{
+    game.begin.high_score = NULL;
+    game.begin.logo = NULL;
+    game.begin.play_with_1 = NULL;
+    game.begin.play_with_2 = NULL;
+    game.begin.quit = NULL;
+    game.begin.selected_option = NULL;
+    game.begin.surface_play = NULL;
+    game.Grenderer = NULL;
+    game.Gscreen = NULL;
+    game.Gwindow = NULL;
+    game.infos.font = NULL;
+    game.infos.surface_score_title = NULL;
+    game.infos.surface_high_score = NULL;
+    game.infos.texture_high_score = NULL;
+    game.infos.texture_score_title = NULL;
+    game.monster_speed = 1;
+    game = init_monster_player(game);
+
+    return game;
+}
+
+t_game init_monster_player(t_game game)
+{
+    int i;
+
+    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 10);
+    game.Gplayer2.bullet = malloc(sizeof(t_bullet) * 10);
+    game.Gmonster = malloc((sizeof(t_monster) * MONSTER_NBR) + 1);
+    game.Gplayer1.player = NULL;
+    game.Gplayer1.bulletGo_sound = NULL;
+    game.Gplayer1.playerExplode_sound = NULL;
+    game.Gplayer2.player = NULL;
+    game.Gplayer2.bulletGo_sound = NULL;
+    game.Gplayer2.playerExplode_sound = NULL;
+    for (i = 0; i < 10; i++) {
+        game.Gplayer1.bullet[i].bullet = NULL;
+        game.Gplayer2.bullet[i].bullet = NULL;
+    }
+    for (i = 0; i < MONSTER_NBR; i++) {
+        game.Gmonster[i].bullet.bullet = NULL;
+        game.Gmonster[i].explosion = NULL;
+        game.Gmonster[i].monster = NULL;
+        game.Gmonster[i].monsterExplode_sound = NULL;
+        game.Gmonster[i].monsterMove_sound = NULL;
+        game.Gmonster[i].nbr_bullet = 0;
+    }
+
+    return game;
+}
 
 t_game  init_text(t_game game)
 {
@@ -117,7 +163,6 @@ t_game  init_text(t_game game)
 t_game  init_player(t_game game)
 {
     game.Gplayer1.position = init_position(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 35, 35);
-    game.Gplayer1.bullet = malloc(sizeof(t_bullet) * 50);
 
     game.Gplayer1.nbr_bullet = 0;
     game.Gplayer1.score = 0;
