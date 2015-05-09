@@ -160,5 +160,7 @@ void            freeBegin(t_game game);
 void            freeMonster(t_game game);
 void            freePlayer(t_player player);
 void            freeInfos(t_game game);
+t_game          init_monster_player(t_game game);
+t_game          init_game(t_game game);
 
 #endif /* __main_file_h__ */
