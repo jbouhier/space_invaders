@@ -28,6 +28,7 @@
 #define LOAD_FONT_MAX 1
 #define FONT_SIZE 20
 #define SCORE_LENGTH 4
+#define LIVES_LENGTH 1
 
 
 typedef struct      s_bullet
@@ -45,10 +46,12 @@ typedef struct      s_player
     Mix_Chunk       *playerExplode_sound;
     int             nbr_bullet;
     long            score;
+    char            *score_str;
     SDL_Rect        score_pos;
     SDL_Surface     *surface_score;
     SDL_Texture     *texture_score;
-    int             lives;
+    long            lives;
+    char            *lives_str;
     SDL_Rect        lives_pos;
     SDL_Surface     *surface_lives;
     SDL_Texture     *texture_lives;

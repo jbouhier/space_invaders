@@ -144,7 +144,7 @@ t_game launch_bulletMonster(t_game game) {
             if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
                 Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
                 printf("A monster has hit the player!\n");
-                printf("Lifes %d\n", game.Gplayer1.lives);
+                printf("Lifes %ld\n", game.Gplayer1.lives);
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
                 
@@ -211,21 +211,21 @@ bool checkCollision( SDL_Rect a, SDL_Rect b )
     bottomB = b.y + b.h;
     //If any of the sides from A are outside of B
     if ( bottomA <= topB ) {
-        return false;
+        return (false);
     }
     
     if ( topA >= bottomB ) {
-        return false;
+        return (false);
     }
 
     if ( rightA <= leftB ) {
-        return false;
+        return (false);
     }
 
     if ( leftA >= rightB ) {
-        return false;
+        return (false);
     }
 
     //If none of the sides from A are outside B
-    return true;
+    return (true);
 }
