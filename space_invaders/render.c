@@ -51,9 +51,7 @@ void    renderPlayer(t_game game)
         SDL_RenderCopy( game.Grenderer, game.Gplayer2.texture_score, NULL, &(game.Gplayer2.score_pos) );
 
     for (i = 0; i < 10; i++) {
-        if (game.Gplayer1.bullet[i].bullet != NULL) {
-            // DEBUG
-            printf("bullet memory = %p => pos = %d\n", game.Gplayer1.bullet[i].bullet, game.Gplayer1.bullet[i].position.x);
+        if (game.Gplayer1.bullet[i].bullet != NULL && game.Gplayer1.bullet[i].position.x <= SCREEN_WIDTH) {
             SDL_RenderCopy( game.Grenderer, game.Gplayer1.bullet[i].bullet, NULL, &(game.Gplayer1.bullet[i].position) ); // 2 balles = plantage !
         }
     }

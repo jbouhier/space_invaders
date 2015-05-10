@@ -67,17 +67,19 @@ t_game launch_bullet(t_game game) {
     int j;
 
     for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
-        if (game.Gplayer1.bullet[i].position.y >= 0) {
+        if (game.Gplayer1.bullet[i].position.y >= 0 && i < 2) {
             game.Gplayer1.bullet[i].position.y -= 10;
             for (j = 0; game.Gmonster[j].monster != NULL; j++) {
                 if (game.Gmonster[j].monster != NULL) {
                     if (checkCollision( game.Gmonster[j].position, game.Gplayer1.bullet[i].position )) {
                         Mix_PlayChannel( -1, game.Gmonster[j].monsterExplode_sound, 0 );
-                        SDL_DestroyTexture(game.Gmonster[j].monster);
+                        SDL_DestroyTexture(game.Gmonster[j].monster); //sometimes bug
                         game = deleteBullets(game, i);
                         game = showExposion(game, j);
                         renderAll(game);
-                        SDL_Delay(100);
+                        if (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion < 30) {
+                            SDL_Delay(30 - (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion));
+                        }
                         SDL_DestroyTexture(game.Gmonster[j].explosion);
                         if (game.Gmonster[j].bullet.bullet != NULL && game.Gmonster[j].bullet.position.y <= 560) {
                             if (game.Gmonster[j + 1].monster != NULL) {
@@ -94,7 +96,7 @@ t_game launch_bullet(t_game game) {
                 }
             }
         }
-        else{
+        else if (i < 2) {
             game = deleteBullets(game, i);
         }
     }
@@ -153,7 +155,7 @@ t_game launch_bulletMonster(t_game game) {
                 
                 game.Gplayer1.lives--;
                 renderAll(game);
-                SDL_Delay(1500);
+                SDL_Delay(1000);
                 game.Gplayer1.player = loadPlayer(game);
                 SDL_DestroyTexture(game.Gmonster[MonsterToLaunch].bullet.bullet);
                 game.Gmonster[MonsterToLaunch].bullet.bullet = NULL;
@@ -172,15 +174,16 @@ t_game launch_bulletMonster(t_game game) {
 t_game deleteBullets(t_game game, int index) {
     int i;
 
-    if (game.Gplayer1.bullet[index].bullet != NULL) {
-        SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet); // Error !
+    if (game.Gplayer1.bullet[index].bullet != NULL && index >= 0 && index < 2) {
+        SDL_DestroyTexture(game.Gplayer1.bullet[index].bullet);
+        game.Gplayer1.bullet[index].bullet = NULL;
     }
 
-    for (i = index; i < 10; i++) {
+    for (i = index; i < 2; i++) {
         game.Gplayer1.bullet[i] = game.Gplayer1.bullet[i + 1];
     }
 
-    if (i > 0) {
+    if (game.Gplayer1.nbr_bullet > 0) {
         game.Gplayer1.nbr_bullet--;
     }
 

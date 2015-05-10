@@ -245,7 +245,6 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
 {
     if (game.Gevenements.type == SDL_KEYDOWN) {
         game.Gplayer1 = movePlayer(game);
-        printf("bullet nbr : %d\n", game.Gplayer1.nbr_bullet);
         if(game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2) {
             Mix_PlayChannel( -1, game.Gplayer1.bulletGo_sound, 0 );
             game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
@@ -255,7 +254,7 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
     }
     if (tempsActuel - tempsPrecedent > 15) { /* Si 15 ms se sont écoulées depuis le dernier tour de boucle */
         game = launch_bullet(game);
-        //game = launch_bulletMonster(game);
+        game = launch_bulletMonster(game);
         game = moveMonster(game);
     }
 
