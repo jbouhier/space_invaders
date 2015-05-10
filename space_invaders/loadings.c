@@ -185,15 +185,19 @@ t_game showExposion(t_game game, int index)
 {
     char *paths;
     
-
-    paths =  malloc (strlen("/../../../images/explosion.png") + 1);
+    paths =  malloc (sizeof(*paths) * (strlen("/../../../images/explosion.png") + 1));
     strcat(paths,"/../../../images/explosion.png");
 
     game.Gmonster[index].explosion = loadTexture(paths, game.Grenderer);
     game.Gmonster[index].timeShowExplosion = SDL_GetTicks();
     
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
+    {
         game.Gplayer1.score += game.Gmonster[index].score;
+        
+        // Score actualisation on screen
+        // game = refresh_score(game);
+    }
     else
         game.Gplayer2.score += game.Gmonster[index].score;
     

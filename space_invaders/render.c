@@ -22,6 +22,10 @@ void    renderAll(t_game game)
     // Text
     SDL_RenderCopy( game.Grenderer, game.infos.texture_score_title, NULL, &(game.infos.score_title_pos) );
     SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer1.texture_score, NULL, &(game.Gplayer1.score_pos) );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer1.texture_lives, NULL, &(game.Gplayer1.lives_pos) );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer2.texture_score, NULL, &(game.Gplayer2.score_pos) );
+    SDL_RenderCopy( game.Grenderer, game.Gplayer2.texture_lives, NULL, &(game.Gplayer2.lives_pos) );
 
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) ); // Error !

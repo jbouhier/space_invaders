@@ -118,10 +118,12 @@ t_game  init_text(t_game game)
     SDL_Colour text_color = { 255, 255, 255, 0};
     
     // Engine text size and position -  (x,    y,  h,   w)
-    game.infos.score_title_pos = init_position(200, 5, 25, 420);
-    game.infos.high_score_pos = init_position(365, 40, 25, 80);
-    game.Gplayer1.score_pos = init_position(200, 40, 25, 80);
-    game.Gplayer2.score_pos = init_position(510, 40, 25, 80);
+    game.infos.score_title_pos = init_position(180, 5, 25, 460);
+    game.infos.high_score_pos = init_position(365, 32, 25, 80);
+    game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
+    game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
+    game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
+    game.Gplayer2.lives_pos = init_position(760, 570, 25, 25);
     
     // Score title
     game.infos.surface_score_title = TTF_RenderText_Solid(game.infos.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
@@ -130,7 +132,6 @@ t_game  init_text(t_game game)
     // Hi-Score
     game.hscore_str = malloc(sizeof(SCORE_LENGTH) + 1);
     game.hscore_str = score_str(game.high_score, game.hscore_str);
-    printf("hscore_str: %s\n", game.hscore_str);
     game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, game.hscore_str, text_color);
     game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
 
@@ -138,10 +139,10 @@ t_game  init_text(t_game game)
     game.Gplayer1.score_str = malloc(sizeof(SCORE_LENGTH) + 1);
     game.Gplayer1.score_str = score_str(game.Gplayer1.score, game.Gplayer1.score_str);
     game.Gplayer1.lives_str = malloc(sizeof(LIVES_LENGTH) + 1);
-    game.Gplayer1.lives_str = score_str(game.Gplayer1.lives, game.Gplayer1.lives_str);
-    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
+    game.Gplayer1.lives_str = lives_str(game.Gplayer1.lives, game.Gplayer1.lives_str);
+    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer1.score_str, text_color);
     game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
-    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
+    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.infos.font, game.Gplayer1.lives_str, text_color);
     game.Gplayer1.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_lives);
 
     
@@ -149,10 +150,10 @@ t_game  init_text(t_game game)
     game.Gplayer2.score_str = malloc(sizeof(SCORE_LENGTH) + 1);
     game.Gplayer2.score_str = score_str(game.Gplayer2.score, game.Gplayer2.score_str);
     game.Gplayer2.lives_str = malloc(sizeof(LIVES_LENGTH) + 1);
-    game.Gplayer2.lives_str = score_str(game.Gplayer2.lives, game.Gplayer2.lives_str);
-    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
+    game.Gplayer2.lives_str = lives_str(game.Gplayer2.lives, game.Gplayer2.lives_str);
+    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer2.score_str, text_color);
     game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
-    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.infos.font, "0000", text_color);
+    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.infos.font, game.Gplayer2.lives_str, text_color);
     game.Gplayer2.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_lives);
     
     // Next, look inside renderAll function !!!
