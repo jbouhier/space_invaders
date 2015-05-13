@@ -170,10 +170,6 @@ t_game showExposion(t_game game, int index)
     else
         game.Gplayer2.score += game.Gmonster[index].score;
     
-    // Debug
-    printf("Score %ld\n", game.Gplayer1.score);
-    printf("monster's[%d] score : %d\n", index, game.Gmonster[index].score);
-    
     return (game);
 }
 
