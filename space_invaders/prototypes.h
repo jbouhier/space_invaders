@@ -21,7 +21,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 
 #define PWD getenv("PWD")
-#define SCREEN_WIDTH 600
+#define SCREEN_WIDTH 710
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
 #define MONSTER_NBR 50
