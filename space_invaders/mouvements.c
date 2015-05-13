@@ -39,19 +39,24 @@ t_game moveMonster(t_game game)
         {
             if(game.Gmonster[i].position.x > 0)
                 game.Gmonster[i].position.x -= game.monster_speed;
-            else{
+            else {
                 game.Gmonster[i].flagpositon = 0;
-                game.Gmonster[i].position.y += 20;
+                if (game.monster_speed < 3)
+                    game.Gmonster[i].position.y += (20 * game.monster_speed);
+                else
+                    game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
             }
-            
         }
         else   //Check si l'objet doit se déplacer vers la droite
         {
             if(game.Gmonster[i].position.x < 760)
                 game.Gmonster[i].position.x += game.monster_speed;
-            else{
+            else {
                 game.Gmonster[i].flagpositon = 1;
-                game.Gmonster[i].position.y += 20;
+                if (game.monster_speed < 3)
+                    game.Gmonster[i].position.y += (20 * game.monster_speed);
+                else
+                    game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
             }
         }
     }
@@ -122,6 +127,7 @@ t_game launch_bulletMonster(t_game game) {
         // No monsters. The player won
         SDL_Delay(5000);
         game = loadMonsters(game);
+        //game = loadSounds(game);
         if (game.monster_speed < 3)
             game.monster_speed += 1;
         i = 50;
@@ -228,4 +234,35 @@ bool checkCollision( SDL_Rect a, SDL_Rect b )
 
     //If none of the sides from A are outside B
     return (true);
+}
+
+
+t_game handleEvent(t_game game) {
+    switch (game.Gevenements.key.keysym.sym) {
+        case SDLK_q:
+            game.quit = 1;
+            break;
+        case SDLK_p:
+                game.quit = 2;
+            break;
+        case SDLK_l:
+            game.quit = 0;
+            break;
+        case SDLK_ESCAPE:
+            game.begin.state = 1;
+            game.quit = 0;
+            break;
+        default:
+            switch (game.Gevenements.window.event) {
+                case SDL_WINDOWEVENT_CLOSE:
+                    game.quit = 1;
+                    break;
+                case SDL_WINDOWEVENT_HIDDEN:
+                    game.quit = 2;
+                    break;
+            }
+            break;
+    }
+
+    return game;
 }

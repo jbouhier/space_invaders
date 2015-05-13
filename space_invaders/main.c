@@ -15,10 +15,8 @@ int main(void)
     int     tempsActuel;
     int     tempsPrecedent;
     int     toWait;
-    int     terminer;
     int     gameover;
 
-    terminer = 0;
     gameover = 0;
     tempsActuel = 0;
     tempsPrecedent = 0;
@@ -28,25 +26,23 @@ int main(void)
     game.hscore_str = score_str(game.high_score, game.hscore_str);
     
     game = showBegin(game);
-    while(!terminer)
+    while(game.quit != 1)
     {
-        while( SDL_PollEvent(&game.Gevenements) >= 0 && terminer != 1)
+        while( SDL_PollEvent(&game.Gevenements) >= 0 && game.quit != 1 )
         {
             tempsActuel = SDL_GetTicks();
-            if(game.Gevenements.window.event == SDL_WINDOWEVENT_CLOSE || game.quit == 1)
-                terminer = 1;
+            game = handleEvent(game);
+
+            if (game.begin.state == 1 && gameover == 0) {
+                game = handleBegin(game);
+            }
+            else if (gameover == 1) {
+                game = showEnd(game);
+                exit(100);
+            }
             else {
-                if (game.begin.state == 1 && gameover == 0) {
-                    game = handleBegin(game);
-                }
-                else {
-                    if (game.begin.state == 0 && gameover == 0) {
-                        game = showGame(game, tempsActuel, tempsPrecedent);
-                    }
-                    if (gameover == 1) {
-                        game = showEnd(game);
-                        exit(100);
-                    }
+                if (game.begin.state == 0 && gameover == 0 && game.quit != 2) {
+                    game = showGame(game, tempsActuel, tempsPrecedent);
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }
@@ -54,7 +50,7 @@ int main(void)
                 gameover = 1;
             
             toWait = SDL_GetTicks() - tempsActuel;
-            if ( toWait < 16 && game.quit == 0)
+            if ( toWait < 16 && game.quit != 1)
                 SDL_Delay(16 - toWait);
         }
     }

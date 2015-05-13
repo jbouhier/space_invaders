@@ -95,7 +95,6 @@ t_game loadMonsters(t_game game)
 
     x = 10;
     y = 100;
-
     paths =  malloc (strlen(PWD) + strlen("/../../../images/monster1.png") + 1);
     strcpy(paths, PWD);
     strcat(paths, "/../../../images/monster1.png");
@@ -116,7 +115,7 @@ t_game loadMonsters(t_game game)
                 game.Gmonster[i].score = 20;
             else
                 game.Gmonster[i].score = 10;
-            
+
             if ((i + 1) % 10 != 0 || i == 0) {
                 x += 30;
             }
@@ -300,28 +299,33 @@ int     checkBeginTexture(t_begin beginGame) {
 }
 
 t_game  handleBegin(t_game game) {
-    if(game.Gevenements.type == SDL_MOUSEMOTION)
-        game = selectionBeginHandler(game);
+    while (SDL_WaitEvent(&game.Gevenements)) {
+        if(game.Gevenements.type == SDL_MOUSEMOTION)
+            game = selectionBeginHandler(game);
 
-    if (game.Gevenements.type == SDL_KEYDOWN)
-        game = KeyBeginHandler(game);
+        if (game.Gevenements.type == SDL_KEYDOWN)
+            game = KeyBeginHandler(game);
 
-    renderBegin(game);
-    if(game.Gevenements.type == SDL_MOUSEBUTTONDOWN && game.Gevenements.button.button == SDL_BUTTON_LEFT) {
-        if( game.Gevenements.button.x >= game.begin.play_with_1_position.x &&
-            game.Gevenements.button.x <= game.begin.play_with_1_position.x + game.begin.play_with_1_position.w &&
-            game.Gevenements.button.y >= game.begin.play_with_1_position.y &&
-            game.Gevenements.button.y <= game.begin.play_with_1_position.y + game.begin.play_with_1_position.h)
-        {
-            game.begin.state = 0;
+        renderBegin(game);
+        if(game.Gevenements.type == SDL_MOUSEBUTTONDOWN && game.Gevenements.button.button == SDL_BUTTON_LEFT) {
+            if( game.Gevenements.button.x >= game.begin.play_with_1_position.x &&
+               game.Gevenements.button.x <= game.begin.play_with_1_position.x + game.begin.play_with_1_position.w &&
+               game.Gevenements.button.y >= game.begin.play_with_1_position.y &&
+               game.Gevenements.button.y <= game.begin.play_with_1_position.y + game.begin.play_with_1_position.h)
+            {
+                game.begin.state = 0;
+            }
+
+            if( game.Gevenements.button.x >= game.begin.quit_position.x &&
+               game.Gevenements.button.x <= game.begin.quit_position.x + game.begin.quit_position.w &&
+               game.Gevenements.button.y >= game.begin.quit_position.y &&
+               game.Gevenements.button.y <= game.begin.quit_position.y + game.begin.quit_position.h)
+            {
+                game.quit = 1;
+            }
         }
-
-        if( game.Gevenements.button.x >= game.begin.quit_position.x &&
-           game.Gevenements.button.x <= game.begin.quit_position.x + game.begin.quit_position.w &&
-           game.Gevenements.button.y >= game.begin.quit_position.y &&
-           game.Gevenements.button.y <= game.begin.quit_position.y + game.begin.quit_position.h)
-        {
-            game.quit = 1;
+        if (game.begin.state == 0 || game.quit == 1) {
+            return game;
         }
     }
     return game;
