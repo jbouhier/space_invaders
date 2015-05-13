@@ -126,7 +126,7 @@ t_game loadSounds(t_game game)
 {
     char **paths;
     
-    paths = malloc (sizeof(char) * LOAD_SOUND_MAX);
+    paths = malloc (sizeof(*paths) * LOAD_SOUND_MAX);
     paths = AllocateSoundPath(paths);
 
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
