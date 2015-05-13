@@ -149,8 +149,6 @@ t_game launch_bulletMonster(t_game game) {
             game.Gmonster[MonsterToLaunch].bullet.position.y += 5;
             if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
                 Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
-                printf("A monster has hit the player!\n");
-                printf("Lifes %ld\n", game.Gplayer1.lives);
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
                 
