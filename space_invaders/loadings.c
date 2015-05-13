@@ -165,9 +165,7 @@ t_game showExposion(t_game game, int index)
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
     {
         game.Gplayer1.score += game.Gmonster[index].score;
-        
-        // Score actualisation on screen
-        // game = refresh_score(game);
+        game = refresh_score(game);
     }
     else
         game.Gplayer2.score += game.Gmonster[index].score;
@@ -210,7 +208,7 @@ t_game    showBegin(t_game game)
     game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     Play      ", text_color);
     game.begin.play_with_1 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.play_with_1_position = init_position(265, game.begin.logo_position.y + 200, 50, 250);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "    Quittez    ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "    Quit    ", text_color);
     game.begin.quit = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "  High Score   ", text_color);
     game.begin.high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);

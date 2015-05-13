@@ -155,11 +155,11 @@ t_game launch_bulletMonster(t_game game) {
                 game.Gplayer1.player = NULL;
                 
                 if (game.Gplayer1.lives <= 0)
-                {
                     printf("GAME OVER\n");
-                }
                 
                 game.Gplayer1.lives--;
+                game = refresh_lives(game);
+                
                 renderAll(game);
                 SDL_Delay(1000);
                 game.Gplayer1.player = loadPlayer(game);
