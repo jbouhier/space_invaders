@@ -136,9 +136,9 @@ t_game  init_text(t_game game)
     game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
 
     // Player1
-    game.Gplayer1.score_str = malloc(sizeof(SCORE_LENGTH) + 1);
+    game.Gplayer1.score_str = malloc(sizeof(*(game.Gplayer1.score_str)) * (SCORE_LENGTH) + 1);
     game.Gplayer1.score_str = score_str(game.Gplayer1.score, game.Gplayer1.score_str);
-    game.Gplayer1.lives_str = malloc(sizeof(LIVES_LENGTH) + 1);
+    game.Gplayer1.lives_str = malloc(sizeof(*(game.Gplayer1.lives_str)) * (LIVES_LENGTH) + 1);
     game.Gplayer1.lives_str = lives_str(game.Gplayer1.lives, game.Gplayer1.lives_str);
     game.Gplayer1.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer1.score_str, text_color);
     game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
@@ -147,9 +147,9 @@ t_game  init_text(t_game game)
 
     
     // Player2
-    game.Gplayer2.score_str = malloc(sizeof(SCORE_LENGTH) + 1);
+    game.Gplayer2.score_str = malloc(sizeof(*(game.Gplayer2.score_str)) * (SCORE_LENGTH) + 1);
     game.Gplayer2.score_str = score_str(game.Gplayer2.score, game.Gplayer2.score_str);
-    game.Gplayer2.lives_str = malloc(sizeof(LIVES_LENGTH) + 1);
+    game.Gplayer2.lives_str = malloc(sizeof(*(game.Gplayer2.lives_str)) * (LIVES_LENGTH) + 1);
     game.Gplayer2.lives_str = lives_str(game.Gplayer2.lives, game.Gplayer2.lives_str);
     game.Gplayer2.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer2.score_str, text_color);
     game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);

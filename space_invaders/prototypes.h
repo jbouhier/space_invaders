@@ -168,6 +168,8 @@ t_game          init_game(t_game game);
 void            renderPlayer(t_game game);
 char            *lives_str(long lives, char *lives_str);
 t_game          handleEvent(t_game game);
-//t_game          refresh_score(t_game game);
+t_game          refresh_score(t_game game);
+t_game          refresh_lives(t_game game);
+
 
 #endif /* __prototypes_h__ */
