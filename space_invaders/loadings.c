@@ -55,7 +55,7 @@ SDL_Texture *loadPlayer(t_game game)
     strcat(ship, ship_rel_path);
     
     //Load ship PNG texture
-    player = loadTexture(ship, game.Grenderer);
+    player = loadTexture("/../../../images/ship.png", game.Grenderer);
     if( player == NULL )
         printf( "Failed to load texture image!\n" );
 
@@ -68,14 +68,10 @@ SDL_Texture *loadBullet(t_game game)
     //Loading success flag
     bool success = true;
     SDL_Texture* bullet;
-    char *paths;
     
-    paths =  malloc (strlen(PWD) + strlen("/../../../images/bullet.png") + 1);
-    strcpy(paths, PWD);
-    strcat(paths,"/../../../images/bullet.png");
 
     //Load PNG texture
-    bullet = loadTexture(paths, game.Grenderer);
+    bullet = loadTexture("/../../../images/bullet.png", game.Grenderer);
 
     if( bullet == NULL )
     {
@@ -83,30 +79,26 @@ SDL_Texture *loadBullet(t_game game)
         success = false;
     }
     
-    free(paths);
 
     return bullet;
 }
 
 t_game loadMonsters(t_game game)
 {
-    char *paths;
+    
     SDL_Surface *loadedSurface;
 
     x = 10;
     y = 100;
-    paths =  malloc (strlen(PWD) + strlen("/../../../images/monster1.png") + 1);
-    strcpy(paths, PWD);
-    strcat(paths, "/../../../images/monster1.png");
 
-    loadedSurface = IMG_Load( paths );
+    loadedSurface = IMG_Load( "/../../../images/monster1.png" );
     if( loadedSurface == NULL )
-        printf( "Unable to load image %s! SDL_image Error: %s\n", paths, IMG_GetError() );
+        printf( "Unable to load image %s! SDL_image Error: %s\n", "/../../../images/monster1.png", IMG_GetError() );
     else {
         for (i = 0; i < MONSTER_NBR; i++) {
             game.Gmonster[i].monster = SDL_CreateTextureFromSurface ( game.Grenderer, loadedSurface);
             if( game.Gmonster[i].monster == NULL ) {
-                printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n", paths, SDL_GetError()  );
+                printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n", "/../../../images/monster1.png", SDL_GetError()  );
             }
             game.Gmonster[i].position = init_position(x, y, 20, 20);
             if (y < 110)
@@ -126,7 +118,6 @@ t_game loadMonsters(t_game game)
         }
         SDL_FreeSurface( loadedSurface );
     }
-    free(paths);
 
     return game;
 }
@@ -135,23 +126,20 @@ t_game loadSounds(t_game game)
 {
     char **paths;
     
-    paths = NULL;
+    paths = malloc (sizeof(char) * LOAD_SOUND_MAX);
     paths = AllocateSoundPath(paths);
 
-    game.Gplayer1.playerExplode_sound = Mix_LoadWAV( paths[0] );
-    game.Gplayer1.bulletGo_sound = Mix_LoadWAV( paths[2] );
+    game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
+    game.Gplayer1.bulletGo_sound = Mix_LoadWAV( "/../../../sounds/invaderkilled.wav" );
 
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( paths[1] );
-        game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( paths[3] );
+        game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( "/../../../sounds/shoot.wav" );
+        game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( "/../../../sounds/MoveMonster.wav" );
     }
 
     if(game.Gplayer1.playerExplode_sound == NULL)
         fprintf(stderr,"Could not load %s\n", paths[0]);
-    
-    for (i = 0; i < LOAD_SOUND_MAX; i++) {
-        free(paths[i]);
-    }
+
     free(paths);
 
     return game;
@@ -160,34 +148,18 @@ t_game loadSounds(t_game game)
 
 char **AllocateSoundPath(char **paths)
 {
-    paths = malloc (sizeof(char*) + LOAD_SOUND_MAX);
-
-    paths[0] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/explosion.wav")) + 1);
-    paths[1] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/invaderkilled.wav")) + 1);
-    paths[2] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/shoot.wav")) + 1);
-    paths[3] = malloc ((sizeof(char) * strlen(PWD) + strlen("/../../../sounds/MoveMonster.wav")) + 1);
-
-    strcpy(paths[0], PWD);
-    strcpy(paths[1], PWD);
-    strcpy(paths[2], PWD);
-    strcpy(paths[3], PWD);
-    
-    strcat(paths[0],"/../../../sounds/explosion.wav");
-    strcat(paths[1],"/../../../sounds/invaderkilled.wav");
-    strcat(paths[2],"/../../../sounds/shoot.wav");
-    strcat(paths[3],"/../../../sounds/MoveMonster.wav");
+    paths[0] = "/../../../sounds/explosion.wav";
+    paths[1] = "/../../../sounds/invaderkilled.wav";
+    paths[2] = "/../../../sounds/shoot.wav";
+    paths[3] = "/../../../sounds/MoveMonster.wav";
     
     return paths;
 }
 
 t_game showExposion(t_game game, int index)
 {
-    char *paths;
     
-    paths =  malloc (sizeof(*paths) * (strlen("/../../../images/explosion.png") + 1));
-    strcat(paths,"/../../../images/explosion.png");
-
-    game.Gmonster[index].explosion = loadTexture(paths, game.Grenderer);
+    game.Gmonster[index].explosion = loadTexture("/../../../images/explosion.png", game.Grenderer);
     game.Gmonster[index].timeShowExplosion = SDL_GetTicks();
     
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
