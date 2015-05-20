@@ -62,13 +62,11 @@ int     set_hscore(t_game *game, long score)
     return (1);
 }
 
-
+// score_str = long 4 + 1 for '\0'
 void    overwrite_hscore(t_player player)
 {
     FILE    *fd;
-    // score_str should normaly be 5 because the number is 4 long
-    // + 1 for the NULL terminating string
-char	score_str[5];
+    char	score_str[5];
     
     if ((fd = fopen(hscore_path(), "w+")))
     {

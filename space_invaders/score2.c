@@ -40,44 +40,37 @@ t_game  refresh_score(t_game game)
 {
     SDL_Colour text_color = {255, 255, 255, 0};
     
-    // Player 1
-    // SDL_FreeSurface(game.Gplayer1.surface_score);
-    game.Gplayer1.score_str = score_str(game.Gplayer1.score, game.Gplayer1.score_str);
-    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer1.score_str, text_color);
-    game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
-
-    // Player 2
-    // SDL_FreeSurface(game.Gplayer2.surface_score);
+    game.Gplayer1.score_str = score_str(game.Gplayer1.score,
+                                        game.Gplayer1.score_str);
+    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.text_game.font,
+                                                       game.Gplayer1.score_str,
+                                                       text_color);
+    game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer,
+                                                               game.Gplayer1.surface_score);
+    
     game.Gplayer2.score_str = score_str(game.Gplayer2.score, game.Gplayer2.score_str);
-    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.infos.font, game.Gplayer2.score_str, text_color);
+    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.text_game.font, game.Gplayer2.score_str, text_color);
     game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
     
-    // Update Render
-    SDL_RenderCopy( game.Grenderer, game.Gplayer1.texture_score, NULL, &(game.Gplayer1.score_pos) );
-    SDL_RenderCopy( game.Grenderer, game.Gplayer2.texture_score, NULL, &(game.Gplayer2.score_pos) );
+    SDL_RenderCopy(game.Grenderer, game.Gplayer1.texture_score, NULL,
+                   &(game.Gplayer1.score_pos));
+    SDL_RenderCopy(game.Grenderer, game.Gplayer2.texture_score, NULL,
+                   &(game.Gplayer2.score_pos) );
     
     return (game);
 }
 
-t_game  refresh_lives(t_game game)
+void  render_lives(t_player *p, t_text_game text, SDL_Renderer *rend)
 {
     SDL_Colour text_color = {255, 255, 255, 0};
     
-    // Player 1
-    game.Gplayer1.lives_str = lives_str(game.Gplayer1.lives, game.Gplayer1.lives_str);
-    game.Gplayer1.surface_lives = TTF_RenderText_Solid(game.infos.font, game.Gplayer1.lives_str, text_color);
-    game.Gplayer1.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_lives);
+    p->lives_str = malloc(sizeof(*(p->lives_str)) * (LIVES_LENGTH) + 1);
+    p->lives_str = lives_str(p->lives, p->lives_str);
+    p->surface_lives = TTF_RenderText_Solid(text.font, p->lives_str, text_color);
+    p->texture_lives = SDL_CreateTextureFromSurface(rend, p->surface_lives);
     
-    // Player 2
-    game.Gplayer2.lives_str = lives_str(game.Gplayer2.lives, game.Gplayer2.lives_str);
-    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.infos.font, game.Gplayer2.lives_str, text_color);
-    game.Gplayer2.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_lives);
-    
-    // Update Render
-    SDL_RenderCopy( game.Grenderer, game.Gplayer1.texture_lives, NULL, &(game.Gplayer1.lives_pos) );
-    SDL_RenderCopy( game.Grenderer, game.Gplayer2.texture_lives, NULL, &(game.Gplayer2.lives_pos) );
-    
-    return (game);
+    // Update Renderer
+    SDL_RenderCopy(rend, p->texture_lives, NULL, &(p->lives_pos));
 }
 
 t_game  refresh_hscore(t_game game)
@@ -86,11 +79,11 @@ t_game  refresh_hscore(t_game game)
     
     // High score
     game.hscore_str = score_str(game.high_score, game.hscore_str);
-    game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, game.hscore_str, text_color);
-    game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
+    game.text_game.surface_high_score = TTF_RenderText_Solid(game.text_game.font, game.hscore_str, text_color);
+    game.text_game.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.text_game.surface_high_score);
     
     // Update Render
-    SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
+    SDL_RenderCopy( game.Grenderer, game.text_game.texture_high_score, NULL, &(game.text_game.high_score_pos) );
     
     return (game);
 }

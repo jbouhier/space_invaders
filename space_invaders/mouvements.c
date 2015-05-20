@@ -161,7 +161,7 @@ t_game  launch_bulletMonster(t_game game)
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
                 game.Gplayer1.lives--;
-                game = refresh_lives(game);
+                render_lives(&(game.Gplayer1), game.text_game, game.Grenderer);
                 
                 renderAll(game);
                 SDL_Delay(1000);

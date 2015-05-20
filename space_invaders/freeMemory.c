@@ -95,20 +95,20 @@ void freePlayer(t_player player)
 
 void freeInfos(t_game game)
 {
-    if (game.infos.surface_high_score)
-        SDL_FreeSurface(game.infos.surface_high_score);
-    if (game.infos.surface_score_title)
-        SDL_FreeSurface(game.infos.surface_score_title);
-    if (game.infos.texture_high_score)
-        SDL_DestroyTexture(game.infos.texture_high_score);
-    if (game.infos.texture_score_title)
-        SDL_DestroyTexture(game.infos.texture_score_title);
-    if (game.infos.font)
-        TTF_CloseFont(game.infos.font);
+    if (game.text_game.surface_high_score)
+        SDL_FreeSurface(game.text_game.surface_high_score);
+    if (game.text_game.surface_score_title)
+        SDL_FreeSurface(game.text_game.surface_score_title);
+    if (game.text_game.texture_high_score)
+        SDL_DestroyTexture(game.text_game.texture_high_score);
+    if (game.text_game.texture_score_title)
+        SDL_DestroyTexture(game.text_game.texture_score_title);
+    if (game.text_game.font)
+        TTF_CloseFont(game.text_game.font);
 
-    game.infos.surface_high_score = NULL;
-    game.infos.surface_score_title = NULL;
-    game.infos.texture_high_score = NULL;
-    game.infos.texture_score_title = NULL;
-    game.infos.font = NULL;
+    game.text_game.surface_high_score = NULL;
+    game.text_game.surface_score_title = NULL;
+    game.text_game.texture_high_score = NULL;
+    game.text_game.texture_score_title = NULL;
+    game.text_game.font = NULL;
 }
