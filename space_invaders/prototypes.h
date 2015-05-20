@@ -170,6 +170,7 @@ char            *lives_str(long lives, char *lives_str);
 t_game          handleEvent(t_game game);
 t_game          refresh_score(t_game game);
 t_game          refresh_lives(t_game game);
+t_game          refresh_hscore(t_game game);
 
 
 #endif /* __prototypes_h__ */

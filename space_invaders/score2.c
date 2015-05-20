@@ -79,3 +79,18 @@ t_game  refresh_lives(t_game game)
     
     return (game);
 }
+
+t_game  refresh_hscore(t_game game)
+{
+    SDL_Colour text_color = {255, 255, 255, 0};
+    
+    // High score
+    game.hscore_str = score_str(game.high_score, game.hscore_str);
+    game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, game.hscore_str, text_color);
+    game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
+    
+    // Update Render
+    SDL_RenderCopy( game.Grenderer, game.infos.texture_high_score, NULL, &(game.infos.high_score_pos) );
+    
+    return (game);
+}
