@@ -130,7 +130,7 @@ t_game  init_text(t_game game)
     game.infos.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_score_title);
     
     // Hi-Score
-    game.hscore_str = malloc(sizeof(SCORE_LENGTH) + 1);
+    game.hscore_str = malloc(sizeof(char) * (SCORE_LENGTH + 1));
     game.hscore_str = score_str(game.high_score, game.hscore_str);
     game.infos.surface_high_score = TTF_RenderText_Solid(game.infos.font, game.hscore_str, text_color);
     game.infos.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.infos.surface_high_score);
@@ -243,6 +243,15 @@ SDL_Rect init_bulletMonsterPos(t_monster monster) {
 */
 t_game    showEnd(t_game game)
 {
+    int write_error;
+    
+    write_error = -1;
+    write_error = write_score(game, game.Gplayer1);
+    
+    printf("Write high score error: %d\n", write_error);
+    printf("-1 = , 1 = nope, 0 = success\n");
+    printf("GAME OVER\n");
+    
     return (game);
 }
 

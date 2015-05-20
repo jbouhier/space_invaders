@@ -2,7 +2,7 @@
 //  score1.c
 //  space_invaders
 //
-//  Created by SynxS on 06/05/15.
+//  Created by Jean-Baptiste Bouhier on 06/05/15.
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
@@ -16,7 +16,7 @@ char    *hscore_path()
 {
     char    *path;
     
-    path =  malloc (strlen(PWD) + strlen(HSCORE_FILE_PATH) + 1);
+    path =  malloc (sizeof(*path) * strlen(PWD) + strlen(HSCORE_FILE_PATH) + 1);
     strcpy(path, PWD);
     strcat(path, HSCORE_FILE_PATH);
     
@@ -24,7 +24,7 @@ char    *hscore_path()
 }
 
 
-long get_hscore(char *hscore_path)
+long    get_hscore(char *hscore_path)
 {
     FILE    *fd;
     char    buffer[SCORE_LENGTH + 1];
@@ -50,9 +50,16 @@ long get_hscore(char *hscore_path)
 }
 
 
-void    set_hscore(t_game *game, long score)
+int     set_hscore(t_game *game, long score)
 {
+    int success;
+    
+    success = -1;
     game->high_score = score;
+    
+    if (game->high_score == score)
+        return (0);
+    return (1);
 }
 
 
@@ -61,7 +68,7 @@ void    overwrite_hscore(t_player player)
     FILE    *fd;
     // score_str should normaly be 5 because the number is 4 long
     // + 1 for the NULL terminating string
-    char	score_str[12];
+char	score_str[5];
     
     if ((fd = fopen(hscore_path(), "w+")))
     {
@@ -78,12 +85,14 @@ void    overwrite_hscore(t_player player)
 }
 
 
-// When player.lives < 0
-// write_score(game, get_hscore(hscore_path()) );
-void    write_score(t_game game, long hscore)
+int     write_score(t_game game, t_player player)
 {
-    if (game.Gplayer1.score > hscore && game.Gplayer1.score > game.Gplayer2.score)
-        overwrite_hscore(game.Gplayer1);
-    else if (game.Gplayer2.score > hscore && game.Gplayer1.score < game.Gplayer2.score)
-         overwrite_hscore(game.Gplayer2);
+    if (player.lives < 0 && player.score > game.high_score)
+    {
+        printf("Overwriting player score to file.\n");
+        overwrite_hscore(player);
+        return (0);
+    }
+    else
+        return (1);
 }

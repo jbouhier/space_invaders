@@ -109,15 +109,18 @@ t_game launch_bullet(t_game game) {
 }
 
 
-t_game launch_bulletMonster(t_game game) {
+t_game  launch_bulletMonster(t_game game)
+{
     int i;
     int bulletOn;
     int MonsterToLaunch;
     
     bulletOn = 0;
     MonsterToLaunch = 0;
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        if (game.Gmonster[i].bullet.bullet != NULL) {
+    for (i = 0; game.Gmonster[i].monster != NULL; i++)
+    {
+        if (game.Gmonster[i].bullet.bullet != NULL)
+        {
             bulletOn++;
             MonsterToLaunch = i;
         }
@@ -133,9 +136,11 @@ t_game launch_bulletMonster(t_game game) {
         i = 50;
     }
     // Launch bullet of the monster when no other bullet have being launched by one of them
-    if (bulletOn == 0) {
+    if (bulletOn == 0)
+    {
         MonsterToLaunch = rand() % i;
-        for (i = 0; game.Gmonster[i].monster != NULL; i++) {
+        for (i = 0; game.Gmonster[i].monster != NULL; i++)
+        {
             if (game.Gmonster[i].position.x == game.Gmonster[MonsterToLaunch].position.x &&
                 game.Gmonster[i].position.y > game.Gmonster[MonsterToLaunch].position.y) {
                 MonsterToLaunch = i;
@@ -144,17 +149,26 @@ t_game launch_bulletMonster(t_game game) {
         game.Gmonster[MonsterToLaunch].bullet.bullet = loadBullet(game);
         game.Gmonster[MonsterToLaunch].bullet.position = init_bulletMonsterPos(game.Gmonster[MonsterToLaunch]);
     }
-    else {
-        if (game.Gmonster[MonsterToLaunch].bullet.position.y <= 560) {
+    else
+    {
+        if (game.Gmonster[MonsterToLaunch].bullet.position.y <= 560)
+        {
             game.Gmonster[MonsterToLaunch].bullet.position.y += 5;
-            if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
+            
+            if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position ))
+            {
                 Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
+               
+                
+                
+                
+                // Debug
+                printf("You lost a life. %ld left.\n", game.Gplayer1.lives);
+                
+
+                
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
-                
-                if (game.Gplayer1.lives <= 0)
-                    printf("GAME OVER\n");
-                
                 game.Gplayer1.lives--;
                 game = refresh_lives(game);
                 
@@ -165,13 +179,14 @@ t_game launch_bulletMonster(t_game game) {
                 game.Gmonster[MonsterToLaunch].bullet.bullet = NULL;
             }
         }
-        else {
+        else
+        {
             SDL_DestroyTexture(game.Gmonster[MonsterToLaunch].bullet.bullet);
             game.Gmonster[MonsterToLaunch].bullet.bullet = NULL;
         }
     }
 
-    return game;
+    return (game);
 }
 
 

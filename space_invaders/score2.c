@@ -2,7 +2,7 @@
 //  score2.c
 //  space_invaders
 //
-//  Created by SynxS on 07/05/15.
+//  Created by Jean-Baptiste Bouhier on 07/05/15.
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ char  *score_str(long hscore, char *score_str)
     size_t  i;
     char    *tmp;
     
-    score_str = malloc(sizeof(*score_str) * SCORE_LENGTH + 1);
+    score_str = malloc(sizeof(*tmp) * SCORE_LENGTH + 1);
     sprintf(score_str, "%ld", hscore);
     len = strlen(score_str);
     tmp = malloc(sizeof(*tmp) * SCORE_LENGTH + 1);
