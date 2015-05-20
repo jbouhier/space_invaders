@@ -158,15 +158,6 @@ t_game  launch_bulletMonster(t_game game)
             if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position ))
             {
                 Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
-               
-                
-                
-                
-                // Debug
-                printf("You lost a life. %ld left.\n", game.Gplayer1.lives);
-                
-
-                
                 SDL_DestroyTexture(game.Gplayer1.player);
                 game.Gplayer1.player = NULL;
                 game.Gplayer1.lives--;

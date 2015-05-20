@@ -21,15 +21,11 @@ int main(void)
     tempsActuel = 0;
     tempsPrecedent = 0;
 
-    game = init_screen(game);
     set_hscore(&game, get_hscore(hscore_path()));
     game.hscore_str = score_str(game.high_score, game.hscore_str);
-
-    // Debug to save high score
-    printf("game.high_score = %ld\n", game.high_score);
-    printf("game.hscore_str: %s\n", game.hscore_str);
-    
+    game = init_screen(game);
     game = showBegin(game);
+    
     while(game.quit != 1)
     {
         while( SDL_PollEvent(&game.Gevenements) >= 0 && game.quit != 1 )
