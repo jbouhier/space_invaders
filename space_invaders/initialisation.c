@@ -129,30 +129,11 @@ t_game  init_text(t_game game)
     game.text_game.surface_score_title = TTF_RenderText_Solid(game.text_game.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
     game.text_game.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.text_game.surface_score_title);
     
-    // Hi-Score
-    game.hscore_str = malloc(sizeof(char) * (SCORE_LENGTH + 1));
-    game.hscore_str = score_str(game.high_score, game.hscore_str);
-    game.text_game.surface_high_score = TTF_RenderText_Solid(game.text_game.font, game.hscore_str, text_color);
-    game.text_game.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.text_game.surface_high_score);
-
-    // Player1
-    game.Gplayer1.score_str = malloc(sizeof(*(game.Gplayer1.score_str)) * (SCORE_LENGTH) + 1);
-    game.Gplayer1.score_str = score_str(game.Gplayer1.score, game.Gplayer1.score_str);
-    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.text_game.font, game.Gplayer1.score_str, text_color);
-    game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer1.surface_score);
-    
+    render_hscore(&game, game.text_game, game.Grenderer);
+    render_score(&(game.Gplayer1), game.text_game, game.Grenderer);
     render_lives(&(game.Gplayer1), game.text_game, game.Grenderer);
-
-    
-    // Player2
-    game.Gplayer2.score_str = malloc(sizeof(*(game.Gplayer2.score_str)) * (SCORE_LENGTH) + 1);
-    game.Gplayer2.score_str = score_str(game.Gplayer2.score, game.Gplayer2.score_str);
-    game.Gplayer2.lives_str = malloc(sizeof(*(game.Gplayer2.lives_str)) * (LIVES_LENGTH) + 1);
-    game.Gplayer2.lives_str = lives_str(game.Gplayer2.lives, game.Gplayer2.lives_str);
-    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.text_game.font, game.Gplayer2.score_str, text_color);
-    game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
-    game.Gplayer2.surface_lives = TTF_RenderText_Solid(game.text_game.font, game.Gplayer2.lives_str, text_color);
-    game.Gplayer2.texture_lives = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_lives);
+    render_score(&(game.Gplayer2), game.text_game, game.Grenderer);
+    render_lives(&(game.Gplayer2), game.text_game, game.Grenderer);
     
     // Next, look inside renderAll function !!!
     // Next, look inside renderAll function !!!

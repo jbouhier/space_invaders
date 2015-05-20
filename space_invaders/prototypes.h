@@ -72,18 +72,6 @@ typedef struct      s_monster
 }                   t_monster;
 
 
-typedef struct      s_text_game
-{
-    TTF_Font        *font;
-    SDL_Surface     *surface_score_title;
-    SDL_Texture     *texture_score_title;
-    SDL_Rect        score_title_pos;
-    SDL_Rect        high_score_pos;
-    SDL_Surface     *surface_high_score;
-    SDL_Texture     *texture_high_score;
-}                   t_text_game;
-
-
 typedef struct      s_begin
 {
     SDL_Texture     *logo;
@@ -101,6 +89,19 @@ typedef struct      s_begin
     SDL_Rect        selected_option_position;
     int             state;
 }                   t_begin;
+
+
+typedef struct      s_text_game
+{
+    TTF_Font        *font;
+    SDL_Surface     *surface_score_title;
+    SDL_Texture     *texture_score_title;
+    SDL_Rect        score_title_pos;
+    SDL_Rect        high_score_pos;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
+}                   t_text_game;
+
 
 typedef struct      s_game
 {
@@ -124,6 +125,13 @@ typedef struct      s_game
 }                   t_game;
 
 SDL_Rect    init_position(int x, int y, int h, int w);
+SDL_Window  *init(SDL_Window *gWindow);
+SDL_Texture *loadPlayer(t_game game);
+SDL_Texture *loadBullet(t_game game);
+SDL_Rect    init_bulletPos(t_player player);
+SDL_Rect    init_bulletMonsterPos(t_monster monster);
+
+t_game      launch_bullet(t_game game);
 void        renderBegin(t_game game);
 t_game      showBegin(t_game game);
 t_game      handleBegin(t_game game);
@@ -132,17 +140,14 @@ int         checkBeginTexture(t_begin beginGame);
 t_game      selectionBeginHandler(t_game game);
 t_game      showEnd(t_game game);
 t_game      showGame(t_game game, int tempsActuel, int tempsPrecedent);
-SDL_Window  *init(SDL_Window *gWindow);
+
 t_game      init_screen(t_game game);
 t_game      init_player(t_game game);
 t_game      init_text(t_game game);
-SDL_Texture *loadPlayer(t_game game);
+
 t_player    movePlayer(t_game game);
 t_game      moveMonster(t_game game);
-SDL_Texture *loadBullet(t_game game);
-SDL_Rect    init_bulletPos(t_player player);
-SDL_Rect    init_bulletMonsterPos(t_monster monster);
-t_game      launch_bullet(t_game game);
+
 t_game      launch_bulletMonster(t_game game);
 void        renderAll(t_game game);
 t_game      deleteBullets(t_game game, int index);
@@ -168,9 +173,9 @@ t_game      init_game(t_game game);
 void        renderPlayer(t_game game);
 char        *lives_str(long lives, char *lives_str);
 t_game      handleEvent(t_game game);
-t_game      refresh_score(t_game game);
+void        render_score(t_player *p, t_text_game text, SDL_Renderer *rend);
 void        render_lives(t_player *p, t_text_game text, SDL_Renderer *rend);
-t_game      refresh_hscore(t_game game);
+void        render_hscore(t_game *game, t_text_game text, SDL_Renderer *rend);
 
 
 #endif /* __prototypes_h__ */

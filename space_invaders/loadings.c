@@ -165,7 +165,7 @@ t_game showExposion(t_game game, int index)
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
     {
         game.Gplayer1.score += game.Gmonster[index].score;
-        game = refresh_score(game);
+        render_score(&(game.Gplayer1), game.text_game, game.Grenderer);
     }
     else
         game.Gplayer2.score += game.Gmonster[index].score;

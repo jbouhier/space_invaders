@@ -60,30 +60,38 @@ t_game  refresh_score(t_game game)
     return (game);
 }
 
+
+void  render_hscore(t_game *g, t_text_game text, SDL_Renderer *rend)
+{
+    SDL_Colour tcolor = {255, 255, 255, 0};
+    
+    g->hscore_str = malloc(sizeof(*(g->hscore_str)) * (SCORE_LENGTH + 1));
+    g->hscore_str = score_str(g->high_score, g->hscore_str);
+    g->surface_high_score = TTF_RenderText_Solid(text.font, g->hscore_str, tcolor);
+    g->texture_high_score = SDL_CreateTextureFromSurface(rend, g->surface_high_score);
+    SDL_RenderCopy(rend, g->texture_high_score, NULL, &(g->high_score_pos));
+}
+
+
+void  render_score(t_player *p, t_text_game text, SDL_Renderer *rend)
+{
+    SDL_Colour tcolor = {255, 255, 255, 0};
+    
+    p->score_str = malloc(sizeof(*(p->score_str)) * (SCORE_LENGTH) + 1);
+    p->score_str = score_str(p->score, p->score_str);
+    p->surface_score = TTF_RenderText_Solid(text.font, p->score_str, tcolor);
+    p->texture_score = SDL_CreateTextureFromSurface(rend, p->surface_score);
+    SDL_RenderCopy(rend, p->texture_score, NULL, &(p->score_pos));
+}
+
+
 void  render_lives(t_player *p, t_text_game text, SDL_Renderer *rend)
 {
-    SDL_Colour text_color = {255, 255, 255, 0};
+    SDL_Colour tcolor = {255, 255, 255, 0};
     
     p->lives_str = malloc(sizeof(*(p->lives_str)) * (LIVES_LENGTH) + 1);
     p->lives_str = lives_str(p->lives, p->lives_str);
-    p->surface_lives = TTF_RenderText_Solid(text.font, p->lives_str, text_color);
+    p->surface_lives = TTF_RenderText_Solid(text.font, p->lives_str, tcolor);
     p->texture_lives = SDL_CreateTextureFromSurface(rend, p->surface_lives);
-    
-    // Update Renderer
     SDL_RenderCopy(rend, p->texture_lives, NULL, &(p->lives_pos));
-}
-
-t_game  refresh_hscore(t_game game)
-{
-    SDL_Colour text_color = {255, 255, 255, 0};
-    
-    // High score
-    game.hscore_str = score_str(game.high_score, game.hscore_str);
-    game.text_game.surface_high_score = TTF_RenderText_Solid(game.text_game.font, game.hscore_str, text_color);
-    game.text_game.texture_high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.text_game.surface_high_score);
-    
-    // Update Render
-    SDL_RenderCopy( game.Grenderer, game.text_game.texture_high_score, NULL, &(game.text_game.high_score_pos) );
-    
-    return (game);
 }
