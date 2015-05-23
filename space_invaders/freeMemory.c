@@ -57,7 +57,6 @@ void freeMonster(t_game game)
     free(game.Gmonster);
 }
 
-
 void freePlayer(t_player player)
 {
     int i;

@@ -21,7 +21,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 
 #define PWD getenv("PWD")
-#define SCREEN_WIDTH 600
+#define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define LOAD_SOUND_MAX 4
 #define MONSTER_NBR 50
@@ -170,6 +170,6 @@ char            *lives_str(long lives, char *lives_str);
 t_game          handleEvent(t_game game);
 t_game          refresh_score(t_game game);
 t_game          refresh_lives(t_game game);
-
+t_game          show_pause (t_game game);
 
 #endif /* __prototypes_h__ */

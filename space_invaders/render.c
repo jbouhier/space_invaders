@@ -12,11 +12,20 @@
 void    renderAll(t_game game)
 {
     int i;
+    static int j = 0;
+    SDL_Rect  pos = {0, 0 + j, SCREEN_WIDTH, SCREEN_HEIGHT};
+    SDL_Rect  pos1 = {0, j - SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT};
 
     SDL_RenderClear( game.Grenderer );
-    if (game.Gscreen != NULL)
-        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-
+    if (game.Gscreen != NULL) {
+        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, &pos );
+        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, &pos1 );
+    }
+    
+    j++;
+    if (j > SCREEN_HEIGHT) {
+        j = 0;
+    }
     renderPlayer(game);
 
     // Text

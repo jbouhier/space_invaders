@@ -121,9 +121,9 @@ t_game  init_text(t_game game)
     game.infos.score_title_pos = init_position(180, 5, 25, 460);
     game.infos.high_score_pos = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
-    game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
-    game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
-    game.Gplayer2.lives_pos = init_position(760, 570, 25, 25);
+    game.Gplayer2.score_pos = init_position(SCREEN_WIDTH - 260, 32, 25, 80);
+    game.Gplayer1.lives_pos = init_position(20, SCREEN_HEIGHT - 30, 25, 25);
+    game.Gplayer2.lives_pos = init_position( SCREEN_WIDTH - 20, SCREEN_HEIGHT - 30, 25, 25);
     
     // Score title
     game.infos.surface_score_title = TTF_RenderText_Solid(game.infos.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);

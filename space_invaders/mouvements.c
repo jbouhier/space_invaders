@@ -145,7 +145,7 @@ t_game launch_bulletMonster(t_game game) {
         game.Gmonster[MonsterToLaunch].bullet.position = init_bulletMonsterPos(game.Gmonster[MonsterToLaunch]);
     }
     else {
-        if (game.Gmonster[MonsterToLaunch].bullet.position.y <= 560) {
+        if (game.Gmonster[MonsterToLaunch].bullet.position.y <= SCREEN_HEIGHT - 40) {
             game.Gmonster[MonsterToLaunch].bullet.position.y += 5;
             if (checkCollision( game.Gplayer1.position, game.Gmonster[MonsterToLaunch].bullet.position )) {
                 Mix_PlayChannel( -1, game.Gplayer1.playerExplode_sound, 0 );
@@ -243,7 +243,10 @@ t_game handleEvent(t_game game) {
             game.quit = 1;
             break;
         case SDLK_p:
-                game.quit = 2;
+            game.quit = 2;
+            while (game.quit == 2) {
+                
+            }
             break;
         case SDLK_l:
             game.quit = 0;
@@ -264,5 +267,13 @@ t_game handleEvent(t_game game) {
             break;
     }
 
+    return game;
+}
+
+t_game show_pause (t_game game) {
+    SDL_Texture *pause_texture;
+    
+    pause_texture = loadTexture( "/../../../images/background/pause.jpg", game.Grenderer );
+    
     return game;
 }
