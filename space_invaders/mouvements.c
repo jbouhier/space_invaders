@@ -240,16 +240,16 @@ bool checkCollision( SDL_Rect a, SDL_Rect b )
 t_game handleEvent(t_game game) {
     switch (game.Gevenements.key.keysym.sym) {
         case SDLK_q:
-            game.quit = 1;
+            if (game.begin.state != 2)
+                game.quit = 1;
             break;
         case SDLK_p:
-            game.quit = 2;
-            while (game.quit == 2) {
-                
-            }
+            if (game.begin.state != 2)
+                game.quit = 2;
             break;
         case SDLK_l:
-            game.quit = 0;
+            if (game.begin.state != 2)
+                game.quit = 0;
             break;
         case SDLK_ESCAPE:
             game.begin.state = 1;
@@ -261,7 +261,8 @@ t_game handleEvent(t_game game) {
                     game.quit = 1;
                     break;
                 case SDL_WINDOWEVENT_HIDDEN:
-                    game.quit = 2;
+                    if (game.begin.state != 2)
+                        game.quit = 2;
                     break;
             }
             break;
@@ -271,9 +272,10 @@ t_game handleEvent(t_game game) {
 }
 
 t_game show_pause (t_game game) {
-    SDL_Texture *pause_texture;
+    SDL_Rect pos = {(SCREEN_WIDTH / 2) - 100, (SCREEN_HEIGHT / 2) - 50, 200, 100};
     
-    pause_texture = loadTexture( "/../../../images/background/pause.jpg", game.Grenderer );
+    SDL_RenderCopy( game.Grenderer, game.begin.pause, NULL, &pos );
+    SDL_RenderPresent(game.Grenderer);
     
     return game;
 }

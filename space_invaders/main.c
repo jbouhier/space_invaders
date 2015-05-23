@@ -41,8 +41,16 @@ int main(void)
                 exit(100);
             }
             else {
-                if (game.begin.state == 0 && gameover == 0 && game.quit != 2) {
-                    game = showGame(game, tempsActuel, tempsPrecedent);
+                if (game.begin.state == 2) {
+                    game = showInstruction(game);
+                }
+                else {
+                    if (game.begin.state == 0 && gameover == 0 && game.quit != 2) {
+                        game = showGame(game, tempsActuel, tempsPrecedent);
+                    }
+                    if (game.quit == 2) {
+                        game = show_pause (game);
+                    }
                 }
                 tempsPrecedent = tempsActuel; /* Le temps "actuel" devient le temps "precedent" pour nos futurs calculs */
             }

@@ -87,6 +87,9 @@ typedef struct      s_text_game
 typedef struct      s_begin
 {
     SDL_Texture     *logo;
+    SDL_Texture     *pause;
+    SDL_Texture     *instruction;
+    SDL_Rect        instruction_position;
     SDL_Rect        logo_position;
     SDL_Texture     *play_with_1;
     SDL_Rect        play_with_1_position;
@@ -171,5 +174,7 @@ t_game          handleEvent(t_game game);
 t_game          refresh_score(t_game game);
 t_game          refresh_lives(t_game game);
 t_game          show_pause (t_game game);
+SDL_Texture     *loadTexture(char* path, SDL_Renderer* gRenderer);
+t_game          showInstruction(t_game game);
 
 #endif /* __prototypes_h__ */
