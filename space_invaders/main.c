@@ -22,7 +22,7 @@ int main(void)
     tempsPrecedent = 0;
 
     set_hscore(&game, get_hscore(hscore_path()));
-    game.hscore_str = score_str(game.high_score, game.hscore_str);
+    game.text.hscore_str = score_str(game.text.hscore, game.text.hscore_str);
     game = init_screen(game);
     game = showBegin(game);
     

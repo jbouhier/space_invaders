@@ -165,7 +165,7 @@ t_game showExposion(t_game game, int index)
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
     {
         game.Gplayer1.score += game.Gmonster[index].score;
-        render_score(&(game.Gplayer1), game.text_game, game.Grenderer);
+        render_score(&(game.Gplayer1), game.text, game.Grenderer);
     }
     else
         game.Gplayer2.score += game.Gmonster[index].score;
@@ -201,12 +201,12 @@ t_game    showBegin(t_game game)
     game.begin.selected_option = loadTexture( "/../../../images/background/selection.png", game.Grenderer );
     game.begin.logo_position = init_position(120, 100, 150, 500);
     game.begin.state = 1;
-    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "     Play      ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "     Play      ", text_color);
     game.begin.play_with_1 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.play_with_1_position = init_position(265, game.begin.logo_position.y + 200, 50, 250);
-    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "    Quit    ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "    Quit    ", text_color);
     game.begin.quit = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "  High Score   ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "  High Score   ", text_color);
     game.begin.high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.quit = 0;
     game.begin.high_score_position = init_position(game.begin.play_with_1_position.x, game.begin.play_with_1_position.y + 50,

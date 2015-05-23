@@ -41,7 +41,8 @@ long    get_hscore(char *hscore_path)
     }
     else
     {
-        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path, strerror(errno));
+        fprintf(stderr, "Could not open: %s -> Error: %s\n",
+                hscore_path, strerror(errno));
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
@@ -55,9 +56,9 @@ int     set_hscore(t_game *game, long score)
     int success;
     
     success = -1;
-    game->high_score = score;
+    game->text.hscore = score;
     
-    if (game->high_score == score)
+    if (game->text.hscore == score)
         return (0);
     return (1);
 }
@@ -76,7 +77,8 @@ void    overwrite_hscore(t_player player)
     }
     else
     {
-        fprintf(stderr, "Could not open: %s -> Error: %s\n", hscore_path(), strerror(errno));
+        fprintf(stderr, "Could not open: %s -> Error: %s\n",
+                hscore_path(), strerror(errno));
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
@@ -85,7 +87,7 @@ void    overwrite_hscore(t_player player)
 
 int     write_score(t_game game, t_player player)
 {
-    if (player.lives < 0 && player.score > game.high_score)
+    if (player.lives < 0 && player.score > game.text.hscore)
     {
         printf("Overwriting player score to file.\n");
         overwrite_hscore(player);

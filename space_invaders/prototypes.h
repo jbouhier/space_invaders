@@ -91,16 +91,18 @@ typedef struct      s_begin
 }                   t_begin;
 
 
-typedef struct      s_text_game
+typedef struct      s_text
 {
     TTF_Font        *font;
     SDL_Surface     *surface_score_title;
     SDL_Texture     *texture_score_title;
     SDL_Rect        score_title_pos;
-    SDL_Rect        high_score_pos;
-    SDL_Surface     *surface_high_score;
-    SDL_Texture     *texture_high_score;
-}                   t_text_game;
+    long            hscore;
+    char            *hscore_str;
+    SDL_Rect        pos_hscore;
+    SDL_Surface     *sur_hscore;
+    SDL_Texture     *tex_hscore;
+}                   t_text;
 
 
 typedef struct      s_game
@@ -112,16 +114,12 @@ typedef struct      s_game
     t_player        Gplayer1;
     t_player        Gplayer2;
     t_monster       *Gmonster;
-    t_text_game     text_game;
+    t_text          text;
     t_begin         begin;
     int             monster_speed;
     int             quit;
     SDL_Rect        score_title_pos;
-    long            high_score;
-    char            *hscore_str;
-    SDL_Rect        high_score_pos;
-    SDL_Surface     *surface_high_score;
-    SDL_Texture     *texture_high_score;
+
 }                   t_game;
 
 SDL_Rect    init_position(int x, int y, int h, int w);
@@ -173,9 +171,9 @@ t_game      init_game(t_game game);
 void        renderPlayer(t_game game);
 char        *lives_str(long lives, char *lives_str);
 t_game      handleEvent(t_game game);
-void        render_score(t_player *p, t_text_game text, SDL_Renderer *rend);
-void        render_lives(t_player *p, t_text_game text, SDL_Renderer *rend);
-void        render_hscore(t_game *game, t_text_game text, SDL_Renderer *rend);
+void        render_score(t_player *p, t_text text, SDL_Renderer *rend);
+void        render_lives(t_player *p, t_text text, SDL_Renderer *rend);
+void        render_hscore(t_text *t, SDL_Renderer *rend);
 
 
 #endif /* __prototypes_h__ */

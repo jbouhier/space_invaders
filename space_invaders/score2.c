@@ -36,48 +36,23 @@ char  *lives_str(long lives, char *lives_str)
 }
 
 
-t_game  refresh_score(t_game game)
-{
-    SDL_Colour text_color = {255, 255, 255, 0};
-    
-    game.Gplayer1.score_str = score_str(game.Gplayer1.score,
-                                        game.Gplayer1.score_str);
-    game.Gplayer1.surface_score = TTF_RenderText_Solid(game.text_game.font,
-                                                       game.Gplayer1.score_str,
-                                                       text_color);
-    game.Gplayer1.texture_score = SDL_CreateTextureFromSurface(game.Grenderer,
-                                                               game.Gplayer1.surface_score);
-    
-    game.Gplayer2.score_str = score_str(game.Gplayer2.score, game.Gplayer2.score_str);
-    game.Gplayer2.surface_score = TTF_RenderText_Solid(game.text_game.font, game.Gplayer2.score_str, text_color);
-    game.Gplayer2.texture_score = SDL_CreateTextureFromSurface(game.Grenderer, game.Gplayer2.surface_score);
-    
-    SDL_RenderCopy(game.Grenderer, game.Gplayer1.texture_score, NULL,
-                   &(game.Gplayer1.score_pos));
-    SDL_RenderCopy(game.Grenderer, game.Gplayer2.texture_score, NULL,
-                   &(game.Gplayer2.score_pos) );
-    
-    return (game);
-}
-
-
-void  render_hscore(t_game *g, t_text_game text, SDL_Renderer *rend)
+void  render_hscore(t_text *t, SDL_Renderer *rend)
 {
     SDL_Colour tcolor = {255, 255, 255, 0};
     
-    g->hscore_str = malloc(sizeof(*(g->hscore_str)) * (SCORE_LENGTH + 1));
-    g->hscore_str = score_str(g->high_score, g->hscore_str);
-    g->surface_high_score = TTF_RenderText_Solid(text.font, g->hscore_str, tcolor);
-    g->texture_high_score = SDL_CreateTextureFromSurface(rend, g->surface_high_score);
-    SDL_RenderCopy(rend, g->texture_high_score, NULL, &(g->high_score_pos));
+    t->hscore_str = malloc(sizeof(*(t->hscore_str)) * SCORE_LENGTH + 1);
+    t->hscore_str = score_str(t->hscore, t->hscore_str);
+    t->sur_hscore = TTF_RenderText_Solid(t->font, t->hscore_str, tcolor);
+    t->tex_hscore = SDL_CreateTextureFromSurface(rend, t->sur_hscore);
+    SDL_RenderCopy(rend, t->tex_hscore, NULL, &(t->pos_hscore));
 }
 
 
-void  render_score(t_player *p, t_text_game text, SDL_Renderer *rend)
+void  render_score(t_player *p, t_text text, SDL_Renderer *rend)
 {
     SDL_Colour tcolor = {255, 255, 255, 0};
     
-    p->score_str = malloc(sizeof(*(p->score_str)) * (SCORE_LENGTH) + 1);
+    p->score_str = malloc(sizeof(*(p->score_str)) * SCORE_LENGTH + 1);
     p->score_str = score_str(p->score, p->score_str);
     p->surface_score = TTF_RenderText_Solid(text.font, p->score_str, tcolor);
     p->texture_score = SDL_CreateTextureFromSurface(rend, p->surface_score);
@@ -85,13 +60,36 @@ void  render_score(t_player *p, t_text_game text, SDL_Renderer *rend)
 }
 
 
-void  render_lives(t_player *p, t_text_game text, SDL_Renderer *rend)
+void  render_lives(t_player *p, t_text text, SDL_Renderer *rend)
 {
     SDL_Colour tcolor = {255, 255, 255, 0};
     
-    p->lives_str = malloc(sizeof(*(p->lives_str)) * (LIVES_LENGTH) + 1);
+    p->lives_str = malloc(sizeof(*(p->lives_str)) * LIVES_LENGTH + 1);
     p->lives_str = lives_str(p->lives, p->lives_str);
     p->surface_lives = TTF_RenderText_Solid(text.font, p->lives_str, tcolor);
     p->texture_lives = SDL_CreateTextureFromSurface(rend, p->surface_lives);
     SDL_RenderCopy(rend, p->texture_lives, NULL, &(p->lives_pos));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
