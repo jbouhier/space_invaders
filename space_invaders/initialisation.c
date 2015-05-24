@@ -201,7 +201,8 @@ SDL_Rect init_bulletPos(t_player player)
     return (DestR);
 }
 
-SDL_Rect init_bulletMonsterPos(t_monster monster) {
+SDL_Rect init_bulletMonsterPos(t_monster monster)
+{
     SDL_Rect DestR;
     
     DestR.y =  monster.position.y + 4;

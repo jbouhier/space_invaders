@@ -140,6 +140,7 @@ t_game      selectionBeginHandler(t_game game);
 t_game      showEnd(t_game game);
 t_game      showGame(t_game game, int tempsActuel, int tempsPrecedent);
 
+t_game      init_game(t_game game);
 t_game      init_screen(t_game game);
 t_game      init_player(t_game game);
 t_game      init_text(t_game game);
@@ -156,22 +157,24 @@ t_game      loadSounds(t_game game);
 char        **AllocateSoundPath(char **paths);
 t_game      loadMonsters(t_game game);
 t_game      showExposion(t_game game, int index);
+
 char        *hscore_path();
+char        *score_str(long hscore, char *score_str);
+char        *lives_str(long lives, char *lives_str);
 long        get_hscore(char *hscore_path);
 int         set_hscore(t_game *game, long score);
-t_game      showExposion(t_game game, int index);
 void        overwrite_hscore(t_player player);
 int         write_score(t_game game, t_player player);
-char        *score_str(long hscore, char *score_str);
+
+t_game      showExposion(t_game game, int index);
 void        freeBegin(t_game game);
 void        freeMonster(t_game game);
 void        freePlayer(t_player player);
 void        freeInfos(t_game game);
 t_game      init_monster_player(t_game game);
-t_game      init_game(t_game game);
-void        renderPlayer(t_game game);
-char        *lives_str(long lives, char *lives_str);
 t_game      handleEvent(t_game game);
+
+void        renderPlayer(t_game game);
 void        render_score(t_player *p, t_text text, SDL_Renderer *rend);
 void        render_lives(t_player *p, t_text text, SDL_Renderer *rend);
 void        render_hscore(t_text *t, SDL_Renderer *rend);
