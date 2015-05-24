@@ -170,6 +170,7 @@ t_game      showExposion(t_game game, int index);
 void        freeBegin(t_game game);
 void        freeMonster(t_game game);
 void        freePlayer(t_player player);
+void        set_player(t_player *player);
 void        freeInfos(t_game game);
 t_game      init_monster_player(t_game game);
 t_game      handleEvent(t_game game);

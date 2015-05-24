@@ -81,16 +81,19 @@ void freePlayer(t_player player)
         SDL_DestroyTexture(player.bullet[i].bullet);
         player.bullet[i].bullet = NULL;
     }
-
-    player.player = NULL;
-    player.texture_score = NULL;
-    player.texture_lives = NULL;
-    player.surface_score = NULL;
-    player.surface_lives = NULL;
-    player.bulletGo_sound = NULL;
-    player.playerExplode_sound = NULL;
-
+    set_player(&player);
     free(player.bullet);
+}
+
+void    set_player(t_player *player)
+{
+    player->player = NULL;
+    player->texture_score = NULL;
+    player->texture_lives = NULL;
+    player->surface_score = NULL;
+    player->surface_lives = NULL;
+    player->bulletGo_sound = NULL;
+    player->playerExplode_sound = NULL;
 }
 
 void freeInfos(t_game game)
