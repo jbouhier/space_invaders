@@ -1,5 +1,5 @@
 //
-//  loadings.c
+//  loadings1.c
 //  space_invaders
 //
 //  Created by Gatien MOUAFO on 27/03/15.
@@ -7,6 +7,7 @@
 //
 
 #include "prototypes.h"
+
 int i;
 int j;
 int x;
