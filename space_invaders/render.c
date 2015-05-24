@@ -16,14 +16,12 @@ void    renderAll(t_game game)
     SDL_RenderClear( game.Grenderer );
     if (game.Gscreen != NULL)
         SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-
     renderPlayer(game);
-
-    // Text
-    SDL_RenderCopy( game.Grenderer, game.text.texture_score_title, NULL, &(game.text.score_title_pos) );
+    render_title(&(game.text), game.Grenderer);
     render_hscore(&(game.text), game.Grenderer);
-
-
+    render_lives(&(game.Gplayer1), game.text, game.Grenderer);
+    render_lives(&(game.Gplayer2), game.text, game.Grenderer);
+    
     for (i = 0; game.Gmonster[i].monster != NULL; i++) {
         SDL_RenderCopy( game.Grenderer, game.Gmonster[i].monster, NULL, &(game.Gmonster[i].position) ); // Error !
         if (game.Gmonster[i].explosion != NULL) {

@@ -94,9 +94,10 @@ typedef struct      s_begin
 typedef struct      s_text
 {
     TTF_Font        *font;
-    SDL_Surface     *surface_score_title;
-    SDL_Texture     *texture_score_title;
-    SDL_Rect        score_title_pos;
+    SDL_Color       color;
+    SDL_Surface     *sur_stitle;
+    SDL_Texture     *tex_stitle;
+    SDL_Rect        pos_stitle;
     long            hscore;
     char            *hscore_str;
     SDL_Rect        pos_hscore;
@@ -174,6 +175,6 @@ t_game      handleEvent(t_game game);
 void        render_score(t_player *p, t_text text, SDL_Renderer *rend);
 void        render_lives(t_player *p, t_text text, SDL_Renderer *rend);
 void        render_hscore(t_text *t, SDL_Renderer *rend);
-
+void        render_title(t_text *t, SDL_Renderer *rend);
 
 #endif /* __prototypes_h__ */

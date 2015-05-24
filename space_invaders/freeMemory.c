@@ -97,18 +97,18 @@ void freeInfos(t_game game)
 {
     if (game.text.sur_hscore)
         SDL_FreeSurface(game.text.sur_hscore);
-    if (game.text.surface_score_title)
-        SDL_FreeSurface(game.text.surface_score_title);
+    if (game.text.sur_stitle)
+        SDL_FreeSurface(game.text.sur_stitle);
     if (game.text.tex_hscore)
         SDL_DestroyTexture(game.text.tex_hscore);
-    if (game.text.texture_score_title)
-        SDL_DestroyTexture(game.text.texture_score_title);
+    if (game.text.tex_stitle)
+        SDL_DestroyTexture(game.text.tex_stitle);
     if (game.text.font)
         TTF_CloseFont(game.text.font);
 
     game.text.sur_hscore = NULL;
-    game.text.surface_score_title = NULL;
+    game.text.sur_stitle = NULL;
     game.text.tex_hscore = NULL;
-    game.text.texture_score_title = NULL;
+    game.text.tex_stitle = NULL;
     game.text.font = NULL;
 }

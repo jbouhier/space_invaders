@@ -55,6 +55,7 @@ t_game init_screen(t_game game)
     SDL_FreeSurface(screenSurface);
 
     game = init_player(game);
+    game.text.hscore_str = score_str(game.text.hscore, game.text.hscore_str);
     game = init_text(game);
 
     return (game);
@@ -73,11 +74,15 @@ t_game init_game(t_game game)
     game.Gscreen = NULL;
     game.Gwindow = NULL;
     game.text.font = NULL;
-    game.text.surface_score_title = NULL;
+    game.text.sur_stitle = NULL;
     game.text.sur_hscore = NULL;
     game.text.tex_hscore = NULL;
-    game.text.texture_score_title = NULL;
+    game.text.tex_stitle = NULL;
     game.monster_speed = 1;
+    game.text.color.r = 255;
+    game.text.color.g = 255;
+    game.text.color.b = 255;
+    game.text.color.a = 0;
     game = init_monster_player(game);
 
     return (game);
@@ -115,27 +120,22 @@ t_game init_monster_player(t_game game)
 t_game  init_text(t_game game)
 {
     game.text.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
-    SDL_Colour text_color = { 255, 255, 255, 0};
     
     // Engine text size and position -  (x,    y,  h,   w)
-    game.text.score_title_pos = init_position(180, 5, 25, 460);
+    game.text.pos_stitle = init_position(180, 5, 25, 460);
     game.text.pos_hscore = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
     game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
     game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
     game.Gplayer2.lives_pos = init_position(760, 570, 25, 25);
     
-    // Score title
-    game.text.surface_score_title = TTF_RenderText_Solid(game.text.font, "S C O R E < 1 >        H I - S C O R E        S C O R E < 2 >", text_color);
-    game.text.texture_score_title = SDL_CreateTextureFromSurface(game.Grenderer, game.text.surface_score_title);
-    
+    render_title(&(game.text), game.Grenderer);
     render_hscore(&(game.text), game.Grenderer);
     render_score(&(game.Gplayer1), game.text, game.Grenderer);
     render_lives(&(game.Gplayer1), game.text, game.Grenderer);
     render_score(&(game.Gplayer2), game.text, game.Grenderer);
     render_lives(&(game.Gplayer2), game.text, game.Grenderer);
     
-    // Next, look inside renderAll function !!!
     return (game);
 }
 
