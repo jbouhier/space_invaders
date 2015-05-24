@@ -134,7 +134,7 @@ SDL_Rect    init_bulletMonsterPos(t_monster monster);
 
 t_game      launch_bullet(t_game game);
 void        renderBegin(t_game game);
-t_game      showBegin(t_game game);
+t_game      showBegin(t_game game, t_text *t);
 t_game      handleBegin(t_game game);
 t_game      KeyBeginHandler(t_game game);
 int         checkBeginTexture(t_begin beginGame);
@@ -158,7 +158,7 @@ bool        checkCollision( SDL_Rect a, SDL_Rect b );
 t_game      loadSounds(t_game game);
 char        **AllocateSoundPath(char **paths);
 t_game      loadMonsters(t_game game);
-t_game      showExposion(t_game game, int index);
+t_game      showExposion(t_game game, int i);
 
 char        *hscore_path();
 char        *score_str(long hscore, char *score_str);

@@ -8,6 +8,7 @@
 
 #include "prototypes.h"
 
+
 // Load image at specified path
 SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer)
 {

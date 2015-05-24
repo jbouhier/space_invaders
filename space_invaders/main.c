@@ -23,7 +23,7 @@ int main(void)
 
     set_hscore(&game, get_hscore(hscore_path()));
     game = init_screen(game);
-    game = showBegin(game);
+    game = showBegin(game, &(game.text));
     
     while(game.quit != 1)
     {

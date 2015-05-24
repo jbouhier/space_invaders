@@ -14,22 +14,31 @@ int x;
 int y;
 
 
-t_game loadMonsters(t_game game)
+t_game  loadMonsters(t_game game)
 {
-    
     SDL_Surface *loadedSurface;
+    int i;
+    int x;
+    int y;
 
     x = 10;
     y = 100;
-
-    loadedSurface = IMG_Load( "/../../../images/monster1.png" );
-    if( loadedSurface == NULL )
-        printf( "Unable to load image %s! SDL_image Error: %s\n", "/../../../images/monster1.png", IMG_GetError() );
-    else {
-        for (i = 0; i < MONSTER_NBR; i++) {
-            game.Gmonster[i].monster = SDL_CreateTextureFromSurface ( game.Grenderer, loadedSurface);
-            if( game.Gmonster[i].monster == NULL ) {
-                printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n", "/../../../images/monster1.png", SDL_GetError()  );
+    loadedSurface = IMG_Load("/../../../images/monster1.png");
+    
+    if (loadedSurface == NULL)
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n",
+               "/../../../images/monster1.png", IMG_GetError() );
+    }
+    else
+    {
+        for (i = 0; i < MONSTER_NBR; i++)
+        {
+            game.Gmonster[i].monster = SDL_CreateTextureFromSurface(game.Grenderer, loadedSurface);
+            if (game.Gmonster[i].monster == NULL)
+            {
+                printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n",
+                       "/../../../images/monster1.png", SDL_GetError() );
             }
             game.Gmonster[i].position = init_position(x, y, 20, 20);
             if (y < 110)
@@ -39,25 +48,29 @@ t_game loadMonsters(t_game game)
             else
                 game.Gmonster[i].score = 10;
 
-            if ((i + 1) % 10 != 0 || i == 0) {
+            if ((i + 1) % 10 != 0 || i == 0)
                 x += 30;
-            }
-            else {
+            else
+            {
                 x = 10;
                 y += 30;
             }
         }
-        SDL_FreeSurface( loadedSurface );
+        SDL_FreeSurface(loadedSurface);
     }
 
-    return game;
+    return (game);
 }
+
+
+
+
 
 t_game loadSounds(t_game game)
 {
     char **paths;
     
-    paths = malloc (sizeof(*paths) * LOAD_SOUND_MAX);
+    paths = malloc(sizeof(*paths) * LOAD_SOUND_MAX);
     paths = AllocateSoundPath(paths);
 
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
@@ -84,25 +97,27 @@ char **AllocateSoundPath(char **paths)
     paths[2] = "/../../../sounds/shoot.wav";
     paths[3] = "/../../../sounds/MoveMonster.wav";
     
-    return paths;
+    return (paths);
 }
 
-t_game showExposion(t_game game, int index)
+t_game  showExposion(t_game game, int i)
 {
+    char    *explo = "/../../../images/explosion.png";
     
-    game.Gmonster[index].explosion = loadTexture("/../../../images/explosion.png", game.Grenderer);
-    game.Gmonster[index].timeShowExplosion = SDL_GetTicks();
+    game.Gmonster[i].explosion = loadTexture(explo, game.Grenderer);
+    game.Gmonster[i].timeShowExplosion = SDL_GetTicks();
     
     if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
     {
-        game.Gplayer1.score += game.Gmonster[index].score;
+        game.Gplayer1.score += game.Gmonster[i].score;
         render_score(&(game.Gplayer1), game.text, game.Grenderer);
     }
     else
-        game.Gplayer2.score += game.Gmonster[index].score;
+        game.Gplayer2.score += game.Gmonster[i].score;
     
     return (game);
 }
+
 
 
 SDL_Texture *loadMonster(SDL_Renderer* gRenderer)
@@ -124,20 +139,19 @@ SDL_Texture *loadMonster(SDL_Renderer* gRenderer)
  **  Fonction qui affiche l'interface qui permet de debuter le jeux.
  **  L'utilisateur doit cliquer sur commencer le jeux pour passer a l'interface du jeux et jouer
  */
-t_game    showBegin(t_game game)
+t_game    showBegin(t_game game, t_text *t)
 {
-    SDL_Colour text_color = { 255, 255, 255, 0 };
     game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
     game.begin.logo = loadTexture( "/../../../images/background/logo.png", game.Grenderer );
     game.begin.selected_option = loadTexture( "/../../../images/background/selection.png", game.Grenderer );
     game.begin.logo_position = init_position(120, 100, 150, 500);
     game.begin.state = 1;
-    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "     Play      ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "     Play      ", t->color);
     game.begin.play_with_1 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.play_with_1_position = init_position(265, game.begin.logo_position.y + 200, 50, 250);
-    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "    Quit    ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "    Quit    ", t->color);
     game.begin.quit = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "  High Score   ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "  High Score   ", t->color);
     game.begin.high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.quit = 0;
     game.begin.high_score_position = init_position(game.begin.play_with_1_position.x, game.begin.play_with_1_position.y + 50,
@@ -148,10 +162,9 @@ t_game    showBegin(t_game game)
                                                         game.begin.play_with_1_position.y + 10, 30, 100);
     game.begin.play_with_2 = NULL;
     renderBegin(game);
-
-    return game;
+    
+    return (game);
 }
-
 
 void    renderBegin(t_game game)
 {
