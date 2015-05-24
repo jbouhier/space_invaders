@@ -125,10 +125,12 @@ typedef struct      s_game
 
 SDL_Rect    init_position(int x, int y, int h, int w);
 SDL_Window  *init(SDL_Window *gWindow);
+SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer);
 SDL_Texture *loadPlayer(t_game game);
 SDL_Texture *loadBullet(t_game game);
 SDL_Rect    init_bulletPos(t_player player);
 SDL_Rect    init_bulletMonsterPos(t_monster monster);
+
 
 t_game      launch_bullet(t_game game);
 void        renderBegin(t_game game);
