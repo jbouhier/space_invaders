@@ -81,5 +81,3 @@ int     checkBeginTexture(t_begin beginGame)
     
     return (0);
 }
-
-
