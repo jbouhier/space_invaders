@@ -60,33 +60,6 @@ t_game  loadMonsters(t_game game)
 }
 
 
-
-
-
-t_game loadSounds(t_game game)
-{
-    char **paths;
-    
-    paths = malloc(sizeof(*paths) * LOAD_SOUND_MAX);
-    paths = AllocateSoundPath(paths);
-
-    game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
-    game.Gplayer1.bulletGo_sound = Mix_LoadWAV( "/../../../sounds/invaderkilled.wav" );
-
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
-        game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( "/../../../sounds/shoot.wav" );
-        game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( "/../../../sounds/MoveMonster.wav" );
-    }
-
-    if(game.Gplayer1.playerExplode_sound == NULL)
-        fprintf(stderr,"Could not load %s\n", paths[0]);
-
-    free(paths);
-
-    return game;
-}
-
-
 char **AllocateSoundPath(char **paths)
 {
     paths[0] = "/../../../sounds/explosion.wav";
