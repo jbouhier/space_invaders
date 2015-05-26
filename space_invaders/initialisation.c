@@ -179,14 +179,14 @@ void end(t_game game)
 
 SDL_Rect init_position(int x, int y, int h, int w)
 {
-    SDL_Rect DestR;
+    SDL_Rect rect;
 
-    DestR.x = x;
-    DestR.y = y;
-    DestR.h = h;
-    DestR.w = w;
+    rect.x = x;
+    rect.y = y;
+    rect.h = h;
+    rect.w = w;
     
-    return (DestR);
+    return (rect);
 }
 
 SDL_Rect init_bulletPos(t_player player)
