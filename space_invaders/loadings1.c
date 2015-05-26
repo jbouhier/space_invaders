@@ -8,8 +8,7 @@
 
 #include "prototypes.h"
 
-int i;
-int j;
+
 int x;
 int y;
 
@@ -17,6 +16,8 @@ int y;
 t_game  loadMonsters(t_game game)
 {
     SDL_Surface *surf;
+    int i;
+    
     x = 10;
     y = 100;
     
@@ -26,16 +27,21 @@ t_game  loadMonsters(t_game game)
     {
         printf( "Unable to load image %s! SDL_image Error: %s\n",
                "/../../../images/monster1.png", IMG_GetError() );
+        SDL_Quit();
+        exit(EXIT_FAILURE);
     }
     else
     {
+
         for (i = 0; i < MONSTER_NBR; i++)
         {
             game.Gmonster[i].monster = SDL_CreateTextureFromSurface(game.Grenderer, surf);
             if (game.Gmonster[i].monster == NULL)
             {
-                printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n",
+                printf( "Load texture error %s for the monsters! SDL Error: %s\n",
                        "/../../../images/monster1.png", SDL_GetError() );
+                SDL_Quit();
+                exit(EXIT_FAILURE);
             }
             game.Gmonster[i].position = init_position(x, y, 20, 20);
             if (y < 110)
