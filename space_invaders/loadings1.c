@@ -16,16 +16,13 @@ int y;
 
 t_game  loadMonsters(t_game game)
 {
-    SDL_Surface *loadedSurface;
-    int i;
-    int x;
-    int y;
-
+    SDL_Surface *surf;
     x = 10;
     y = 100;
-    loadedSurface = IMG_Load("/../../../images/monster1.png");
     
-    if (loadedSurface == NULL)
+    surf = IMG_Load("/../../../images/monster1.png");
+    
+    if (surf == NULL)
     {
         printf( "Unable to load image %s! SDL_image Error: %s\n",
                "/../../../images/monster1.png", IMG_GetError() );
@@ -34,7 +31,7 @@ t_game  loadMonsters(t_game game)
     {
         for (i = 0; i < MONSTER_NBR; i++)
         {
-            game.Gmonster[i].monster = SDL_CreateTextureFromSurface(game.Grenderer, loadedSurface);
+            game.Gmonster[i].monster = SDL_CreateTextureFromSurface(game.Grenderer, surf);
             if (game.Gmonster[i].monster == NULL)
             {
                 printf( "Failed to load texture image %s for the monsters! SDL Error: %s\n",
@@ -56,7 +53,7 @@ t_game  loadMonsters(t_game game)
                 y += 30;
             }
         }
-        SDL_FreeSurface(loadedSurface);
+        SDL_FreeSurface(surf);
     }
 
     return (game);

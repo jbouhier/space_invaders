@@ -114,7 +114,7 @@ t_game init_monster_player(t_game game)
         game.Gmonster[i].nbr_bullet = 0;
     }
 
-    return game;
+    return (game);
 }
 
 t_game  init_text(t_game game)
