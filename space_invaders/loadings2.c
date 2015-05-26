@@ -10,7 +10,7 @@
 
 
 // Load image at specified path
-SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer)
+SDL_Texture     *loadTexture(char *path, SDL_Renderer *gRenderer)
 {
     SDL_Texture     *newTexture;
     SDL_Surface     *loadedSurface;
@@ -39,7 +39,8 @@ SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer)
     return (newTexture);
 }
 
-SDL_Texture *loadPlayer(t_game game)
+
+SDL_Texture     *loadPlayer(t_game game)
 {
     //Loading success flag
     SDL_Texture *player;
@@ -59,7 +60,8 @@ SDL_Texture *loadPlayer(t_game game)
     return (player);
 }
 
-SDL_Texture *loadBullet(t_game game)
+
+SDL_Texture     *loadBullet(t_game game)
 {
     //Loading success flag
     bool success;
@@ -79,7 +81,7 @@ SDL_Texture *loadBullet(t_game game)
 }
 
 
-t_game loadSounds(t_game game)
+t_game  loadSounds(t_game game)
 {
     int     i;
     char    **paths;
@@ -99,6 +101,24 @@ t_game loadSounds(t_game game)
         fprintf(stderr,"Could not load %s\n", paths[0]);
     
     free(paths);
+    
+    return (game);
+}
+
+t_game  showExposion(t_game game, int i)
+{
+    char    *explo = "/../../../images/explosion.png";
+    
+    game.Gmonster[i].explosion = loadTexture(explo, game.Grenderer);
+    game.Gmonster[i].timeShowExplosion = SDL_GetTicks();
+    
+    if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
+    {
+        game.Gplayer1.score += game.Gmonster[i].score;
+        render_score(&(game.Gplayer1), game.text, game.Grenderer);
+    }
+    else
+        game.Gplayer2.score += game.Gmonster[i].score;
     
     return (game);
 }

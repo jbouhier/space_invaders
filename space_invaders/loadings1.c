@@ -70,23 +70,8 @@ char **AllocateSoundPath(char **paths)
     return (paths);
 }
 
-t_game  showExposion(t_game game, int i)
-{
-    char    *explo = "/../../../images/explosion.png";
-    
-    game.Gmonster[i].explosion = loadTexture(explo, game.Grenderer);
-    game.Gmonster[i].timeShowExplosion = SDL_GetTicks();
-    
-    if (game.Gplayer1.player != NULL && game.Gplayer1.lives > -1)
-    {
-        game.Gplayer1.score += game.Gmonster[i].score;
-        render_score(&(game.Gplayer1), game.text, game.Grenderer);
-    }
-    else
-        game.Gplayer2.score += game.Gmonster[i].score;
-    
-    return (game);
-}
+
+
 
 
 
