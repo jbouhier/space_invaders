@@ -57,7 +57,6 @@ void    renderBegin(t_game game)
 }
 
 
-
 int     checkBeginTexture(t_begin beginGame)
 {
     if (beginGame.high_score == NULL)

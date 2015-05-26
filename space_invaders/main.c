@@ -21,7 +21,6 @@ int main(void)
     tempsActuel = 0;
     tempsPrecedent = 0;
 
-    set_hscore(&game, get_hscore(hscore_path()));
     game = init_screen(game);
     game = showBegin(game, &(game.text));
     

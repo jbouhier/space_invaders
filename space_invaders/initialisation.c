@@ -84,6 +84,7 @@ t_game init_game(t_game game)
     game.text.color.b = 255;
     game.text.color.a = 0;
     game = init_monster_player(game);
+    set_hscore(&game, get_hscore(hscore_path()));
 
     return (game);
 }
