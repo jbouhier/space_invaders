@@ -8,63 +8,75 @@
 
 #include "prototypes.h"
 
+SDL_Surface     *get_surface(char *path)
+{
+    SDL_Surface *surf;
+    
+    surf = IMG_Load(path);
+    
+    if (surf == NULL)
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n",
+               path, IMG_GetError() );
+        SDL_Quit();
+        exit(EXIT_FAILURE);
+    }
+
+    return (surf);
+}
+
 
 t_game  loadMonsters(t_game game)
 {
-    SDL_Surface *surf;
     int i;
+    SDL_Surface *surf;
+    
+    surf = get_surface("/../../../images/monster1.png");
+    
+    for (i = 0; i < MONSTER_NBR; i++)
+        tex_monster(&game, i, surf);
+        
+    SDL_FreeSurface(surf);
+    return (game);
+}
+
+
+void    tex_monster(t_game *game, int i, SDL_Surface *surf)
+{
     int x;
     int y;
     
     x = 10;
     y = 100;
     
-    surf = IMG_Load("/../../../images/monster1.png");
-    
-    if (surf == NULL)
+    game->Gmonster[i].monster = SDL_CreateTextureFromSurface(game->Grenderer, surf);
+    if (game->Gmonster[i].monster == NULL)
     {
-        printf( "Unable to load image %s! SDL_image Error: %s\n",
-               "/../../../images/monster1.png", IMG_GetError() );
+        printf( "Load texture error %s for the monsters! SDL Error: %s\n",
+               "/../../../images/monster1.png", SDL_GetError() );
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
+    game->Gmonster[i].position = init_position(x, y, 20, 20);
+    if (y < 110)
+        game->Gmonster[i].score = 30;
+    else if (y > 110 && y < 180)
+        game->Gmonster[i].score = 20;
+    else
+        game->Gmonster[i].score = 10;
+    
+    if ((i + 1) % 10 != 0 || i == 0)
+        x += 30;
     else
     {
-
-        for (i = 0; i < MONSTER_NBR; i++)
-        {
-            game.Gmonster[i].monster = SDL_CreateTextureFromSurface(game.Grenderer, surf);
-            if (game.Gmonster[i].monster == NULL)
-            {
-                printf( "Load texture error %s for the monsters! SDL Error: %s\n",
-                       "/../../../images/monster1.png", SDL_GetError() );
-                SDL_Quit();
-                exit(EXIT_FAILURE);
-            }
-            game.Gmonster[i].position = init_position(x, y, 20, 20);
-            if (y < 110)
-                game.Gmonster[i].score = 30;
-            else if (y > 110 && y < 180)
-                game.Gmonster[i].score = 20;
-            else
-                game.Gmonster[i].score = 10;
-
-            if ((i + 1) % 10 != 0 || i == 0)
-                x += 30;
-            else
-            {
-                x = 10;
-                y += 30;
-            }
-        }
-        SDL_FreeSurface(surf);
+        x = 10;
+        y += 30;
     }
-
-    return (game);
 }
 
 
-t_game  handleBegin(t_game game) {
+t_game  handleBegin(t_game game)
+{
     while (SDL_WaitEvent(&game.Gevenements)) {
         if(game.Gevenements.type == SDL_MOUSEMOTION)
             game = selectionBeginHandler(game);
@@ -91,13 +103,14 @@ t_game  handleBegin(t_game game) {
             }
         }
         if (game.begin.state == 0 || game.quit == 1) {
-            return game;
+            return (game);
         }
     }
-    return game;
+    return (game);
 }
 
-t_game  KeyBeginHandler(t_game game) {
+t_game  KeyBeginHandler(t_game game)
+{
     if( game.Gevenements.key.keysym.sym == SDLK_UP) {
         if ( game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
             game.begin.selected_option_position.y = game.begin.play_with_1_position.y + 10;
@@ -120,5 +133,5 @@ t_game  KeyBeginHandler(t_game game) {
             game.quit = 1;
     }
 
-    return game;
+    return (game);
 }
