@@ -55,3 +55,32 @@ void    renderBegin(t_game game)
         SDL_UpdateWindowSurface( game.Gwindow );
     }
 }
+
+
+
+int     checkBeginTexture(t_begin beginGame)
+{
+    if (beginGame.high_score == NULL)
+        printf("High score Text's Texture is NULL. Will not render the game\n");
+    
+    if (beginGame.logo == NULL)
+        printf("logo Texture is NULL. Will not render the game\n");
+    
+    if (beginGame.play_with_1 == NULL)
+        printf("the Play Text's Texture is NULL. Will not render the game\n");
+    
+    if (beginGame.quit == NULL)
+        printf("the quit Text's Texture is NULL. Will not render the game\n");
+    
+    if (beginGame.selected_option == NULL)
+        printf("the arrow Texture is NULL. Will not render the game\n");
+    
+    if (beginGame.high_score != NULL && beginGame.logo != NULL &&
+        beginGame.quit != NULL && beginGame.play_with_1 != NULL &&
+        beginGame.selected_option != NULL)
+            return (1);
+    
+    return (0);
+}
+
+
