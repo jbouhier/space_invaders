@@ -9,7 +9,7 @@
 #include "prototypes.h"
 
 
-int main(void)
+int     main(void)
 {
     t_game  game;
     int     tempsActuel;
@@ -33,10 +33,9 @@ int main(void)
 
             if (game.begin.state == 1 && gameover == 0)
                 game = handleBegin(game);
-            else if (gameover == 1)
-            {
-                game = showEnd(game);
-                exit(100);
+            else if (gameover == 1) {
+//                game = showGameOver(game);
+                gameover = 0;
             }
             else
             {

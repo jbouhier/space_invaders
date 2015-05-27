@@ -37,6 +37,7 @@ typedef struct      s_bullet
     SDL_Rect        position;
 }                   t_bullet;
 
+
 typedef struct      s_player
 {
     SDL_Texture     *player;
@@ -57,6 +58,7 @@ typedef struct      s_player
     SDL_Texture     *texture_lives;
 }                   t_player;
 
+
 typedef struct      s_monster
 {
     SDL_Texture     *monster;
@@ -70,6 +72,19 @@ typedef struct      s_monster
     int             nbr_bullet;
     int             score;
 }                   t_monster;
+
+
+typedef struct      s_text_game
+{
+    TTF_Font        *font;
+    SDL_Surface     *surface_score_title;
+    SDL_Texture     *texture_score_title;
+    SDL_Rect        score_title_pos;
+    SDL_Rect        high_score_pos;
+    SDL_Rect        game_over;
+    SDL_Surface     *surface_high_score;
+    SDL_Texture     *texture_high_score;
+}                   t_text_game;
 
 
 typedef struct      s_begin
@@ -122,6 +137,7 @@ typedef struct      s_game
     SDL_Rect        score_title_pos;
 
 }                   t_game;
+
 
 SDL_Rect    init_position(int x, int y, int h, int w);
 SDL_Window  *init(SDL_Window *gWindow);
