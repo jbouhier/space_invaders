@@ -120,6 +120,7 @@ t_game  init_text(t_game game)
     // Engine text size and position -  (x,    y,  h,   w)
     game.infos.score_title_pos = init_position(180, 5, 25, 460);
     game.infos.high_score_pos = init_position(365, 32, 25, 80);
+    game.infos.game_over = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
     game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
     game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
