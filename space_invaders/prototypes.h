@@ -89,6 +89,9 @@ typedef struct      s_text_game
 typedef struct      s_begin
 {
     SDL_Texture     *logo;
+    SDL_Texture     *pause;
+    SDL_Texture     *instruction;
+    SDL_Rect        instruction_position;
     SDL_Rect        logo_position;
     SDL_Texture     *play_with_1;
     SDL_Rect        play_with_1_position;
@@ -158,6 +161,7 @@ void        ft_sdlk_down(t_begin *begin);
 int         checkBeginTexture(t_begin beginGame);
 t_game      selectionBeginHandler(t_game game);
 t_game      showEnd(t_game game);
+t_game      showInstruction(t_game game);
 t_game      showGame(t_game game, int tempsActuel, int tempsPrecedent);
 
 t_game      init_game(t_game game);
@@ -202,11 +206,12 @@ void        render_hscore(t_text *t, SDL_Renderer *rend);
 void        render_title(t_text *t, SDL_Renderer *rend);
 
 SDL_Surface *get_surface(char *path);
+SDL_Texture *loadTexture(char* path, SDL_Renderer* gRenderer);
 void        tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf);
 void        left_click(t_game *game);
 
 t_game      showGameOver(t_game game);
+t_game      show_pause (t_game game);
 void        renderEnd(t_game game);
-
 
 #endif /* __prototypes_h__ */

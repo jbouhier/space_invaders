@@ -22,6 +22,9 @@ t_game  KeyBeginHandler(t_game game)
         if (game.begin.selected_option_position.y ==
             game.begin.play_with_1_position.y + 10)
             game.begin.state = 0;
+        else if (game.begin.selected_option_position.y ==
+                 game.begin.instruction_position.y + 10)
+            game.begin.state = 2;
         else
             game.quit = 1;
     }
@@ -35,6 +38,8 @@ void    ft_sdlk_up(t_begin *begin)
     if (begin->selected_option_position.y == begin->high_score_position.y + 10)
         begin->selected_option_position.y = begin->play_with_1_position.y + 10;
     else if (begin->selected_option_position.y == begin->quit_position.y + 10)
+        begin->selected_option_position.y = begin->instruction_position.y + 10;
+    else if (begin->selected_option_position.y == begin->instruction_position.y + 10)
         begin->selected_option_position.y = begin->high_score_position.y + 10;
 }
 
@@ -45,5 +50,7 @@ void    ft_sdlk_down(t_begin *begin)
         begin->selected_option_position.y = begin->high_score_position.y + 10;
     else if (begin->selected_option_position.y ==
              begin->high_score_position.y + 10)
+        begin->selected_option_position.y = begin->instruction_position.y + 10;
+    else if (begin->selected_option_position.y == begin->instruction_position.y + 10)
         begin->selected_option_position.y = begin->quit_position.y + 10;
 }

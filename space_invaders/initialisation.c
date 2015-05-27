@@ -130,9 +130,9 @@ t_game  init_text(t_game game)
     game.text.pos_hscore = init_position(365, 32, 25, 80);
     game.text.game_over = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
-    game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
-    game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
-    game.Gplayer2.lives_pos = init_position(760, 570, 25, 25);
+    game.Gplayer2.score_pos = init_position(SCREEN_WIDTH - 260, 32, 25, 80);
+    game.Gplayer1.lives_pos = init_position(20, SCREEN_HEIGHT - 30, 25, 25);
+    game.Gplayer2.lives_pos = init_position( SCREEN_WIDTH - 20, SCREEN_HEIGHT - 30, 25, 25);
     
     render_title(&(game.text), game.Grenderer);
     render_hscore(&(game.text), game.Grenderer);
@@ -220,7 +220,6 @@ SDL_Rect init_bulletMonsterPos(t_monster monster)
 
     return (rectangle);
 }
-
 
 t_game  showGameOver(t_game game)
 {

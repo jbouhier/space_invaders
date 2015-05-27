@@ -91,7 +91,7 @@ t_game  handleBegin(t_game game)
         {
             left_click(&game);
         }
-        if (game.begin.state == 0 || game.quit == 1)
+        if (game.begin.state != 1 || game.quit == 1)
             return (game);
     }
     return (game);
@@ -109,7 +109,17 @@ void    left_click(t_game *game)
     {
         game->begin.state = 0;
     }
-    
+
+    if( game->Gevenements.button.x >= game->begin.instruction_position.x &&
+       game->Gevenements.button.x <= game->begin.instruction_position.x +
+       game->begin.instruction_position.w &&
+       game->Gevenements.button.y >= game->begin.instruction_position.y &&
+       game->Gevenements.button.y <= game->begin.instruction_position.y +
+       game->begin.instruction_position.h)
+    {
+        game->begin.state = 2;
+    }
+
     if (game->Gevenements.button.x >= game->begin.quit_position.x &&
         game->Gevenements.button.x <= game->begin.quit_position.x +
         game->begin.quit_position.w &&

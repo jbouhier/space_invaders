@@ -33,14 +33,23 @@ int     main(void)
 
             if (game.begin.state == 1 && gameover == 0)
                 game = handleBegin(game);
-            else if (gameover == 1) {
+            else if (gameover == 1)
+            {
                 game = showGameOver(game);
+                printf("GAME OVER\n");
                 gameover = 0;
             }
             else
             {
-                if (game.begin.state == 0 && gameover == 0 && game.quit != 2)
-                    game = showGame(game, tempsActuel, tempsPrecedent);
+                if (game.begin.state == 2)
+                    game = showInstruction(game);
+                else
+                {
+                    if (game.begin.state == 0 && gameover == 0 && game.quit != 2)
+                        game = showGame(game, tempsActuel, tempsPrecedent);
+                    if (game.quit == 2)
+                        game = show_pause (game);
+                }
                 // Le temps "actuel" devient le temps "precedent" pour nos futurs calculs
                 tempsPrecedent = tempsActuel;
             }

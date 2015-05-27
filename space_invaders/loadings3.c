@@ -50,6 +50,7 @@ void    renderBegin(t_game game)
         SDL_RenderCopy( game.Grenderer, game.begin.play_with_1, NULL, &(game.begin.play_with_1_position) );
         SDL_RenderCopy( game.Grenderer, game.begin.high_score, NULL, &(game.begin.high_score_position) );
         SDL_RenderCopy( game.Grenderer, game.begin.quit, NULL, &(game.begin.quit_position) );
+        SDL_RenderCopy( game.Grenderer, game.begin.instruction, NULL, &(game.begin.instruction_position) );
         SDL_RenderCopy( game.Grenderer, game.begin.selected_option, NULL, &(game.begin.selected_option_position) );
         SDL_RenderPresent( game.Grenderer );
         SDL_UpdateWindowSurface( game.Gwindow );
