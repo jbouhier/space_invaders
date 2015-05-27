@@ -126,7 +126,7 @@ t_game loadSounds(t_game game)
 {
     char **paths;
     
-    paths = malloc (sizeof(char) * LOAD_SOUND_MAX);
+    paths = malloc (sizeof(*paths) * LOAD_SOUND_MAX);
     paths = AllocateSoundPath(paths);
 
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
@@ -170,10 +170,6 @@ t_game showExposion(t_game game, int index)
     else
         game.Gplayer2.score += game.Gmonster[index].score;
     
-    // Debug
-    printf("Score %ld\n", game.Gplayer1.score);
-    printf("monster's[%d] score : %d\n", index, game.Gmonster[index].score);
-    
     return (game);
 }
 
@@ -206,14 +202,14 @@ t_game    showBegin(t_game game)
     game.begin.pause = loadTexture( "/../../../images/background/pause.png", game.Grenderer );
     game.begin.logo_position = init_position(120, 100, 150, 500);
     game.begin.state = 1;
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     Play      ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "     Play      ", text_color);
     game.begin.play_with_1 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.play_with_1_position = init_position(265, game.begin.logo_position.y + 200, 50, 250);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "  Instructions ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "  Instructions ", text_color);
     game.begin.instruction = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "    Quit    ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "    Quit    ", text_color);
     game.begin.quit = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "  High Score   ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "  High Score   ", text_color);
     game.begin.high_score = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.quit = 0;
     game.begin.high_score_position = init_position(game.begin.play_with_1_position.x, game.begin.play_with_1_position.y + 50,
@@ -227,6 +223,27 @@ t_game    showBegin(t_game game)
     game.begin.play_with_2 = NULL;
     renderBegin(game);
 
+    return game;
+}
+
+t_game  showGameOver(t_game game){
+    
+    SDL_Colour text_color = { 255, 255, 255, 0 };
+    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "     GAME OVER      ", text_color);
+    game.begin.play_with_2 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
+    game.begin.play_with_2_position = init_position(135, 180, 180, 500);
+    
+    SDL_Delay(40);
+    game.begin.state = 1;
+    
+    game = loadMonsters(game);
+    game = loadSounds(game);
+    game = init_player(game);
+    game = init_text(game);
+    game.quit = 0;
+    renderEnd(game);
+    
     return game;
 }
 
@@ -250,6 +267,22 @@ void    renderBegin(t_game game)
         SDL_UpdateWindowSurface( game.Gwindow );
     }
 }
+
+void    renderEnd(t_game game)
+{
+    int checkResult;
+    
+    checkResult = checkBeginTexture(game.begin);
+    
+    if (checkResult == 1) {
+        SDL_RenderClear( game.Grenderer );
+        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
+        SDL_RenderCopy( game.Grenderer, game.begin.play_with_2, NULL, &(game.begin.play_with_2_position) );
+        SDL_RenderPresent( game.Grenderer );
+        SDL_UpdateWindowSurface( game.Gwindow );
+    }
+}
+
 
 int     checkBeginTexture(t_begin beginGame) {
     if (beginGame.high_score == NULL)
@@ -387,17 +420,17 @@ t_game showInstruction(t_game game) {
     SDL_Texture *instruction[6];
     
     pos = init_position(120, 100, 50, 600);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "<-      :  Player moves left                  ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "<-      :  Player moves left                  ", text_color);
     instruction[0] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "->      :  Player moves right                 ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "->      :  Player moves right                 ", text_color);
     instruction[1] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "Space  :  Player shoots (2 bullets at a time)", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "Space  :  Player shoots (2 bullets at a time)", text_color);
     instruction[2] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "p       :  Pause Game                         ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "p       :  Pause Game                         ", text_color);
     instruction[3] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "l         :  Remove game from pause          ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "l         :  Remove game from pause          ", text_color);
     instruction[4] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "ESC    :  returns to main menu               ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text_game.font, "ESC    :  returns to main menu               ", text_color);
     instruction[5] = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     
     SDL_RenderClear(game.Grenderer);

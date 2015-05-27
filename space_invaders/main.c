@@ -21,11 +21,11 @@ int main(void)
     tempsActuel = 0;
     tempsPrecedent = 0;
 
-    game = init_screen(game);
     set_hscore(&game, get_hscore(hscore_path()));
     game.hscore_str = score_str(game.high_score, game.hscore_str);
-    
+    game = init_screen(game);
     game = showBegin(game);
+    
     while(game.quit != 1)
     {
         while( SDL_PollEvent(&game.Gevenements) >= 0 && game.quit != 1 )
@@ -33,14 +33,19 @@ int main(void)
             tempsActuel = SDL_GetTicks();
             game = handleEvent(game);
 
-            if (game.begin.state == 1 && gameover == 0) {
+            if (game.begin.state == 1 && gameover == 0)
+            {
                 game = handleBegin(game);
+                
             }
-            else if (gameover == 1) {
-                game = showEnd(game);
-                exit(100);
+            else if (gameover == 1)
+            {
+                game = showGameOver(game);
+                printf("GAME OVER\n");
+                gameover = 0;
             }
-            else {
+            else
+            {
                 if (game.begin.state == 2) {
                     game = showInstruction(game);
                 }
@@ -64,5 +69,5 @@ int main(void)
     }
 
     end(game);
-    return 0;
+    return (0);
 }

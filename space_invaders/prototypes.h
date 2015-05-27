@@ -79,6 +79,7 @@ typedef struct      s_text_game
     SDL_Texture     *texture_score_title;
     SDL_Rect        score_title_pos;
     SDL_Rect        high_score_pos;
+    SDL_Rect        game_over;
     SDL_Surface     *surface_high_score;
     SDL_Texture     *texture_high_score;
 }                   t_text_game;
@@ -114,7 +115,7 @@ typedef struct      s_game
     t_player        Gplayer1;
     t_player        Gplayer2;
     t_monster       *Gmonster;
-    t_text_game     infos;
+    t_text_game     text_game;
     t_begin         begin;
     int             monster_speed;
     int             quit;
@@ -128,12 +129,14 @@ typedef struct      s_game
 
 SDL_Rect        init_position(int x, int y, int h, int w);
 void            renderBegin(t_game game);
+void            renderEnd(t_game game);
 t_game          showBegin(t_game game);
 t_game          handleBegin(t_game game);
 t_game          KeyBeginHandler(t_game game);
 int             checkBeginTexture(t_begin beginGame);
 t_game          selectionBeginHandler(t_game game);
 t_game          showEnd(t_game game);
+t_game          showGameOver(t_game game);
 t_game          showGame(t_game game, int tempsActuel, int tempsPrecedent);
 SDL_Window      *init(SDL_Window *gWindow);
 t_game          init_screen(t_game game);
@@ -157,10 +160,10 @@ t_game          loadMonsters(t_game game);
 t_game          showExposion(t_game game, int index);
 char            *hscore_path();
 long            get_hscore(char *hscore_path);
-void            set_hscore(t_game *game, long score);
+int             set_hscore(t_game *game, long score);
 t_game          showExposion(t_game game, int index);
 void            overwrite_hscore(t_player player);
-void            write_score(t_game game, long hscore);
+int             write_score(t_game game, t_player player);
 char            *score_str(long hscore, char *score_str);
 void            freeBegin(t_game game);
 void            freeMonster(t_game game);
@@ -176,5 +179,6 @@ t_game          refresh_lives(t_game game);
 t_game          show_pause (t_game game);
 SDL_Texture     *loadTexture(char* path, SDL_Renderer* gRenderer);
 t_game          showInstruction(t_game game);
+void            render_lives(t_player *player, t_text_game, SDL_Renderer *renderer);
 
 #endif /* __prototypes_h__ */
