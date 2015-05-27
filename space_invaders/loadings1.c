@@ -8,6 +8,7 @@
 
 #include "prototypes.h"
 
+
 SDL_Surface     *get_surface(char *path)
 {
     SDL_Surface *surf;
@@ -76,61 +77,46 @@ void    tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf)
 
 t_game  handleBegin(t_game game)
 {
-    while (SDL_WaitEvent(&game.Gevenements)) {
-        if(game.Gevenements.type == SDL_MOUSEMOTION)
+    while (SDL_WaitEvent(&game.Gevenements))
+    {
+        if (game.Gevenements.type == SDL_MOUSEMOTION)
             game = selectionBeginHandler(game);
 
         if (game.Gevenements.type == SDL_KEYDOWN)
             game = KeyBeginHandler(game);
 
         renderBegin(game);
-        if(game.Gevenements.type == SDL_MOUSEBUTTONDOWN && game.Gevenements.button.button == SDL_BUTTON_LEFT) {
-            if( game.Gevenements.button.x >= game.begin.play_with_1_position.x &&
-               game.Gevenements.button.x <= game.begin.play_with_1_position.x + game.begin.play_with_1_position.w &&
-               game.Gevenements.button.y >= game.begin.play_with_1_position.y &&
-               game.Gevenements.button.y <= game.begin.play_with_1_position.y + game.begin.play_with_1_position.h)
-            {
-                game.begin.state = 0;
-            }
-
-            if( game.Gevenements.button.x >= game.begin.quit_position.x &&
-               game.Gevenements.button.x <= game.begin.quit_position.x + game.begin.quit_position.w &&
-               game.Gevenements.button.y >= game.begin.quit_position.y &&
-               game.Gevenements.button.y <= game.begin.quit_position.y + game.begin.quit_position.h)
-            {
-                game.quit = 1;
-            }
+        if (game.Gevenements.type == SDL_MOUSEBUTTONDOWN &&
+            game.Gevenements.button.button == SDL_BUTTON_LEFT)
+        {
+            left_click(&game);
         }
-        if (game.begin.state == 0 || game.quit == 1) {
+        if (game.begin.state == 0 || game.quit == 1)
             return (game);
-        }
     }
     return (game);
 }
 
-t_game  KeyBeginHandler(t_game game)
+
+void    left_click(t_game *game)
 {
-    if( game.Gevenements.key.keysym.sym == SDLK_UP) {
-        if ( game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
-            game.begin.selected_option_position.y = game.begin.play_with_1_position.y + 10;
-        else if (game.begin.selected_option_position.y == game.begin.quit_position.y + 10)
-            game.begin.selected_option_position.y = game.begin.high_score_position.y + 10;
+    if (game->Gevenements.button.x >= game->begin.play_with_1_position.x &&
+        game->Gevenements.button.x <= game->begin.play_with_1_position.x +
+        game->begin.play_with_1_position.w &&
+        game->Gevenements.button.y >= game->begin.play_with_1_position.y &&
+        game->Gevenements.button.y <= game->begin.play_with_1_position.y +
+        game->begin.play_with_1_position.h)
+    {
+        game->begin.state = 0;
     }
-    else if( game.Gevenements.key.keysym.sym == SDLK_DOWN) {
-        if ( game.begin.selected_option_position.y == game.begin.play_with_1_position.y + 10)
-            game.begin.selected_option_position.y = game.begin.high_score_position.y + 10;
-        else if (game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
-            game.begin.selected_option_position.y = game.begin.quit_position.y + 10;
+    
+    if (game->Gevenements.button.x >= game->begin.quit_position.x &&
+        game->Gevenements.button.x <= game->begin.quit_position.x +
+        game->begin.quit_position.w &&
+        game->Gevenements.button.y >= game->begin.quit_position.y &&
+        game->Gevenements.button.y <= game->begin.quit_position.y +
+        game->begin.quit_position.h)
+    {
+        game->quit = 1;
     }
-
-    if (game.Gevenements.key.keysym.sym == SDLK_RETURN || game.Gevenements.key.keysym.sym == SDLK_RETURN2) {
-        if ( game.begin.selected_option_position.y == game.begin.play_with_1_position.y + 10)
-            game.begin.state = 0;
-        //else if (game.begin.selected_option_position.y == game.begin.high_score_position.y + 10)
-            // TODO Script pour l'affichage des highscores
-        else
-            game.quit = 1;
-    }
-
-    return (game);
 }
