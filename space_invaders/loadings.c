@@ -221,6 +221,26 @@ t_game    showBegin(t_game game)
     return game;
 }
 
+t_game  showGameOver(t_game game){
+    
+    SDL_Colour text_color = { 255, 255, 255, 0 };
+    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
+    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     GAME OVER      ", text_color);
+    game.begin.play_with_2 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
+    game.begin.play_with_2_position = init_position(135, 180, 180, 500);
+    
+    SDL_Delay(50);
+    game.begin.state = 1;
+    if(game.Gplayer1.lives == -1)
+        game.Gplayer1.lives = 3;
+    
+    
+    
+    renderEnd(game);
+    
+    return game;
+}
+
 
 void    renderBegin(t_game game)
 {
@@ -240,6 +260,22 @@ void    renderBegin(t_game game)
         SDL_UpdateWindowSurface( game.Gwindow );
     }
 }
+
+void    renderEnd(t_game game)
+{
+    int checkResult;
+    
+    checkResult = checkBeginTexture(game.begin);
+    
+    if (checkResult == 1) {
+        SDL_RenderClear( game.Grenderer );
+        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
+        SDL_RenderCopy( game.Grenderer, game.begin.play_with_2, NULL, &(game.begin.play_with_2_position) );
+        SDL_RenderPresent( game.Grenderer );
+        SDL_UpdateWindowSurface( game.Gwindow );
+    }
+}
+
 
 int     checkBeginTexture(t_begin beginGame) {
     if (beginGame.high_score == NULL)
