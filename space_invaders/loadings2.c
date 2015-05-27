@@ -26,13 +26,12 @@ SDL_Texture     *loadTexture(char *path, SDL_Renderer *gRenderer)
     else
     {
         //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
+        newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
         if (newTexture == NULL)
         {
             printf("Unable to create texture from %s! SDL Error: %s\n",
                    path, SDL_GetError() );
         }
-        //Get rid of old loaded surface
         SDL_FreeSurface(loadedSurface);
     }
     
@@ -92,12 +91,13 @@ t_game  loadSounds(t_game game)
     game.Gplayer1.playerExplode_sound = Mix_LoadWAV( "/../../../sounds/explosion.wav" );
     game.Gplayer1.bulletGo_sound = Mix_LoadWAV( "/../../../sounds/invaderkilled.wav" );
     
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
+    for (i = 0; game.Gmonster[i].monster != NULL; i++)
+    {
         game.Gmonster[i].monsterExplode_sound = Mix_LoadWAV( "/../../../sounds/shoot.wav" );
         game.Gmonster[i].monsterMove_sound = Mix_LoadWAV( "/../../../sounds/MoveMonster.wav" );
     }
     
-    if(game.Gplayer1.playerExplode_sound == NULL)
+    if (game.Gplayer1.playerExplode_sound == NULL)
         fprintf(stderr,"Could not load %s\n", paths[0]);
     
     free(paths);
