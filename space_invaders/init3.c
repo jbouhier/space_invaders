@@ -25,6 +25,9 @@ t_game  showGameOver(t_game game)
         game = init_player(game);
     }
     
+    set_hscore(&game, get_hscore(hscore_path()));
+    render_hscore(&(game.text), game.Grenderer);
+    render_score(&(game.Gplayer1), game.text, game.Grenderer);
     renderEnd(game);
     
     return (game);
@@ -37,12 +40,14 @@ void    renderEnd(t_game game)
     
     checkResult = checkBeginTexture(game.begin);
     
-    if (checkResult == 1) {
-        SDL_RenderClear( game.Grenderer );
-        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-        SDL_RenderCopy( game.Grenderer, game.begin.play_with_2, NULL, &(game.begin.play_with_2_position) );
-        SDL_RenderPresent( game.Grenderer );
-        SDL_UpdateWindowSurface( game.Gwindow );
+    if (checkResult == 1)
+    {
+        SDL_RenderClear(game.Grenderer);
+        SDL_RenderCopy(game.Grenderer, game.Gscreen, NULL, NULL);
+        SDL_RenderCopy(game.Grenderer, game.begin.play_with_2, NULL,
+                       &(game.begin.play_with_2_position) );
+        SDL_RenderPresent(game.Grenderer);
+        SDL_UpdateWindowSurface(game.Gwindow);
     }
 }
 
