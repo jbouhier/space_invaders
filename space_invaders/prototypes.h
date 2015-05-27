@@ -142,6 +142,7 @@ typedef struct      s_game
 }                   t_game;
 
 
+void        init_time(int *tempsActuel, int *tempsPrecedent, int *gameover);
 SDL_Rect    init_position(int x, int y, int h, int w);
 SDL_Window  *init(SDL_Window *gWindow);
 SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer);

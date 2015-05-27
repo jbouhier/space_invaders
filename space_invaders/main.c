@@ -17,9 +17,7 @@ int     main(void)
     int     toWait;
     int     gameover;
 
-    gameover = 0;
-    tempsActuel = 0;
-    tempsPrecedent = 0;
+    init_time(&tempsActuel, &tempsPrecedent, &gameover);
     game = init_screen(game);
     game = showBegin(game, &(game.text));
     
@@ -69,14 +67,3 @@ int     main(void)
     end(game);
     return (0);
 }
-
-
-
-
-
-
-
-
-
-
-

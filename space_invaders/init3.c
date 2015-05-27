@@ -76,3 +76,11 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
     renderAll(game);
     return (game);
 }
+
+
+void    init_time(int *tempsActuel, int *tempsPrecedent, int *gameover)
+{
+    *tempsActuel = 0;
+    *tempsPrecedent = 0;
+    *gameover = 0;
+}
