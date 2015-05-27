@@ -144,10 +144,10 @@ typedef struct      s_game
 
 typedef struct      s_time
 {
-    int     tempsActuel;
-    int     tempsPrecedent;
-    int     toWait;
-    int     gameover;
+    int             tempsActuel;
+    int             tempsPrecedent;
+    int             toWait;
+    int             gameover;
 }                   t_time;
 
 
