@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
-
 #include "prototypes.h"
+
 
 SDL_Window  *init(SDL_Window *gWindow)
 {
@@ -64,6 +64,7 @@ t_game init_screen(t_game game)
     return (game);
 }
 
+
 t_game init_game(t_game game)
 {
     game.begin.high_score = NULL;
@@ -91,6 +92,7 @@ t_game init_game(t_game game)
 
     return (game);
 }
+
 
 t_game init_monster_player(t_game game)
 {
@@ -121,6 +123,7 @@ t_game init_monster_player(t_game game)
     return (game);
 }
 
+
 t_game  init_text(t_game game)
 {
     game.text.font = TTF_OpenFont("/../../../fonts/uni05_53.ttf", FONT_SIZE);
@@ -141,143 +144,5 @@ t_game  init_text(t_game game)
     render_score(&(game.Gplayer2), game.text, game.Grenderer);
     render_lives(&(game.Gplayer2), game.text, game.Grenderer);
     
-    return (game);
-}
-
-
-t_game  init_player(t_game game)
-{
-    game.Gplayer1.position = init_position(SCREEN_WIDTH /
-                                           2, SCREEN_HEIGHT - 100, 35, 35);
-
-    game.Gplayer1.nbr_bullet = 0;
-    game.Gplayer1.score = 0;
-    game.Gplayer1.lives = 3;
-
-    game.Gplayer2.nbr_bullet = 0;
-    game.Gplayer2.score = 0;
-    game.Gplayer2.lives = 3;
-    
-    return (game);
-}
-
-
-void end(t_game game)
-{
-    freeBegin(game);
-    freeMonster(game);
-    freePlayer(game.Gplayer1);
-    freePlayer(game.Gplayer2);
-    freeInfos(game);
-
-    SDL_DestroyTexture(game.Gscreen);
-    SDL_DestroyRenderer( game.Grenderer );
-    SDL_DestroyWindow( game.Gwindow );
-    game.Grenderer = NULL;
-    game.Gscreen = NULL;
-    game.Gwindow = NULL;
-    
-    IMG_Quit();
-    Mix_Quit();
-    TTF_Quit();
-    SDL_Quit();
-}
-
-SDL_Rect init_position(int x, int y, int h, int w)
-{
-    SDL_Rect rect;
-
-    rect.x = x;
-    rect.y = y;
-    rect.h = h;
-    rect.w = w;
-    
-    return (rect);
-}
-
-
-SDL_Rect init_bulletPos(t_player player)
-{
-    SDL_Rect rectangle;
-
-    rectangle.y =  player.position.y - 10;
-    rectangle.x =  player.position.x + 12;
-    rectangle.w = 10;
-    rectangle.h = 25;
-
-    return (rectangle);
-}
-
-
-SDL_Rect init_bulletMonsterPos(t_monster monster)
-{
-    SDL_Rect rectangle;
-    
-    rectangle.y =  monster.position.y + 4;
-    rectangle.x =  monster.position.x + 8;
-    rectangle.w = 4;
-    rectangle.h = 30;
-
-    return (rectangle);
-}
-
-t_game  showGameOver(t_game game)
-{
-    SDL_Colour text_color = { 255, 255, 255, 0 };
-    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
-    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "     GAME OVER      ", text_color);
-    game.begin.play_with_2 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
-    game.begin.play_with_2_position = init_position(135, 180, 180, 500);
-    
-    SDL_Delay(50);
-    game.begin.state = 1;
-    
-    if(game.Gplayer1.lives == -1)
-        game.Gplayer1.lives = 3;
-
-    renderEnd(game);
-    
-    return (game);
-}
-
-
-void    renderEnd(t_game game)
-{
-    int checkResult;
-    
-    checkResult = checkBeginTexture(game.begin);
-    
-    if (checkResult == 1) {
-        SDL_RenderClear( game.Grenderer );
-        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
-        SDL_RenderCopy( game.Grenderer, game.begin.play_with_2, NULL, &(game.begin.play_with_2_position) );
-        SDL_RenderPresent( game.Grenderer );
-        SDL_UpdateWindowSurface( game.Gwindow );
-    }
-}
-
-
-// Display game interface to be able to play
-t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
-{
-    if (game.Gevenements.type == SDL_KEYDOWN)
-    {
-        game.Gplayer1 = movePlayer(game);
-        if (game.Gevenements.key.keysym.sym == SDLK_SPACE && game.Gplayer1.nbr_bullet < 2)
-        {
-            Mix_PlayChannel(-1, game.Gplayer1.bulletGo_sound, 0);
-            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].bullet = loadBullet(game);
-            game.Gplayer1.bullet[game.Gplayer1.nbr_bullet].position = init_bulletPos(game.Gplayer1);
-            game.Gplayer1.nbr_bullet++;
-        }
-    }
-    // Si 15 ms se sont écoulées depuis le dernier tour de boucle
-    if (tempsActuel - tempsPrecedent > 15) {
-        game = launch_bullet(game);
-        game = launch_bulletMonster(game);
-        game = moveMonster(game);
-    }
-
-    renderAll(game);
     return (game);
 }

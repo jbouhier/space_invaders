@@ -20,10 +20,12 @@ int     main(void)
     gameover = 0;
     tempsActuel = 0;
     tempsPrecedent = 0;
-
     game = init_screen(game);
     game = showBegin(game, &(game.text));
     
+    // Put init function inside it w/ pointer parameters
+    // start_game();
+
     while (game.quit != 1)
     {
         while (SDL_PollEvent(&game.Gevenements) >= 0 && game.quit != 1)
@@ -53,10 +55,12 @@ int     main(void)
                 // Le temps "actuel" devient le temps "precedent" pour nos futurs calculs
                 tempsPrecedent = tempsActuel;
             }
+            
             if (game.Gplayer1.lives == -1 || game.Gplayer2.lives == -1 || game.Gmonster[0].monster == NULL)
                 gameover = 1;
             
             toWait = SDL_GetTicks() - tempsActuel;
+            
             if (toWait < 16 && game.quit != 1)
                 SDL_Delay(16 - toWait);
         }
@@ -65,3 +69,14 @@ int     main(void)
     end(game);
     return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
