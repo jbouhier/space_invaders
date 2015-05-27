@@ -2,14 +2,14 @@
 //  main.c
 //  space_invaders
 //
-//  Created by SynxS on 27/03/15.
+//  Created by Jean-Baptiste Bouhier on 27/03/15.
 //  Copyright (c) 2015 ETNA. All rights reserved.
 //
 
 #include "prototypes.h"
 
 
-int main(void)
+int     main(void)
 {
     t_game  game;
     int     tempsActuel;
@@ -21,10 +21,8 @@ int main(void)
     tempsActuel = 0;
     tempsPrecedent = 0;
 
-    set_hscore(&game, get_hscore(hscore_path()));
-    game.hscore_str = score_str(game.high_score, game.hscore_str);
     game = init_screen(game);
-    game = showBegin(game);
+    game = showBegin(game, &(game.text));
     
     while(game.quit != 1)
     {
@@ -34,12 +32,8 @@ int main(void)
             game = handleEvent(game);
 
             if (game.begin.state == 1 && gameover == 0)
-            {
                 game = handleBegin(game);
-                
-            }
-            else if (gameover == 1)
-            {
+            else if (gameover == 1) {
                 game = showGameOver(game);
                 printf("GAME OVER\n");
                 gameover = 0;

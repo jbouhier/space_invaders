@@ -37,6 +37,7 @@ typedef struct      s_bullet
     SDL_Rect        position;
 }                   t_bullet;
 
+
 typedef struct      s_player
 {
     SDL_Texture     *player;
@@ -56,6 +57,7 @@ typedef struct      s_player
     SDL_Surface     *surface_lives;
     SDL_Texture     *texture_lives;
 }                   t_player;
+
 
 typedef struct      s_monster
 {
@@ -79,7 +81,6 @@ typedef struct      s_text_game
     SDL_Texture     *texture_score_title;
     SDL_Rect        score_title_pos;
     SDL_Rect        high_score_pos;
-    SDL_Rect        game_over;
     SDL_Surface     *surface_high_score;
     SDL_Texture     *texture_high_score;
 }                   t_text_game;
@@ -106,6 +107,23 @@ typedef struct      s_begin
     int             state;
 }                   t_begin;
 
+
+typedef struct      s_text
+{
+    TTF_Font        *font;
+    SDL_Color       color;
+    SDL_Surface     *sur_stitle;
+    SDL_Texture     *tex_stitle;
+    SDL_Rect        pos_stitle;
+    long            hscore;
+    char            *hscore_str;
+    SDL_Rect        game_over;
+    SDL_Rect        pos_hscore;
+    SDL_Surface     *sur_hscore;
+    SDL_Texture     *tex_hscore;
+}                   t_text;
+
+
 typedef struct      s_game
 {
     SDL_Window      *Gwindow;
@@ -115,70 +133,85 @@ typedef struct      s_game
     t_player        Gplayer1;
     t_player        Gplayer2;
     t_monster       *Gmonster;
-    t_text_game     text_game;
+    t_text          text;
     t_begin         begin;
     int             monster_speed;
     int             quit;
     SDL_Rect        score_title_pos;
-    long            high_score;
-    char            *hscore_str;
-    SDL_Rect        high_score_pos;
-    SDL_Surface     *surface_high_score;
-    SDL_Texture     *texture_high_score;
+
 }                   t_game;
 
-SDL_Rect        init_position(int x, int y, int h, int w);
-void            renderBegin(t_game game);
-void            renderEnd(t_game game);
-t_game          showBegin(t_game game);
-t_game          handleBegin(t_game game);
-t_game          KeyBeginHandler(t_game game);
-int             checkBeginTexture(t_begin beginGame);
-t_game          selectionBeginHandler(t_game game);
-t_game          showEnd(t_game game);
-t_game          showGameOver(t_game game);
-t_game          showGame(t_game game, int tempsActuel, int tempsPrecedent);
-SDL_Window      *init(SDL_Window *gWindow);
-t_game          init_screen(t_game game);
-t_game          init_player(t_game game);
-t_game          init_text(t_game game);
-SDL_Texture     *loadPlayer(t_game game);
-t_player        movePlayer(t_game game);
-t_game          moveMonster(t_game game);
-SDL_Texture     *loadBullet(t_game game);
-SDL_Rect        init_bulletPos(t_player player);
-SDL_Rect        init_bulletMonsterPos(t_monster monster);
-t_game          launch_bullet(t_game game);
-t_game          launch_bulletMonster(t_game game);
-void            renderAll(t_game game);
-t_game          deleteBullets(t_game game, int index);
-void            end(t_game game);
-bool            checkCollision( SDL_Rect a, SDL_Rect b );
-t_game          loadSounds(t_game game);
-char            **AllocateSoundPath(char **paths);
-t_game          loadMonsters(t_game game);
-t_game          showExposion(t_game game, int index);
-char            *hscore_path();
-long            get_hscore(char *hscore_path);
-int             set_hscore(t_game *game, long score);
-t_game          showExposion(t_game game, int index);
-void            overwrite_hscore(t_player player);
-int             write_score(t_game game, t_player player);
-char            *score_str(long hscore, char *score_str);
-void            freeBegin(t_game game);
-void            freeMonster(t_game game);
-void            freePlayer(t_player player);
-void            freeInfos(t_game game);
-t_game          init_monster_player(t_game game);
-t_game          init_game(t_game game);
-void            renderPlayer(t_game game);
-char            *lives_str(long lives, char *lives_str);
-t_game          handleEvent(t_game game);
-t_game          refresh_score(t_game game);
-t_game          refresh_lives(t_game game);
-t_game          show_pause (t_game game);
-SDL_Texture     *loadTexture(char* path, SDL_Renderer* gRenderer);
-t_game          showInstruction(t_game game);
-void            render_lives(t_player *player, t_text_game, SDL_Renderer *renderer);
+
+SDL_Rect    init_position(int x, int y, int h, int w);
+SDL_Window  *init(SDL_Window *gWindow);
+SDL_Texture *loadTexture(char *path, SDL_Renderer *gRenderer);
+SDL_Texture *loadPlayer(t_game game);
+SDL_Texture *loadBullet(t_game game);
+SDL_Rect    init_bulletPos(t_player player);
+SDL_Rect    init_bulletMonsterPos(t_monster monster);
+
+
+t_game      launch_bullet(t_game game);
+void        renderBegin(t_game game);
+t_game      showBegin(t_game game, t_text *t);
+t_game      handleBegin(t_game game);
+t_game      KeyBeginHandler(t_game game);
+void        ft_sdlk_up(t_begin *begin);
+void        ft_sdlk_down(t_begin *begin);
+int         checkBeginTexture(t_begin beginGame);
+t_game      selectionBeginHandler(t_game game);
+t_game      showEnd(t_game game);
+t_game      showInstruction(t_game game);
+t_game      showGame(t_game game, int tempsActuel, int tempsPrecedent);
+
+t_game      init_game(t_game game);
+t_game      init_screen(t_game game);
+t_game      init_player(t_game game);
+t_game      init_text(t_game game);
+
+t_player    movePlayer(t_game game);
+t_game      moveMonster(t_game game);
+
+t_game      launch_bulletMonster(t_game game);
+void        renderAll(t_game game);
+t_game      deleteBullets(t_game game, int index);
+void        end(t_game game);
+bool        checkCollision( SDL_Rect a, SDL_Rect b );
+t_game      loadSounds(t_game game);
+char        **AllocateSoundPath(char **paths);
+t_game      loadMonsters(t_game game);
+t_game      showExposion(t_game game, int i);
+
+char        *hscore_path();
+char        *score_str(long hscore, char *score_str);
+char        *lives_str(long lives, char *lives_str);
+long        get_hscore(char *hscore_path);
+int         set_hscore(t_game *game, long score);
+void        overwrite_hscore(t_player player);
+int         write_score(t_game game, t_player player);
+
+t_game      showExposion(t_game game, int index);
+void        freeBegin(t_game game);
+void        freeMonster(t_game game);
+void        freePlayer(t_player player);
+void        set_player(t_player *player);
+void        freeInfos(t_game game);
+t_game      init_monster_player(t_game game);
+t_game      handleEvent(t_game game);
+
+void        renderPlayer(t_game game);
+void        render_score(t_player *p, t_text text, SDL_Renderer *rend);
+void        render_lives(t_player *p, t_text text, SDL_Renderer *rend);
+void        render_hscore(t_text *t, SDL_Renderer *rend);
+void        render_title(t_text *t, SDL_Renderer *rend);
+
+SDL_Surface *get_surface(char *path);
+SDL_Texture *loadTexture(char* path, SDL_Renderer* gRenderer);
+void        tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf);
+void        left_click(t_game *game);
+
+t_game      showGameOver(t_game game);
+t_game      show_pause (t_game game);
+void        renderEnd(t_game game);
 
 #endif /* __prototypes_h__ */

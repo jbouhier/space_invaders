@@ -80,34 +80,37 @@ void freePlayer(t_player player)
         SDL_DestroyTexture(player.bullet[i].bullet);
         player.bullet[i].bullet = NULL;
     }
-
-    player.player = NULL;
-    player.texture_score = NULL;
-    player.texture_lives = NULL;
-    player.surface_score = NULL;
-    player.surface_lives = NULL;
-    player.bulletGo_sound = NULL;
-    player.playerExplode_sound = NULL;
-
+    set_player(&player);
     free(player.bullet);
+}
+
+void    set_player(t_player *player)
+{
+    player->player = NULL;
+    player->texture_score = NULL;
+    player->texture_lives = NULL;
+    player->surface_score = NULL;
+    player->surface_lives = NULL;
+    player->bulletGo_sound = NULL;
+    player->playerExplode_sound = NULL;
 }
 
 void freeInfos(t_game game)
 {
-    if (game.text_game.surface_high_score)
-        SDL_FreeSurface(game.text_game.surface_high_score);
-    if (game.text_game.surface_score_title)
-        SDL_FreeSurface(game.text_game.surface_score_title);
-    if (game.text_game.texture_high_score)
-        SDL_DestroyTexture(game.text_game.texture_high_score);
-    if (game.text_game.texture_score_title)
-        SDL_DestroyTexture(game.text_game.texture_score_title);
-    if (game.text_game.font)
-        TTF_CloseFont(game.text_game.font);
+    if (game.text.sur_hscore)
+        SDL_FreeSurface(game.text.sur_hscore);
+    if (game.text.sur_stitle)
+        SDL_FreeSurface(game.text.sur_stitle);
+    if (game.text.tex_hscore)
+        SDL_DestroyTexture(game.text.tex_hscore);
+    if (game.text.tex_stitle)
+        SDL_DestroyTexture(game.text.tex_stitle);
+    if (game.text.font)
+        TTF_CloseFont(game.text.font);
 
-    game.text_game.surface_high_score = NULL;
-    game.text_game.surface_score_title = NULL;
-    game.text_game.texture_high_score = NULL;
-    game.text_game.texture_score_title = NULL;
-    game.text_game.font = NULL;
+    game.text.sur_hscore = NULL;
+    game.text.sur_stitle = NULL;
+    game.text.tex_hscore = NULL;
+    game.text.tex_stitle = NULL;
+    game.text.font = NULL;
 }
