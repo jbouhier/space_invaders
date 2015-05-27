@@ -89,7 +89,6 @@ int     write_score(t_game game, t_player player)
 {
     if (player.lives < 0 && player.score > game.text.hscore)
     {
-        printf("Overwriting player score to file.\n");
         overwrite_hscore(player);
         return (0);
     }
