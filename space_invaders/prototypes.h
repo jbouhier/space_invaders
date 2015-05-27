@@ -137,6 +137,8 @@ void        renderBegin(t_game game);
 t_game      showBegin(t_game game, t_text *t);
 t_game      handleBegin(t_game game);
 t_game      KeyBeginHandler(t_game game);
+void        ft_sdlk_up(t_begin *begin);
+void        ft_sdlk_down(t_begin *begin);
 int         checkBeginTexture(t_begin beginGame);
 t_game      selectionBeginHandler(t_game game);
 t_game      showEnd(t_game game);
@@ -186,5 +188,6 @@ void        render_title(t_text *t, SDL_Renderer *rend);
 SDL_Surface *get_surface(char *path);
 void        tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf);
 void        left_click(t_game *game);
+
 
 #endif /* __prototypes_h__ */
