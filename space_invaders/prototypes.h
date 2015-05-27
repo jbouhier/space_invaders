@@ -81,7 +81,6 @@ typedef struct      s_text_game
     SDL_Texture     *texture_score_title;
     SDL_Rect        score_title_pos;
     SDL_Rect        high_score_pos;
-    SDL_Rect        game_over;
     SDL_Surface     *surface_high_score;
     SDL_Texture     *texture_high_score;
 }                   t_text_game;
@@ -115,6 +114,7 @@ typedef struct      s_text
     SDL_Rect        pos_stitle;
     long            hscore;
     char            *hscore_str;
+    SDL_Rect        game_over;
     SDL_Rect        pos_hscore;
     SDL_Surface     *sur_hscore;
     SDL_Texture     *tex_hscore;

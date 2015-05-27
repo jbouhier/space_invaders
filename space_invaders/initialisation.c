@@ -128,7 +128,7 @@ t_game  init_text(t_game game)
     // Engine text size and position -  (x,    y,  h,   w)
     game.text.pos_stitle = init_position(180, 5, 25, 460);
     game.text.pos_hscore = init_position(365, 32, 25, 80);
-    game.infos.game_over = init_position(365, 32, 25, 80);
+    game.text.game_over = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
     game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
     game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
@@ -226,7 +226,7 @@ t_game  showGameOver(t_game game)
 {
     SDL_Colour text_color = { 255, 255, 255, 0 };
     game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
-    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     GAME OVER      ", text_color);
+    game.begin.surface_play = TTF_RenderText_Solid(game.text.font, "     GAME OVER      ", text_color);
     game.begin.play_with_2 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
     game.begin.play_with_2_position = init_position(135, 180, 180, 500);
     
