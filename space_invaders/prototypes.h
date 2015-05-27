@@ -205,5 +205,8 @@ SDL_Surface *get_surface(char *path);
 void        tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf);
 void        left_click(t_game *game);
 
+t_game      showGameOver(t_game game);
+void        renderEnd(t_game game);
+
 
 #endif /* __prototypes_h__ */

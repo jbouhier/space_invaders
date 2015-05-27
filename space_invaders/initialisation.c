@@ -128,6 +128,7 @@ t_game  init_text(t_game game)
     // Engine text size and position -  (x,    y,  h,   w)
     game.text.pos_stitle = init_position(180, 5, 25, 460);
     game.text.pos_hscore = init_position(365, 32, 25, 80);
+    game.infos.game_over = init_position(365, 32, 25, 80);
     game.Gplayer1.score_pos = init_position(200, 32, 25, 80);
     game.Gplayer2.score_pos = init_position(540, 32, 25, 80);
     game.Gplayer1.lives_pos = init_position(20, 570, 25, 25);
@@ -221,17 +222,39 @@ SDL_Rect init_bulletMonsterPos(t_monster monster)
 }
 
 
-// Show Game Over screen when all players are dead
-t_game    showEnd(t_game game)
+t_game  showGameOver(t_game game)
 {
-    int write_error;
+    SDL_Colour text_color = { 255, 255, 255, 0 };
+    game.Gscreen = loadTexture( "/../../../images/background/main_menu.png", game.Grenderer );
+    game.begin.surface_play = TTF_RenderText_Solid(game.infos.font, "     GAME OVER      ", text_color);
+    game.begin.play_with_2 = SDL_CreateTextureFromSurface(game.Grenderer, game.begin.surface_play);
+    game.begin.play_with_2_position = init_position(135, 180, 180, 500);
     
-    write_error = -1;
-    write_error = write_score(game, game.Gplayer1);
+    SDL_Delay(50);
+    game.begin.state = 1;
+    
+    if(game.Gplayer1.lives == -1)
+        game.Gplayer1.lives = 3;
 
-    printf("GAME OVER\n");
+    renderEnd(game);
     
     return (game);
+}
+
+
+void    renderEnd(t_game game)
+{
+    int checkResult;
+    
+    checkResult = checkBeginTexture(game.begin);
+    
+    if (checkResult == 1) {
+        SDL_RenderClear( game.Grenderer );
+        SDL_RenderCopy( game.Grenderer, game.Gscreen, NULL, NULL );
+        SDL_RenderCopy( game.Grenderer, game.begin.play_with_2, NULL, &(game.begin.play_with_2_position) );
+        SDL_RenderPresent( game.Grenderer );
+        SDL_UpdateWindowSurface( game.Gwindow );
+    }
 }
 
 
