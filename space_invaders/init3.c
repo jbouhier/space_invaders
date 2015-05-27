@@ -78,9 +78,11 @@ t_game    showGame(t_game game, int tempsActuel, int tempsPrecedent)
 }
 
 
-void    init_time(int *tempsActuel, int *tempsPrecedent, int *gameover)
+void    init_time(t_time *time)
 {
-    *tempsActuel = 0;
-    *tempsPrecedent = 0;
-    *gameover = 0;
+    time->tempsActuel = 0;
+    time->tempsPrecedent = 0;
+    time->gameover = 0;
+    time-> toWait = 0;
+    time->gameover = 0;
 }

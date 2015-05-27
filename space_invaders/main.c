@@ -12,32 +12,26 @@
 int     main(void)
 {
     t_game  game;
-    int     tempsActuel;
-    int     tempsPrecedent;
-    int     toWait;
-    int     gameover;
+    t_time  time;
 
-    init_time(&tempsActuel, &tempsPrecedent, &gameover);
+    init_time(&time);
     game = init_screen(game);
     game = showBegin(game, &(game.text));
     
-    // Put init function inside it w/ pointer parameters
-    // start_game();
-
     while (game.quit != 1)
     {
         while (SDL_PollEvent(&game.Gevenements) >= 0 && game.quit != 1)
         {
-            tempsActuel = SDL_GetTicks();
+            time.tempsActuel = SDL_GetTicks();
             game = handleEvent(game);
 
-            if (game.begin.state == 1 && gameover == 0)
+            if (game.begin.state == 1 && time.gameover == 0)
                 game = handleBegin(game);
-            else if (gameover == 1)
+            else if (time.gameover == 1)
             {
                 game = showGameOver(game);
                 printf("GAME OVER\n");
-                gameover = 0;
+                time.gameover = 0;
             }
             else
             {
@@ -45,22 +39,22 @@ int     main(void)
                     game = showInstruction(game);
                 else
                 {
-                    if (game.begin.state == 0 && gameover == 0 && game.quit != 2)
-                        game = showGame(game, tempsActuel, tempsPrecedent);
+                    if (game.begin.state == 0 && time.gameover == 0 && game.quit != 2)
+                        game = showGame(game, time.tempsActuel, time.tempsPrecedent);
                     if (game.quit == 2)
                         game = show_pause (game);
                 }
                 // Le temps "actuel" devient le temps "precedent" pour nos futurs calculs
-                tempsPrecedent = tempsActuel;
+                time.tempsPrecedent = time.tempsActuel;
             }
             
             if (game.Gplayer1.lives == -1 || game.Gplayer2.lives == -1 || game.Gmonster[0].monster == NULL)
-                gameover = 1;
+                time.gameover = 1;
             
-            toWait = SDL_GetTicks() - tempsActuel;
+            time.toWait = SDL_GetTicks() - time.tempsActuel;
             
-            if (toWait < 16 && game.quit != 1)
-                SDL_Delay(16 - toWait);
+            if (time.toWait < 16 && game.quit != 1)
+                SDL_Delay(16 - time.toWait);
         }
     }
 
