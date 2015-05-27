@@ -9,17 +9,20 @@
 #include "prototypes.h"
 
 
-t_player movePlayer(t_game game) {
+t_player movePlayer(t_game game)
+{
     switch( game.Gevenements.key.keysym.sym )
     {
         case SDLK_LEFT:
-            if ( game.Gplayer1.position.x > 0 ) {
+            if ( game.Gplayer1.position.x > 0 )
+            {
                 game.Gplayer1.position.x -= 5;
             }
             break;
             
         case SDLK_RIGHT:
-            if ( game.Gplayer1.position.x < 761 ) {
+            if ( game.Gplayer1.position.x < 761 )
+            {
                 game.Gplayer1.position.x += 5;
             }
             break;
@@ -34,80 +37,133 @@ t_game moveMonster(t_game game)
 {
     int i;
 
-    for (i = 0; game.Gmonster[i].monster != NULL; i++) {
+    for (i = 0; game.Gmonster[i].monster != NULL; i++)
+    {
         if(game.Gmonster[i].flagpositon == 1)        //check si l'objet doit se déplacer vers la gauche
         {
-            if(game.Gmonster[i].position.x > 0)
-                game.Gmonster[i].position.x -= game.monster_speed;
-            else {
-                game.Gmonster[i].flagpositon = 0;
-                if (game.monster_speed < 3)
-                    game.Gmonster[i].position.y += (20 * game.monster_speed);
-                else
-                    game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
-            }
+            game = moveMonsterLeft(game, i);
         }
         else   //Check si l'objet doit se déplacer vers la droite
         {
-            if(game.Gmonster[i].position.x < 760)
-                game.Gmonster[i].position.x += game.monster_speed;
-            else {
-                game.Gmonster[i].flagpositon = 1;
-                if (game.monster_speed < 3)
-                    game.Gmonster[i].position.y += (20 * game.monster_speed);
-                else
-                    game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
-            }
+            game = moveMonsterRight(game, i);
         }
     }
 
     return game;
 }
 
+t_game moveMonsterLeft(t_game game, int i)
+{
+    
+    if(game.Gmonster[i].position.x > 0)
+    {
+        game.Gmonster[i].position.x -= game.monster_speed;
+    }
+    else
+    {
+        game.Gmonster[i].flagpositon = 0;
+        if (game.monster_speed < 3)
+        {
+            game.Gmonster[i].position.y += (20 * game.monster_speed);
+        }
+        else
+        {
+            game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
+        }
+    }
+    
+    return (game);
+}
+
+t_game moveMonsterRight(t_game game, int i)
+{
+    if(game.Gmonster[i].position.x < 760)
+    {
+        game.Gmonster[i].position.x += game.monster_speed;
+    }
+    else
+    {
+        game.Gmonster[i].flagpositon = 1;
+        if (game.monster_speed < 3)
+        {
+            game.Gmonster[i].position.y += (20 * game.monster_speed);
+        }
+        else
+        {
+            game.Gmonster[i].position.y += (20 * (game.monster_speed - 1));
+        }
+    }
+    
+    return (game);
+}
 
 
-
-t_game launch_bullet(t_game game) {
+t_game launch_bullet(t_game game)
+{
     int i;
     int j;
 
-    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++) {
-        if (game.Gplayer1.bullet[i].position.y >= 0 && i < 2) {
+    for (i = 0; game.Gplayer1.bullet[i].bullet != NULL; i++)
+    {
+        if (game.Gplayer1.bullet[i].position.y >= 0 && i < 2)
+        {
             game.Gplayer1.bullet[i].position.y -= 10;
-            for (j = 0; game.Gmonster[j].monster != NULL; j++) {
-                if (game.Gmonster[j].monster != NULL) {
-                    if (checkCollision( game.Gmonster[j].position, game.Gplayer1.bullet[i].position )) {
-                        Mix_PlayChannel( -1, game.Gmonster[j].monsterExplode_sound, 0 );
-                        SDL_DestroyTexture(game.Gmonster[j].monster); //sometimes bug
-                        game = deleteBullets(game, i);
-                        game = showExposion(game, j);
-                        renderAll(game);
-                        if (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion < 30) {
-                            SDL_Delay(30 - (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion));
-                        }
-                        SDL_DestroyTexture(game.Gmonster[j].explosion);
-                        if (game.Gmonster[j].bullet.bullet != NULL && game.Gmonster[j].bullet.position.y <= 560) {
-                            if (game.Gmonster[j + 1].monster != NULL) {
-                                game.Gmonster[j + 1].bullet = game.Gmonster[j].bullet;
-                            }
-                            else if (game.Gmonster[j - 1].monster != NULL) {
-                                game.Gmonster[j - 1].bullet = game.Gmonster[j].bullet;
-                            }
-                        }
-                        for (i = j; game.Gmonster[i].monster != NULL; i++) {
-                            game.Gmonster[i] = game.Gmonster[i + 1];
-                        }
-                    }
+            for (j = 0; game.Gmonster[j].monster != NULL; j++)
+            {
+                if (game.Gmonster[j].monster != NULL)
+                {
+                    game = collideAction(game, i, j);
                 }
             }
         }
-        else if (i < 2) {
+        else if (i < 2)
+        {
             game = deleteBullets(game, i);
         }
     }
     return game;
 }
 
+t_game collideAction(t_game game, int i, int j)
+{
+    if (checkCollision( game.Gmonster[j].position, game.Gplayer1.bullet[i].position ))
+    {
+        Mix_PlayChannel( -1, game.Gmonster[j].monsterExplode_sound, 0 );
+        SDL_DestroyTexture(game.Gmonster[j].monster); //sometimes bug
+        game = deleteBullets(game, i);
+        game = showExposion(game, j);
+        renderAll(game);
+
+        if (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion < 30)
+        {
+            SDL_Delay(30 - (SDL_GetTicks() - game.Gmonster[j].timeShowExplosion));
+        }
+
+        SDL_DestroyTexture(game.Gmonster[j].explosion);
+        game = UpdateMonster(game, i, j);
+    }
+    
+    return (game);
+}
+
+t_game UpdateMonster(t_game game, int i, int j)
+{
+    if (game.Gmonster[j].bullet.bullet != NULL && game.Gmonster[j].bullet.position.y <= 560)
+    {
+        if (game.Gmonster[j + 1].monster != NULL) {
+            game.Gmonster[j + 1].bullet = game.Gmonster[j].bullet;
+        }
+        else if (game.Gmonster[j - 1].monster != NULL) {
+            game.Gmonster[j - 1].bullet = game.Gmonster[j].bullet;
+        }
+    }
+
+    for (i = j; game.Gmonster[i].monster != NULL; i++) {
+        game.Gmonster[i] = game.Gmonster[i + 1];
+    }
+
+    return (game);
+}
 
 t_game  launch_bulletMonster(t_game game)
 {
@@ -126,15 +182,7 @@ t_game  launch_bulletMonster(t_game game)
         }
     }
 
-    if (i == 0) {
-        // No monsters. The player won
-        SDL_Delay(5000);
-        game = loadMonsters(game);
-        //game = loadSounds(game);
-        if (game.monster_speed < 3)
-            game.monster_speed += 1;
-        i = 50;
-    }
+    
     // Launch bullet of the monster when no other bullet have being launched by one of them
     if (bulletOn == 0)
     {
@@ -180,6 +228,20 @@ t_game  launch_bulletMonster(t_game game)
     return (game);
 }
 
+t_game updateLevel(t_game game, int i)
+{
+    if (i == 0) {
+        // No monsters. The player won
+        SDL_Delay(5000);
+        game = loadMonsters(game);
+        game = loadSounds(game);
+        if (game.monster_speed < 3)
+            game.monster_speed += 1;
+        i = 50;
+    }
+
+    return (game);
+}
 
 t_game deleteBullets(t_game game, int index) {
     int i;

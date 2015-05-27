@@ -181,12 +181,16 @@ t_game      init_text(t_game game);
 
 t_player    movePlayer(t_game game);
 t_game      moveMonster(t_game game);
+t_game      moveMonsterLeft(t_game game, int i);
+t_game      moveMonsterRight(t_game game, int i);
 
 t_game      launch_bulletMonster(t_game game);
 void        renderAll(t_game game);
 t_game      deleteBullets(t_game game, int index);
 void        end(t_game game);
 bool        checkCollision( SDL_Rect a, SDL_Rect b );
+t_game      collideAction(t_game game, int i, int j);
+t_game      UpdateMonster(t_game game, int i, int j);
 t_game      loadSounds(t_game game);
 char        **AllocateSoundPath(char **paths);
 t_game      loadMonsters(t_game game);
