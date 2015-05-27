@@ -29,26 +29,25 @@ SDL_Surface     *get_surface(char *path)
 t_game  loadMonsters(t_game game)
 {
     int i;
+    int x;
+    int y;
+    
+    x = 10;
+    y = 100;
     SDL_Surface *surf;
     
     surf = get_surface("/../../../images/monster1.png");
     
     for (i = 0; i < MONSTER_NBR; i++)
-        tex_monster(&game, i, surf);
+        tex_monster(&game, i, &x, &y, surf);
         
     SDL_FreeSurface(surf);
     return (game);
 }
 
 
-void    tex_monster(t_game *game, int i, SDL_Surface *surf)
+void    tex_monster(t_game *game, int i, int *x, int *y, SDL_Surface *surf)
 {
-    int x;
-    int y;
-    
-    x = 10;
-    y = 100;
-    
     game->Gmonster[i].monster = SDL_CreateTextureFromSurface(game->Grenderer, surf);
     if (game->Gmonster[i].monster == NULL)
     {
@@ -57,20 +56,20 @@ void    tex_monster(t_game *game, int i, SDL_Surface *surf)
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
-    game->Gmonster[i].position = init_position(x, y, 20, 20);
-    if (y < 110)
+    game->Gmonster[i].position = init_position(*x, *y, 20, 20);
+    if (*y < 110)
         game->Gmonster[i].score = 30;
-    else if (y > 110 && y < 180)
+    else if (*y > 110 && *y < 180)
         game->Gmonster[i].score = 20;
     else
         game->Gmonster[i].score = 10;
     
     if ((i + 1) % 10 != 0 || i == 0)
-        x += 30;
+        *x += 30;
     else
     {
-        x = 10;
-        y += 30;
+        *x = 10;
+        *y += 30;
     }
 }
 
